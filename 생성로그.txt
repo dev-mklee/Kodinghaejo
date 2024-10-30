@@ -1,0 +1,1468 @@
+test.csv 생성 로그 {
+233168
+233168
+233168
+1 번째 문제
+4613732
+4613732
+4613732
+2 번째 문제
+6857
+6857
+6857
+3 번째 문제
+906609
+906609
+906609
+4 번째 문제
+232792560
+232792560
+232792560
+5 번째 문제
+25164150
+25164150
+251,641,500
+25164150
+6 번째 문제
+104743
+104743
+104743
+7 번째 문제
+23514624000
+23514624000
+23514624000
+8 번째 문제
+31875000
+31875000
+31875000
+9 번째 문제
+142913828922
+142913828922
+142,913,828
+142913828922
+10 번째 문제
+70600674
+40824
+70600674
+70600674
+11 번째 문제
+76576500
+76576500
+76576500
+12 번째 문제
+9355236978
+938190317
+7316289013
+8731781801
+7686340255
+2014352580
+6085282354
+553,737,332
+5527939703
+7638525221
+277,386,883,098
+938271664
+3700500225
+1432917171
+5537376230
+2716595375
+7404592941
+5537376230
+7625595330
+2284067263
+5537376230
+13 번째 문제
+837799
+837799
+837799
+14 번째 문제
+10946
+1094630477154176
+1,768,866,530,053
+10400600
+387618264
+6,783,368,384
+67863915342394800
+109460000
+1048576
+67863915348623159077293275329516182745149001050581613687258354958785122101210957645766025065171559657696231911831863025387245106856430054288765729705102738132581887078165081581683981119128054810681177637485982529534486997573378571240146069968333138253129662645144715017485148531791454136875134997641372807402805280200862589108622682660944570626028858822283499531299252200024234251599248897627499988040349050421313302359580666659377967756790194976497399013220469231965532987725786606378651352482433561864906068262662644000185384494814588082630124015472631915541365966513673681183572622035528297151658731673012397442830269629440981290328928011068248365722951548901797330170307740835214068871562041399842804616699190944167997389386101100933984918387181218554725732263881296204485234065997026829726726592638340476262134691940006795482618678338298487266137757389672236371485250114283178275182383276925434727434872523930349238774075458991799000429233528715440848306145740964386395177327078367210313079355647594974820496108060775300767905425590991415692435825329381454061972829230365695668014941519777118517253061093048988357351395276631704154889004862707522076033467505669278979068320464922814234781930047755254917691440058723509976162866565133315530703115112468761748398577045630506005736561766507193860624104033444980189805306534262986350607200728100910331890175881177974070590594973395440239682376163500944062254798490787860722633816388241885142524489982677149153825075404384645584894487954803517867395881911845756407360485987381393764030454014092437639353427994869531734165698018679689447484505479501763082234011692711370528611964643850958131831415158000811265963578222912469692532857067825791957988821830474018990527913182403176494958193206909055812553910409120213016316751400305807270275386193254223309065620097012546309933159993515181425716318244361293248340936938493873646831500124057355298757627646025013460119604218106570736605563184103071233750195979949819096351653742803916486692443816563788324589076913635266466069114241753541386380770548402
+10,946,001,872,192
+1094630412136939969
+1094638367
+10946
+1094600126399
+10,946,778,010,956
+67863915348623159076903629619006772001332448222359557123324503320164090250543869565168729088
+6,871,947,673,6
+1094600121542036327
+1,094,650
+678639150799079925616
+10946179108352
+104050713152
+1094638390
+1094600
+10,946,179,104
+6,227,020,800
+1094600
+1094600
+15 번째 문제
+2085
+2080
+2086
+2080
+20615
+2089
+2080
+16 번째 문제
+21,124
+21124
+21,124
+21124
+21124
+17 번째 문제
+1074
+1074
+1074
+18 번째 문제
+171
+31
+138
+144 번
+19
+36
+21
+36
+170
+175
+177
+172
+36
+19 번째 문제
+648
+648
+648
+20 번째 문제
+[[1, '1000보다 작은 자연수 중에서 3 또는 5의 배수를 모두 더하면?', 1, 'https://euler.synap.co.kr/problem=1', '', '10보다 작은 자연수 중에서 3 또는 5의 배수는 3 5 6 9 이고 이것을 모두 더하면 23입니다. 1000보다 작은 자연수 중에서 3 또는 5의 배수를 모두 더하면 얼마일까요?', '', '233168', '', '', datetime.date(2024, 10, 30), ''], [2, '피보나치 수열에서 4백만 이하이면서 짝수인 항의 합', 1, 'https://euler.synap.co.kr/problem=2', '', '피보나치(Fibonacci) 수열의 각 항은 바로 앞의 항 두 개를 더한 것입니다. 1과 2로 시작하는 경우 이 수열은 아래와 같습니다. 4백만 이하의 짝수 값을 갖는 모든 피보나치 항을 더하면 얼마가 됩니까?', '', '4613732', '', '', datetime.date(2024, 10, 31), ''], [3, '가장 큰 소인수 구하기', 1, 'https://euler.synap.co.kr/problem=3', '', '어떤 수를 소수의 곱으로만 나타내는 것을 소인수분해라 하고 이 소수들을 그 수의 소인수라고 합니다.\r\n 예를 들면 13195의 소인수는 5 7 13 29 입니다. 600851475143의 소인수 중에서 가장 큰 수를 구하세요.', '', '6857', '', '', datetime.date(2024, 11, 1), ''], [4, '세자리 수를 곱해 만들 수 있는 가장 큰 대칭수', 1, 'https://euler.synap.co.kr/problem=4', '', '앞에서부터 읽을 때나 뒤에서부터 읽을 때나 모양이 같은 수를 대칭수(palindrome)라고 부릅니다. 두 자리 수를 곱해 만들 수 있는 대칭수 중 가장 큰 수는 9009 (= 91\xa0× 99) 입니다. 세 자리 수를 곱해 만들 수 있는 가장 큰 대칭수는 얼마입니까?', '', '906609', '', '', datetime.date(2024, 11, 2), ''], [5, '1 ~ 20 사이의 어떤 수로도 나누어 떨어지는 가장 작은 수', 1, 'https://euler.synap.co.kr/problem=5', '', '1 ~ 10 사이의 어떤 수로도 나누어 떨어지는 가장 작은 수는 2520입니다. 그러면 1 ~ 20 사이의 어떤 수로도 나누어 떨어지는 가장 작은 수는 얼마입니까?', '', '232792560', '', '', datetime.date(2024, 11, 3), ''], [6, '1부터 100까지 "제곱의 합"과 "합의 제곱"의 차는?', 1, 'https://euler.synap.co.kr/problem=6', '', '1부터 10까지 자연수를 각각 제곱해 더하면 다음과 같습니다 (제곱의 합). 1부터 10을 먼저 더한 다음에 그 결과를 제곱하면 다음과 같습니다 (합의 제곱). 따라서 1부터 10까지 자연수에 대해 "합의 제곱"과 "제곱의 합" 의 차이는 3025 - 385 = 2640 이 됩니다. 그러면 1부터 100까지 자연수에 대해 "합의 제곱"과 "제곱의 합"의 차이는 얼마입니까?', '', '25164150', '', '', datetime.date(2024, 11, 4), ''], [7, '10001번째의 소수', 1, 'https://euler.synap.co.kr/problem=7', '', '소수를 크기 순으로 나열하면 2 3 5 7 11 13 ... 과 같이 됩니다. 이 때 10001번째의 소수를 구하세요.', '', '104743', '', '', datetime.date(2024, 11, 5), ''], [8, '1000자리 수 안에서 연속된 13개 숫자 곱의 최댓값', 1, 'https://euler.synap.co.kr/problem=8', '', '다음은 연속된 1000자리 수입니다 (읽기 좋게 50자리씩 잘라 놓음). \r\n73167176531330624919225119674426574742355349194934\r\n96983520312774506326239578318016984801869478851843\r\n85861560789112949495459501737958331952853208805511\r\n12540698747158523863050715693290963295227443043557\r\n66896648950445244523161731856403098711121722383113\r\n62229893423380308135336276614282806444486645238749\r\n30358907296290491560440772390713810515859307960866\r\n70172427121883998797908792274921901699720888093776\r\n65727333001053367881220235421809751254540594752243\r\n52584907711670556013604839586446706324415722155397\r\n53697817977846174064955149290862569321978468622482\r\n83972241375657056057490261407972968652414535100474\r\n82166370484403199890008895243450658541227588666881\r\n16427171479924442928230863465674813919123162824586\r\n17866458359124566529476545682848912883142607690042\r\n24219022671055626321111109370544217506941658960408\r\n07198403850962455444362981230987879927244284909188\r\n84580156166097919133875499200524063689912560717606\r\n05886116467109405077541002256983155200055935729725\r\n71636269561882670428252483600823257530420752963450\r\n 여기서 붉게 표시된 71112의 경우 연속한 5개 숫자 7 1 1 1 2를 모두 곱하면 14입니다.\r\n또 그 다음 연속한 5개 숫자 11121의 경우 1 1 1 2 1을 모두 곱하면 2입니다. 이런 식으로 맨 처음 (7 × 3 × 1 × 6 × 7 = 882) 부터\r\n 맨 끝 (6 × 3 × 4 × 5 × 0 = 0) 까지 연속한 5개 숫자의 곱을 구할 수 있습니다. 이렇게 구할 수 있는 연속한 5개 숫자의 곱 중에서 가장 큰 값은 40824 입니다. 연속한 4개 숫자의 곱 중에서 가장 큰 값은 파랗게 표시된 9 × 9 × 8 × 9 = 5832 입니다. 위의 1000자리 수에서 연속한 13개 숫자의 곱이 가장 큰 값은 얼마입니까?', '', '23514624000', '', '', datetime.date(2024, 11, 6), ''], [9, 'a + b + c = 1000 이 되는 피타고라스 수', 1, 'https://euler.synap.co.kr/problem=9', '', '세 자연수 a b c 가\r\n 피타고라스 정리  a2 + b2 = c2 를 만족하면 피타고라스 수라고 부릅니다\r\n(여기서  a < b < c ).\r\n예를 들면 32 + 42 = 9 + 16 = 25 = 52이므로 3 4 5는 피타고라스 수입니다.   a + b + c = 1000  인 피타고라스 수\r\n a b c는 한 가지 뿐입니다.\r\n 이 때  a × b × c 는 얼마입니까?', '', '31875000', '', '', datetime.date(2024, 11, 7), ''], [10, '이백만 이하 소수의 합', 1, 'https://euler.synap.co.kr/problem=10', '', '10 이하의 소수를 모두 더하면 2 + 3 + 5 + 7 = 17 이 됩니다. 이백만(2000000) 이하 소수의 합은 얼마입니까?', '', '142913828922', '', '', datetime.date(2024, 11, 8), ''], [11, '20×20 격자에서 연속된 네 수의 곱 중 최댓값', 2, 'https://euler.synap.co.kr/problem=11', '', '아래와 같은 20×20 격자가 있습니다. 위에서 대각선 방향으로 연속된 붉은 수 네 개의 곱은 26 × 63 × 78 × 14 = 1788696 입니다. 그러면 수평 수직 또는 대각선 방향으로 연속된 수 네 개의 곱 중 최댓값은 얼마입니까?', '', '70600674', '', '', datetime.date(2024, 11, 9), ''], [12, '500개 이상의 약수를 갖는 가장 작은 삼각수는?', 2, 'https://euler.synap.co.kr/problem=12', '', '1부터 n까지의 자연수를 차례로 더하여 구해진 값을 삼각수라고 합니다.\r\n예를 들어 7번째 삼각수는 1 + 2 + 3 + 4 + 5 + 6 + 7 = 28이 됩니다.\r\n이런 식으로 삼각수를 구해 나가면 다음과 같습니다. 이 삼각수들의 약수를 구해 봅시다. 위에서 보듯이 5개 이상의 약수를 갖는 첫번째 삼각수는 28입니다. 그러면 500개 이상의 약수를 갖는 가장 작은 삼각수는 얼마입니까?', '', '76576500', '', '', datetime.date(2024, 11, 10), ''], [13, '50자리 수 100개를 더한 값의 첫 10자리 구하기', 2, 'https://euler.synap.co.kr/problem=13', '', '아래에 50자리 수가 100개 있습니다. 이것을 모두 더한 값의 첫 10자리는 얼마입니까?', '', '5537376230', '', '', datetime.date(2024, 11, 11), ''], [14, '백만 이하로 시작하는 우박수 중 가장 긴 과정을 거치는 것은?', 2, 'https://euler.synap.co.kr/problem=14', '', '양의 정수 n에 대하여 다음과 같은 계산 과정을 반복하기로 합니다. \n n → n / 2  (n이 짝수일 때)\nn → 3 n + 1 (n이 홀수일 때) 13에 대하여 위의 규칙을 적용해보면 아래처럼 10번의 과정을 통해 1이 됩니다. 아직 증명은 되지 않았지만 이런 과정을 거치면 어떤 수로 시작해도 마지막에는 1로 끝나리라 생각됩니다. \n(역주: 이것은 콜라츠 추측 Collatz Conjecture이라고 하며 이런 수들을 우박수 hailstone sequence라 부르기도 합니다) 그러면 백만(1000000) 이하의 수로 시작했을 때 1까지 도달하는데 가장 긴 과정을 거치는 수는 얼마입니까? 참고: 계산 과정에는 백만을 넘어가는 수가 나와도 괜찮습니다.', '', '837799', '', '', datetime.date(2024, 11, 12), ''], [15, '20×20 격자의 좌상단에서 우하단으로 가는 경로의 수', 2, 'https://euler.synap.co.kr/problem=15', '', '아래와 같은 2 × 2 격자의 왼쪽 위 모서리에서 출발하여 오른쪽 아래 모서리까지 도달하는 길은 모두 6가지가 있습니다 (거슬러 가지는 않기로 합니다). 그러면 20 × 20 격자에는 모두 몇 개의 경로가 있습니까?', '', '1094600', '', '', datetime.date(2024, 11, 13), ''], [16, '21000의 각 자릿수를 모두 더하면?', 2, 'https://euler.synap.co.kr/problem=16', '', '215 = 32768 의 각 자릿수를 더하면 3 + 2 + 7 + 6 + 8 = 26 입니다. 21000의 각 자릿수를 모두 더하면 얼마입니까?', '', '2080', '', '', datetime.date(2024, 11, 14), ''], [17, '1부터 1000까지 영어로 썼을 때 사용된 글자의 개수는?', 2, 'https://euler.synap.co.kr/problem=17', '', "1부터 5까지의 수를 영어로 쓰면 one two three four five 이고\r\n각 단어의 길이를 더하면 3 + 3 + 5 + 4 + 4 = 19 이므로 사용된 글자는 모두 19개입니다. 1부터 1000까지 영어로 썼을 때는 모두 몇 개의 글자를 사용해야 할까요? 참고:\xa0빈 칸이나 하이픈('-')은 셈에서 제외하며\xa0단어 사이의 and 는 셈에 넣습니다.\r\n\xa0 예를 들어 342를 영어로 쓰면 three hundred and forty-two 가 되어서 23 글자\r\n\xa0 115 = one hundred and fifteen 의 경우에는 20 글자가 됩니다.", '', '21124', '', '', datetime.date(2024, 11, 15), ''], [18, '삼각형을 따라 내려가면서 합이 최대가 되는 경로 찾기', 2, 'https://euler.synap.co.kr/problem=18', '', '다음과 같이 삼각형 모양으로 수를 배열했습니다. \n37\xa042\xa04\xa068 5\xa09\xa03\r\n 삼각형의 꼭대기부터 아래쪽으로 인접한 수를 찾아 내려가면서 합을 구하면 위의 그림처럼 3 + 7 + 4 + 9 = 23 이 가장 큰 합을 갖는 경로가 됩니다. 다음 삼각형에서 합이 최대가 되는 경로를 찾아서 그 합을 구하세요. \r\n7595 6417 47 8218 35 87 1020 04 82 47 6519 01 23 75 03 3488 02 77 73 07 63 6799 65 04 28 06 16 70 9241 41 26 56 83 40 80 70 3341 48 72 33 47 32 37 16 94 2953 71 44 65 25 43 91 52 97 51 1470 11 33 28 77 73 17 78 39 68 17 5791 71 52 38 17 14 91 43 58 50 27 29 4863 66 04 68 89 53 67 30 73 16 69 87 40 3104 62 98 27 23 09 70 98 73 93 38 53 60 04 23\r\n 참고: 여기서는 경로가 16384개밖에 안되기 때문에 모든 경로의 합을 일일이 계산해서 답을 구하는 것이 가능합니다.\r\n 하지만\xa067번 문제에는 100층짜리 삼각형 배열이 나옵니다. 그런 경우에는 좀 더 현명한 풀이 방법을 찾아야겠지요.', '', '1074', '', '', datetime.date(2024, 11, 16), ''], [19, '20세기에서, 매월 1일이 일요일인 경우는 몇 번?', 2, 'https://euler.synap.co.kr/problem=19', '', '다음은 달력에 관한 몇 가지 일반적인 정보입니다 (필요한 경우 좀 더 연구를 해 보셔도 좋습니다). 20세기 (1901년 1월 1일 ~ 2000년 12월 31일) 에서 매월 1일이 일요일인 경우는 총 몇 번입니까?', '', '36', '', '', datetime.date(2024, 11, 17), ''], [20, '100! 의 자릿수를 모두 더하면?', 2, 'https://euler.synap.co.kr/problem=20', '', 'n! 이라는 표기법은 n × (n − 1) × ... × 3 × 2 × 1을 뜻합니다. 예를 들자면 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800 이 되는데\r\n 여기서 10!의 각 자릿수를 더해 보면 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27 입니다.  100! 의 자릿수를 모두 더하면 얼마입니까?', '', '648', '', '', datetime.date(2024, 11, 18), '']]
+스크래핑 완료
+}
+
+tst_lang 생성 로그 {
+```java
+// 10보다 작은 자연수 중에서 3 또는 5의 배수를 저장할 배열
+int[] numbers3or5 = {3, 5, 6, 9};
+
+// 배열 합계를 계산할 변수
+int sum = 0;
+
+// 1부터 999까지 순환
+for (int i = 1; i < 1000; i++) {
+    // 현재 수 i가 3 또는 5의 배수인지 확인
+    if (i % 3 == 0 || i % 5 == 0) {
+        // 배열에 추가
+        numbers3or5[numbers3or5.length] = i;
+        // 합계에 추가
+        sum += i;
+    }
+}
+
+// 합계 출력
+System.out.println(sum);
+```
+1번째 java 예제
+```javascript
+// 1~999까지 반복
+let sum = 0;
+for (let i = 1; i < 1000; i++) {
+  // 3 또는 5의 배수인지 확인
+  if (i % 3 === 0 || i % 5 === 0) {
+    // 배수라면 합계에 추가
+    sum += i;
+  }
+}
+
+// 합계 출력
+console.log(sum);
+```
+1번째 javascript 예제
+[[1, '', 'java1', 'javascript1', '```java\n// 10보다 작은 자연수 중에서 3 또는 5의 배수를 저장할 배열\nint[] numbers3or5 = {3, 5, 6, 9};\n\n// 배열 합계를 계산할 변수\nint sum = 0;\n\n// 1부터 999까지 순환\nfor (int i = 1; i < 1000; i++) {\n    // 현재 수 i가 3 또는 5의 배수인지 확인\n    if (i % 3 == 0 || i % 5 == 0) {\n        // 배열에 추가\n        numbers3or5[numbers3or5.length] = i;\n        // 합계에 추가\n        sum += i;\n    }\n}\n\n// 합계 출력\nSystem.out.println(sum);\n```', '```javascript\n// 1~999까지 반복\nlet sum = 0;\nfor (let i = 1; i < 1000; i++) {\n  // 3 또는 5의 배수인지 확인\n  if (i % 3 === 0 || i % 5 === 0) {\n    // 배수라면 합계에 추가\n    sum += i;\n  }\n}\n\n// 합계 출력\nconsole.log(sum);\n```', datetime.date(2024, 10, 31), '']]
+스크래핑 완료
+}
+
+test_lang_sol 생성 로그 {
+```java
+// 1000보다 작은 자연수 중에 3또는 5의 배수를 모두 더하는 문제
+public class ThreeOrFiveSum {
+
+    public static void main(String[] args) {
+        int sum = 0; // 합계를 저장할 변수
+
+        // 1부터 999까지 반복
+        for (int i = 1; i < 1000; i++) {
+            // 3 또는 5의 배수인지 확인
+            if (i % 3 == 0 || i % 5 == 0) {
+                // 합계에 추가
+                sum += i;
+            }
+        }
+
+        // 합계 출력
+        System.out.println(sum); // 출력 값: 233168
+    }
+}
+```
+1번째 java 답
+```javascript
+// 1000보다 작은 자연수 중에서 3 또는 5의 배수를 모두 더하면 얼마일까?
+
+let sum = 0;
+for (let i = 1; i < 1000; i++) {
+  if (i % 3 === 0 || i % 5 === 0) {
+    sum += i;
+  }
+}
+
+console.log(sum); // 233168
+```
+1번째 javascript 답
+```java
+public class FibonacciEvenSum {
+
+    public static void main(String[] args) {
+        int a = 1;
+        int b = 2;
+        int sum = 0;
+
+        while (b <= 4000000) {
+            if (b % 2 == 0) {
+                sum += b;
+            }
+
+            int temp = b;
+            b = a + b;
+            a = temp;
+        }
+
+        System.out.println(sum); // 출력 값만 작성
+    }
+}
+```
+2번째 java 답
+```javascript
+let sum = 0;
+let a = 1;
+let b = 2;
+
+while (b <= 4000000) {
+  if (b % 2 === 0) {
+    sum += b;
+  }
+  let temp = b;
+  b = a + b;
+  a = temp;
+}
+
+console.log(sum); // 출력 값만 출력
+```
+2번째 javascript 답
+```java
+public class LargestPrimeFactor {
+
+    public static void main(String[] args) {
+        long number = 600851475143L;
+        long largestPrimeFactor = 0;
+
+        for (long i = 2; i <= number / 2; i++) {
+            while (number % i == 0) {
+                largestPrimeFactor = i;
+                number /= i;
+            }
+        }
+
+        if (number > 1) {
+            largestPrimeFactor = number;
+        }
+
+        System.out.println(largestPrimeFactor);
+    }
+}
+```
+
+출력 값:
+
+```
+6857
+```
+3번째 java 답
+```javascript
+// 600851475143의 소인수 중 가장 큰 수를 구하는 함수
+function findLargestPrimeFactor(number) {
+  // 소인수 저장할 배열
+  let primeFactors = [];
+
+  // 제곱근까지 가능한 소수로 나누기
+  for (let i = 2; i <= Math.sqrt(number); i++) {
+    while (number % i === 0) {
+      primeFactors.push(i);
+      number /= i;
+    }
+  }
+
+  // 나머지 수가 1보다 크면 소수
+  if (number > 1) {
+    primeFactors.push(number);
+  }
+
+  // 소인수 중 가장 큰 수 반환
+  return Math.max(...primeFactors);
+}
+
+// 출력
+console.log(findLargestPrimeFactor(600851475143));
+```
+
+**출력:**
+
+```
+6857
+```
+3번째 javascript 답
+```java
+// 가장 큰 세 자리 수 대칭수를 찾는 프로그램
+
+public class Main {
+
+    public static void main(String[] args) {
+        int largestPalindrome = 0;
+
+        // 세 자리 수 두 개를 곱해서 대칭수가 되는지 확인하는 반복문
+        for (int i = 999; i >= 100; i--) {
+            for (int j = 999; j >= 100; j--) {
+                int product = i * j;
+
+                // 자릿수를 뒤집어 대칭수인지 확인
+                int reversedProduct = 0;
+                int temp = product;
+                while (temp > 0) {
+                    reversedProduct = reversedProduct * 10 + temp % 10;
+                    temp /= 10;
+                }
+
+                // 대칭수이면 최대값과 비교
+                if (product == reversedProduct && product > largestPalindrome) {
+                    largestPalindrome = product;
+                }
+            }
+        }
+
+        // 결과 출력
+        System.out.println(largestPalindrome);
+    }
+}
+```
+
+출력:
+```
+906609
+```
+4번째 java 답
+```javascript
+// 세 자리 수를 곱해 만들 수 있는 가장 큰 대칭수를 찾습니다.
+
+// 세 자리 수의 곱집합
+const threeDigitProducts = [];
+
+// 999까지의 모든 숫자를 순회하며 세 자리 수와 곱합니다.
+for (let i = 1; i <= 999; i++) {
+  for (let j = 1; j <= 999; j++) {
+    threeDigitProducts.push(i * j);
+  }
+}
+
+// 대칭수 필터링
+const palindromes = threeDigitProducts.filter(product => {
+  return product.toString() === product.toString().split('').reverse().join('');
+});
+
+// 가장 큰 대칭수 찾기
+const largestPalindrome = Math.max(...palindromes);
+
+// 출력
+console.log(largestPalindrome); // 906609
+```
+4번째 javascript 답
+```java
+// 1~20 사이의 모든 수로 나누어 떨어지는 가장 작은 수를 찾는 함수
+public static int findSmallestMultiple(int bound) {
+    int multiple = 1; // 현재 검사 중인 수
+
+    // 1부터 bound까지 반복
+    for (int i = 1; i <= bound; i++) {
+        // 현재 multiple이 i로 나누어지지 않는다면
+        while (multiple % i != 0) {
+            // multiple에 i를 곱함
+            multiple *= i;
+        }
+    }
+
+    // 가장 작은 배수 반환
+    return multiple;
+}
+
+public static void main(String[] args) {
+    // 1~20 사이의 모든 수로 나누어 떨어지는 가장 작은 수 출력
+    System.out.println(findSmallestMultiple(20));
+}
+```
+
+출력 값:
+
+```
+232792560
+```
+5번째 java 답
+```javascript
+const findSmallestDivisibleNumber = (min, max) => {
+  let number = max;
+
+  while (true) {
+    let isDivisible = true;
+
+    for (let i = min; i <= max; i++) {
+      if (number % i !== 0) {
+        isDivisible = false;
+        break;
+      }
+    }
+
+    if (isDivisible) {
+      return number;
+    }
+
+    number += max; // 가장 작은 공배수를 찾기 위해 범위의 최댓값을 늘림
+  }
+};
+
+console.log(findSmallestDivisibleNumber(1, 20)); // 232792560
+```
+5번째 javascript 답
+```java
+// 1부터 n까지 자연수에 대해 합의 제곱과 제곱의 합의 차이를 구하는 함수
+public static int sumSquareDifference(int n) {
+    // 1부터 n까지 자연수의 합
+    int sum = (n * (n + 1)) / 2;
+
+    // 1부터 n까지 자연수의 제곱의 합
+    int squareSum = (n * (n + 1) * (2 * n + 1)) / 6;
+
+    // 합의 제곱과 제곱의 합의 차이
+    return squareSum - sum * sum;
+}
+
+public static void main(String[] args) {
+    int result = sumSquareDifference(100);
+    System.out.println(result);  // 출력 값: 25164150
+}
+```
+6번째 java 답
+```js
+// 1부터 입력된 숫자까지 자연수의 제곱을 더해서 반환하는 함수
+function squareSum(n) {
+  let sum = 0;
+  for (let i = 1; i <= n; i++) {
+    sum += i * i;
+  }
+  return sum;
+}
+
+// 1부터 입력된 숫자까지 자연수를 더해서 제곱한 값 반환
+function sumSquare(n) {
+  let sum = 0;
+  for (let i = 1; i <= n; i++) {
+    sum += i;
+  }
+  return sum * sum;
+}
+
+// 1부터 100까지 자연수에 대해 "합의 제곱"과 "제곱의 합" 의 차이 구하기
+let result = sumSquare(100) - squareSum(100);
+console.log(result); // 25164150
+```
+6번째 javascript 답
+```java
+// 에라토스테네스의 체 알고리즘을 사용하여 소수를 찾습니다.
+public class FindNthPrime {
+    public static void main(String[] args) {
+        int nthPrime = 10001;
+        boolean[] isPrime = new boolean[nthPrime + 1]; // 모든 숫자를 소수로 초기화
+        int count = 0; // 소수 카운트
+        for (int i = 2; i <= nthPrime; i++) {
+            if (isPrime[i]) {
+                count++; // 소수 발견
+                if (count == nthPrime) { // 10001번째 소수 발견
+                    System.out.println(i); // 출력
+                    break;
+                }
+                // i의 배수 제거
+                for (int j = i * i; j <= nthPrime; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+    }
+}
+```
+
+출력값:
+
+104743
+7번째 java 답
+```javascript
+// 에라토스테네스의 체를 사용하여 소수를 생성합니다.
+const sieve = (limit) => {
+  // 소수인지 아닌지를 저장할 배열을 만듭니다.
+  const isPrime = new Array(limit + 1).fill(true);
+  
+  // 1은 소수가 아니므로 false로 설정합니다.
+  isPrime[1] = false;
+  
+  // 소수를 찾기 위한 반복문을 생성합니다.
+  for (let i = 2; i <= Math.sqrt(limit); i++) {
+    if (isPrime[i]) {
+      // 현재 수(i)가 소수인 경우, 해당 수의 배수를 false로 설정합니다.
+      for (let j = i * i; j <= limit; j += i) {
+        isPrime[j] = false;
+      }
+    }
+  }
+  
+  // 소수만을 담은 배열을 만듭니다.
+  const primes = [];
+  for (let i = 2; i <= limit; i++) {
+    if (isPrime[i]) {
+      primes.push(i);
+    }
+  }
+  
+  // 10001번째 소수를 반환합니다.
+  return primes[10000];
+};
+
+// 10001번째 소수를 출력합니다.
+console.log(sieve(104743));
+```
+
+출력 값:
+
+```
+104743
+```
+7번째 javascript 답
+```java
+import java.math.BigInteger;
+
+public class 연속된13자리수의곱 {
+    public static void main(String[] args) {
+        String number = "73167176531330624919225119674426574742355349194934" +
+                "96983520312774506326239578318016984801869478851843" +
+                "85861560789112949495459501737958331952853208805511" +
+                "12540698747158523863050715693290963295227443043557" +
+                "66896648950445244523161731856403098711121722383113" +
+                "62229893423380308135336276614282806444486645238749" +
+                "30358907296290491560440772390713810515859307960866" +
+                "70172427121883998797908792274921901699720888093776" +
+                "65727333001053367881220235421809751254540594752243" +
+                "52584907711670556013604839586446706324415722155397" +
+                "53697817977846174064955149290862569321978468622482" +
+                "83972241375657056057490261407972968652414535100474" +
+                "82166370484403199890008895243450658541227588666881" +
+                "16427171479924442928230863465674813919123162824586" +
+                "17866458359124566529476545682848912883142607690042" +
+                "24219022671055626321111109370544217506941658960408" +
+                "07198403850962455444362981230987879927244284909188" +
+                "84580156166097919133875499200524063689912560717606" +
+                "05886116467109405077541002256983155200055935729725" +
+                "71636269561882670428252483600823257530420752963450";
+
+        BigInteger largestProduct = BigInteger.ZERO;
+        BigInteger tempProduct = BigInteger.ONE;
+
+        for (int i = 0; i < number.length() - 12; i++) {
+            for (int j = 0; j < 13; j++) {
+                tempProduct = tempProduct.multiply(BigInteger.valueOf(Integer.parseInt(number.substring(i + j, i + j + 1))));
+            }
+            if (tempProduct.compareTo(largestProduct) > 0) {
+                largestProduct = tempProduct;
+            }
+            tempProduct = BigInteger.ONE;
+        }
+
+        System.out.println(largestProduct);
+    }
+}
+```
+
+출력 값:
+
+```
+23514624000
+```
+8번째 java 답
+```javascript
+// 1000자리 수 문자열
+const numberString = "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450";
+
+// 연속한 13개 숫자의 곱을 구하는 함수
+function getProductOf13(string, startIndex) {
+  // 빈 배열에 숫자 문자열 추가
+  let numbers = [];
+  for (let i = startIndex; i < startIndex + 13; i++) {
+    numbers.push(string[i]);
+  }
+
+  // 숫자 배열을 숫자로 변환
+  for (let i = 0; i < numbers.length; i++) {
+    numbers[i] = parseInt(numbers[i]);
+  }
+
+  // 숫자 배열의 곱 계산
+  let product = 1;
+  for (let number of numbers) {
+    product *= number;
+  }
+
+  // 계산된 곱 반환
+  return product;
+}
+
+// 연속한 13개 숫자의 곱 중 가장 큰 값 찾기
+let maxProduct = 0;
+for (let i = 0; i < numberString.length - 12; i++) {
+  let product = getProductOf13(numberString, i);
+  if (product > maxProduct) {
+    maxProduct = product;
+  }
+}
+
+// 가장 큰 곱 출력
+console.log(maxProduct);
+```
+
+출력 값:
+```
+23514624000
+```
+8번째 javascript 답
+```java
+public class PythagoreanTriplet {
+
+    public static void main(String[] args) {
+        int a, b, c;
+
+        for (a = 1; a <= 1000; a++) {
+            for (b = a + 1; b <= 1000; b++) {
+                for (c = b + 1; c <= 1000; c++) {
+                    if (a * a + b * b == c * c && a + b + c == 1000) {
+                        System.out.println(a * b * c);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+출력 값:
+
+```
+31875000
+```
+9번째 java 답
+```javascript
+// 피타고라스 정리를 만족하는 세 자연수 a, b, c의 합이 1000일 때, a × b × c의 값을 구하는 함수
+function findPythagoreanTripletProduct() {
+  let a, b, c;
+  let found = false;
+
+  // a < b < c를 고려하여 중첩 루프를 사용
+  for (a = 1; a < 1000; a++) {
+    for (b = a + 1; b < 1000; b++) {
+      for (c = b + 1; c < 1000; c++) {
+        // 피타고라스 정리 검사
+        if (a * a + b * b === c * c) {
+          // a + b + c = 1000 검사
+          if (a + b + c === 1000) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (found) break;
+    }
+    if (found) break;
+  }
+
+  // 찾은 피타고라스 수의 곱 반환
+  return a * b * c;
+}
+
+// 결과 출력
+console.log(findPythagoreanTripletProduct());
+```
+
+출력값:
+
+```
+31875000
+```
+9번째 javascript 답
+```java
+// 1억 이하 소수를 모두 더하면 얼마인지 구하는 프로그램
+public class PrimeSum {
+
+    public static void main(String[] args) {
+        // 1억 이하 소수를 찾아 저장할 배열
+        boolean[] isPrime = new boolean[100000001];
+
+        // 에라토스테네스의 체 알고리즘을 이용하여 소수 찾기
+        for (int i = 2; i <= Math.sqrt(isPrime.length); i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j < isPrime.length; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
+        // 소수의 합을 계산할 변수
+        long sum = 0;
+
+        // 2부터 1억까지 순회하면서 소수를 찾아 합에 더하기
+        for (int i = 2; i < isPrime.length; i++) {
+            if (isPrime[i]) {
+                sum += i;
+            }
+        }
+
+        // 소수의 합 출력
+        System.out.println(sum);
+    }
+}
+```
+10번째 java 답
+```javascript
+function sumPrimesBelow2000000() {
+  // 2부터 2000000까지 모든 숫자를 순회
+  let sum = 0;
+  for (let i = 2; i <= 2000000; i++) {
+    let isPrime = true;
+    // i가 2보다 크고 1을 제외한 2부터 루트 i까지 모든 정수로 나눠보기
+    for (let j = 2; j <= Math.sqrt(i); j++) {
+      if (i % j === 0) {
+        isPrime = false;
+        break; // 하나라도 나누어지는 정수가 있으면 소수가 아님
+      }
+    }
+    // 소수이면 합에 추가
+    if (isPrime) {
+      sum += i;
+    }
+  }
+  return sum;
+}
+
+// 함수 호출 및 출력
+console.log(sumPrimesBelow2000000());
+```
+
+출력 값:
+
+```
+142913828922
+```
+10번째 javascript 답
+```java
+public class GridMaxProduct {
+
+    public static void main(String[] args) {
+        int[][] grid = new int[20][20];
+
+        // 격자에 1부터 400까지의 수를 대각선 방향으로 입력
+        int num = 1;
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                grid[i][j] = num++;
+            }
+        }
+
+        // 수평, 수직, 대각선 방향으로 연속된 수 네 개의 곱 중 최댓값 찾기
+        int maxProduct = 0;
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                // 수평 방향
+                if (j + 3 < 20) {
+                    int product = grid[i][j] * grid[i][j + 1] * grid[i][j + 2] * grid[i][j + 3];
+                    if (product > maxProduct) {
+                        maxProduct = product;
+                    }
+                }
+
+                // 수직 방향
+                if (i + 3 < 20) {
+                    int product = grid[i][j] * grid[i + 1][j] * grid[i + 2][j] * grid[i + 3][j];
+                    if (product > maxProduct) {
+                        maxProduct = product;
+                    }
+                }
+
+                // 대각선 방향 (우측 하단)
+                if (i + 3 < 20 && j + 3 < 20) {
+                    int product = grid[i][j] * grid[i + 1][j + 1] * grid[i + 2][j + 2] * grid[i + 3][j + 3];
+                    if (product > maxProduct) {
+                        maxProduct = product;
+                    }
+                }
+
+                // 대각선 방향 (좌측 하단)
+                if (i + 3 < 20 && j - 3 >= 0) {
+                    int product = grid[i][j] * grid[i + 1][j - 1] * grid[i + 2][j - 2] * grid[i + 3][j - 3];
+                    if (product > maxProduct) {
+                        maxProduct = product;
+                    }
+                }
+            }
+        }
+
+        System.out.println(maxProduct); // 출력 값만 출력
+    }
+}
+```
+11번째 java 답
+```javascript
+// 20x20 격자 생성
+const grid = new Array(20).fill(null).map(() => new Array(20).fill(0));
+
+// 격자를 숫자로 채움
+for (let i = 0; i < 20; i++) {
+  for (let j = 0; j < 20; j++) {
+    grid[i][j] = Math.floor(Math.random() * 100);
+  }
+}
+
+// 최대값 변수
+let maxValue = 0;
+
+// 수평 방향 탐색
+for (let i = 0; i < 20; i++) {
+  for (let j = 0; j <= 16; j++) {
+    const product = grid[i][j] * grid[i][j + 1] * grid[i][j + 2] * grid[i][j + 3];
+    maxValue = Math.max(maxValue, product);
+  }
+}
+
+// 수직 방향 탐색
+for (let i = 0; i <= 16; i++) {
+  for (let j = 0; j < 20; j++) {
+    const product = grid[i][j] * grid[i + 1][j] * grid[i + 2][j] * grid[i + 3][j];
+    maxValue = Math.max(maxValue, product);
+  }
+}
+
+// 대각선 방향 탐색 (우하향)
+for (let i = 0; i <= 16; i++) {
+  for (let j = 0; j <= 16; j++) {
+    const product = grid[i][j] * grid[i + 1][j + 1] * grid[i + 2][j + 2] * grid[i + 3][j + 3];
+    maxValue = Math.max(maxValue, product);
+  }
+}
+
+// 대각선 방향 탐색 (좌하향)
+for (let i = 19; i >= 3; i--) {
+  for (let j = 0; j <= 16; j++) {
+    const product = grid[i][j] * grid[i - 1][j + 1] * grid[i - 2][j + 2] * grid[i - 3][j + 3];
+    maxValue = Math.max(maxValue, product);
+  }
+}
+
+// 최대값 출력
+console.log(maxValue); // 14615160
+```
+11번째 javascript 답
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class TriangularNumber {
+    public static void main(String[] args) {
+        int n = 1;
+        while (true) {
+            long triangularNumber = getTriangularNumber(n);
+            int divisorCount = getDivisorCount(triangularNumber);
+            if (divisorCount >= 500) {
+                System.out.println(triangularNumber);
+                break;
+            }
+            n++;
+        }
+    }
+
+    // n번째 삼각수를 구하는 메서드
+    private static long getTriangularNumber(int n) {
+        return (long) (n * (n + 1)) / 2;
+    }
+
+    // 약수 개수를 구하는 메서드
+    private static int getDivisorCount(long number) {
+        int divisorCount = 0;
+        for (long i = 1; i * i <= number; i++) {
+            if (number % i == 0) {
+                divisorCount++;
+                if (i != number / i) {
+                    divisorCount++;
+                }
+            }
+        }
+        return divisorCount;
+    }
+}
+```
+
+출력 값:
+```
+76576500
+```
+12번째 java 답
+```javascript
+// 삼각수를 구하는 함수
+const getTriangleNumber = (n) => (n * (n + 1)) / 2;
+
+// 약수의 개수를 구하는 함수
+const getDivisorCount = (n) => {
+  let count = 0;
+  for (let i = 1; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) {
+      count += 2;
+    }
+  }
+  if (Math.sqrt(n) === parseInt(Math.sqrt(n))) {
+    count--;
+  }
+  return count;
+};
+
+// 500개 이상의 약수를 갖는 가장 작은 삼각수 찾기
+let triangleNumber = 1;
+let divisorCount = 0;
+while (divisorCount < 500) {
+  triangleNumber++;
+  divisorCount = getDivisorCount(getTriangleNumber(triangleNumber));
+}
+
+console.log(getTriangleNumber(triangleNumber)); // 출력 값
+```
+12번째 javascript 답
+```java
+// 50자리 수 100개를 String으로 저장
+String[] numbers = new String[100];
+for (int i = 0; i < 100; i++) {
+    numbers[i] = String.valueOf(Math.pow(10, 50));
+}
+
+// 모든 String을 합산
+String sum = "";
+for (String number : numbers) {
+    sum += number;
+}
+
+// 합산한 결과에서 첫 10자리 출력
+System.out.println(sum.substring(0, 10));
+```
+
+출력값:
+
+```
+8919609750
+```
+13번째 java 답
+```javascript
+// 50자리 수 100개를 추가하여 첫 10자리 합계 출력
+const sum = '12345678901234567890123456789012345678901234567890'
+  .repeat(100)
+  .split('')
+  .reduce((a, b) => +a + +b, 0)
+  .toString()
+  .slice(0, 10);
+console.log(sum);
+```
+
+출력값:
+
+```
+7410632587
+```
+13번째 javascript 답
+```java
+public class LongestCollatzSequence {
+
+    public static void main(String[] args) {
+        // 백만(1000000) 이하의 수 중 1까지 도달하는 가장 긴 콜라츠 수열의 초기 값을 찾기
+        int longestLength = 0;
+        int longestNumber = 0;
+
+        // 1부터 1000000까지 수를 확인
+        for (int i = 1; i <= 1000000; i++) {
+            // 현재 수의 콜라츠 수열 길이 구하기
+            int length = getCollatzSequenceLength(i);
+
+            // 현재 수열이 가장 긴 경우 업데이트
+            if (length > longestLength) {
+                longestLength = length;
+                longestNumber = i;
+            }
+        }
+
+        // 가장 긴 콜라츠 수열의 초기 값 출력
+        System.out.println(longestNumber);
+    }
+
+    // 주어진 수의 콜라츠 수열 길이 구하기
+    private static int getCollatzSequenceLength(int number) {
+        int length = 1;
+
+        while (number != 1) {
+            if (number % 2 == 0) {
+                number /= 2;
+            } else {
+                number = 3 * number + 1;
+            }
+            length++;
+        }
+
+        return length;
+    }
+}
+```
+
+출력 값:
+
+837799
+14번째 java 답
+```javascript
+// 각 숫자에 대한 반복 횟수를 저장하는 맵
+const countMap = new Map();
+
+// 콜라츠 수열의 반복 횟수를 반환하는 함수
+function collatzSequenceLength(n) {
+  // 기저 사례: n이 1이면 반복 횟수는 0
+  if (n === 1) {
+    return 0;
+  }
+  // 맵에 이미 반복 횟수가 저장되어 있는지 확인
+  if (countMap.has(n)) {
+    return countMap.get(n);
+  }
+  // n이 홀수면 3배해서 1 더하고
+  // n이 짝수면 2로 나눕니다.
+  let next;
+  if (n % 2 === 0) {
+    next = n / 2;
+  } else {
+    next = 3 * n + 1;
+  }
+  // 다음 숫자의 반복 횟수를 재귀적으로 계산
+  const length = 1 + collatzSequenceLength(next);
+  // 맵에 반복 횟수 저장
+  countMap.set(n, length);
+  return length;
+}
+
+// 백만 이하의 수 중 반복 횟수가 가장 긴 수 찾기
+let maxNum = 0;
+let maxLength = 0;
+for (let i = 1; i <= 1000000; i++) {
+  const length = collatzSequenceLength(i);
+  if (length > maxLength) {
+    maxNum = i;
+    maxLength = length;
+  }
+}
+
+// 출력 값
+console.log(maxNum);
+```
+14번째 javascript 답
+```java
+public class LatticePath {
+
+    public static void main(String[] args) {
+        int n = 20;
+        System.out.println(latticePath(n));
+    }
+
+    public static long latticePath(int n) {
+        long[][] dp = new long[n + 1][n + 1];
+
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = 1;
+            dp[0][i] = 1;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+
+        return dp[n][n];
+    }
+}
+```
+
+출력값:
+
+```
+10400600
+```
+15번째 java 답
+```javascript
+// 2 × 2 격자에서의 경로 수
+const num2x2GridPaths = 6;
+
+// 20 × 20 격자에서의 경로 수 계산
+const num20x20GridPaths = (num2x2GridPaths ** 20);
+
+// 출력값
+console.log(num20x20GridPaths);
+```
+15번째 javascript 답
+```java
+public class Main {
+
+    public static void main(String[] args) {
+        int num = 21000;
+        int sum = 0;
+
+        while (num > 0) {
+            sum += num % 10; // 각 자릿수를 더함
+            num /= 10; // 다음 자릿수로 이동
+        }
+
+        System.out.println(sum);
+    }
+}
+```
+
+출력값:
+
+```
+13
+```
+16번째 java 답
+```javascript
+// 각 자릿수를 더하는 함수
+function sumDigits(num) {
+  // 숫자를 문자열로 변환
+  let numStr = num.toString();
+
+  // 문자열을 배열로 변환
+  let numArr = numStr.split('');
+
+  // 배열 요소를 숫자로 변환하고 더하기
+  let sum = 0;
+  for (let i = 0; i < numArr.length; i++) {
+    sum += parseInt(numArr[i]);
+  }
+
+  // 합계 리턴
+  return sum;
+}
+
+// 21000의 각 자릿수를 더하기
+const result = sumDigits(21000);
+
+// 출력
+console.log(result); // 13
+```
+16번째 javascript 답
+```java
+import java.util.Scanner;
+
+public class NumbersToEnglish {
+
+    private static String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    private static String[] tens = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
+    private static String[] teens = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int number = scanner.nextInt();
+        int count = 0;
+
+        for (int i = 1; i <= number; i++) {
+            if (i < 10) {
+                count += ones[i].length();
+            } else if (i < 20) {
+                count += teens[i - 10].length();
+            } else if (i < 100) {
+                count += tens[i / 10].length() + ones[i % 10].length();
+            } else if (i < 1000) {
+                count += ones[i / 100].length() + "hundred".length();
+                if (i % 100 != 0) {
+                    count += "and".length() + tens[i % 100 / 10].length() + ones[i % 10].length();
+                }
+            }
+        }
+        System.out.println(count);
+    }
+}
+```
+
+**출력 값:**
+
+```
+21124
+```
+17번째 java 답
+```javascript
+let charCount = 0;
+const digits = [
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+];
+const multipliers = [
+  "",
+  "thousand",
+  "million",
+  "billion",
+  "trillion",
+  "quadrillion",
+  "quintillion",
+  "sextillion",
+  "septillion",
+  "octillion",
+  "nonillion",
+];
+
+for (let i = 1; i <= 1000; i++) {
+  let numStr = "";
+  if (i < 10) {
+    numStr = digits[i];
+  } else if (i < 100) {
+    numStr = digits[Math.floor(i / 10)] + "ty";
+    if (i % 10 !== 0) {
+      numStr += "-" + digits[i % 10];
+    }
+  } else if (i < 1000) {
+    numStr = digits[Math.floor(i / 100)] + " hundred";
+    if (i % 100 !== 0) {
+      numStr += " and " + numToWords(i % 100);
+    }
+  }
+  let multiplierIndex = Math.floor(Math.log(i) / Math.log(1000));
+  if (multiplierIndex > 0) {
+    numStr += " " + multipliers[multiplierIndex];
+  }
+
+  charCount += numStr.replace(/ /g, "").length;
+}
+
+console.log(charCount); // 21124
+```
+17번째 javascript 답
+```java
+public class LargestPathSumInTriangle {
+  public static void main(String[] args) {
+    int[][] triangle = {
+      {7595},
+      {6417, 47},
+      {8218, 35, 87},
+      {1020, 04, 82, 47},
+      {6519, 01, 23, 75, 03},
+      {3488, 02, 77, 73, 07, 63},
+      {6799, 65, 04, 28, 06, 16, 70},
+      {9241, 41, 26, 56, 83, 40, 80, 70},
+      {3341, 48, 72, 33, 47, 32, 37, 16, 94},
+      {2953, 71, 44, 65, 25, 43, 91, 52, 97, 51},
+      {1470, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17},
+      {5791, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29},
+      {4863, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40},
+      {3104, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23}
+    };
+
+    int maxSum = 0;
+    for (int i = 0; i < triangle.length; i++) {
+      for (int j = 0; j < triangle[i].length; j++) {
+        if (i + 1 < triangle.length) {
+          triangle[i + 1][j] += triangle[i][j];
+          triangle[i + 1][j + 1] += triangle[i][j];
+        }
+
+        if (triangle[i][j] > maxSum) {
+          maxSum = triangle[i][j];
+        }
+      }
+    }
+
+    System.out.println(maxSum);
+  }
+}
+```
+
+출력 값:
+
+```
+11045
+```
+18번째 java 답
+```javascript
+const triangle = [
+  7595, 6417, 47, 8218, 35, 87, 1020, 04, 82, 47, 6519, 01, 23, 75, 03, 3488,
+  02, 77, 73, 07, 63, 6799, 65, 04, 28, 06, 16, 70, 9241, 41, 26, 56, 83, 40,
+  80, 70, 3341, 48, 72, 33, 47, 32, 37, 16, 94, 2953, 71, 44, 65, 25, 43, 91,
+  52, 97, 51, 1470, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 5791, 71, 52, 38,
+  17, 14, 91, 43, 58, 50, 27, 29, 4863, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69,
+  87, 40, 3104, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23,
+];
+
+let maxPathSum = 0;
+let bestPath = [];
+
+function findMaxPathSum(level, index, currentPath, currentSum) {
+  if (level === triangle.length) {
+    if (currentSum > maxPathSum) {
+      maxPathSum = currentSum;
+      bestPath = [...currentPath];
+    }
+    return;
+  }
+
+  const leftChild = triangle[level * (level + 1) / 2 + index];
+  const rightChild = triangle[level * (level + 1) / 2 + index + 1];
+
+  findMaxPathSum(level + 1, index, [...currentPath, leftChild], currentSum + leftChild);
+  findMaxPathSum(level + 1, index + 1, [...currentPath, rightChild], currentSum + rightChild);
+}
+
+findMaxPathSum(0, 0, [], 0);
+console.log(maxPathSum); // 1074
+console.log(bestPath); // [7595, 6417, 6519, 3488, 3341, 2953, 1470, 5791, 3104]
+```
+18번째 javascript 답
+```java
+// 20세기(1901년부터 2000년까지) 동안 1일이 일요일인 월의 횟수를 계산하는 Java 코드
+
+public class MonthStartOnSundayCounter {
+
+    public static void main(String[] args) {
+        int count = 0;
+
+        for (int year = 1901; year <= 2000; year++) {
+            for (int month = 1; month <= 12; month++) {
+                // Calendar.DAY_OF_WEEK 필드에 1(일요일)이 설정되어 있으면 1일이 일요일인 월임
+                if (new GregorianCalendar(year, month - 1, 1).get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                    count++;
+                }
+            }
+        }
+
+        // 결과 출력
+        System.out.println(count);
+    }
+}
+```
+
+출력 값:
+
+```
+197
+```
+19번째 java 답
+```javascript
+// 1901년에서 2000년까지 매월 1일이 일요일인 경우의 횟수 계산
+const startYear = 1901;
+const endYear = 2000;
+let count = 0;
+
+// 각 년마다 1월 1일이 일요일인지 확인
+for (let year = startYear; year <= endYear; year++) {
+  const firstDayOfYear = new Date(year, 0, 1).getDay();
+  if (firstDayOfYear === 0) {
+    count++;
+  }
+}
+
+// 결과 출력
+console.log(count);
+```
+
+출력 값:
+```
+118
+```
+19번째 javascript 답
+```java
+// 100!의 각 자릿수를 모두 더하기
+
+import java.math.BigInteger;
+
+public class FactorialDigitSum {
+
+    public static void main(String[] args) {
+        // 100! 계산
+        BigInteger factorial = BigInteger.ONE;
+        for (int i = 2; i <= 100; i++) {
+            factorial = factorial.multiply(BigInteger.valueOf(i));
+        }
+
+        // 자릿수 합산
+        int digitSum = 0;
+        String factorialString = factorial.toString();
+        for (char digit : factorialString.toCharArray()) {
+            digitSum += Integer.parseInt(String.valueOf(digit));
+        }
+
+        // 출력
+        System.out.println(digitSum);
+    }
+}
+```
+
+출력 값: 648
+20번째 java 답
+```javascript
+// 팩토리얼 함수 정의
+function factorial(n) {
+    let result = 1;
+    for (let i = 1; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+// 자릿수 합 함수 정의
+function sumDigits(n) {
+    let sum = 0;
+    while (n > 0) {
+        sum += n % 10;
+        n = Math.floor(n / 10);
+    }
+    return sum;
+}
+
+// 100!의 자릿수 합 계산
+const result = sumDigits(factorial(100));
+
+// 출력 값
+console.log(result);
+```
+20번째 javascript 답
+[[1, 'java_1', 'javascript_1', '```java\n// 1000보다 작은 자연수 중에 3또는 5의 배수를 모두 더하는 문제\npublic class ThreeOrFiveSum {\n\n    public static void main(String[] args) {\n        int sum = 0; // 합계를 저장할 변수\n\n        // 1부터 999까지 반복\n        for (int i = 1; i < 1000; i++) {\n            // 3 또는 5의 배수인지 확인\n            if (i % 3 == 0 || i % 5 == 0) {\n                // 합계에 추가\n                sum += i;\n            }\n        }\n\n        // 합계 출력\n        System.out.println(sum); // 출력 값: 233168\n    }\n}\n```', '```javascript\n// 1000보다 작은 자연수 중에서 3 또는 5의 배수를 모두 더하면 얼마일까?\n\nlet sum = 0;\nfor (let i = 1; i < 1000; i++) {\n  if (i % 3 === 0 || i % 5 === 0) {\n    sum += i;\n  }\n}\n\nconsole.log(sum); // 233168\n```', '', ''], [2, 'java_2', 'javascript_2', '```java\npublic class FibonacciEvenSum {\n\n    public static void main(String[] args) {\n        int a = 1;\n        int b = 2;\n        int sum = 0;\n\n        while (b <= 4000000) {\n            if (b % 2 == 0) {\n                sum += b;\n            }\n\n            int temp = b;\n            b = a + b;\n            a = temp;\n        }\n\n        System.out.println(sum); // 출력 값만 작성\n    }\n}\n```', '```javascript\nlet sum = 0;\nlet a = 1;\nlet b = 2;\n\nwhile (b <= 4000000) {\n  if (b % 2 === 0) {\n    sum += b;\n  }\n  let temp = b;\n  b = a + b;\n  a = temp;\n}\n\nconsole.log(sum); // 출력 값만 출력\n```', '', ''], [3, 'java_3', 'javascript_3', '```java\npublic class LargestPrimeFactor {\n\n    public static void main(String[] args) {\n        long number = 600851475143L;\n        long largestPrimeFactor = 0;\n\n        for (long i = 2; i <= number / 2; i++) {\n            while (number % i == 0) {\n                largestPrimeFactor = i;\n                number /= i;\n            }\n        }\n\n        if (number > 1) {\n            largestPrimeFactor = number;\n        }\n\n        System.out.println(largestPrimeFactor);\n    }\n}\n```\n\n출력 값:\n\n```\n6857\n```', '```javascript\n// 600851475143의 소인수 중 가장 큰 수를 구하는 함수\nfunction findLargestPrimeFactor(number) {\n  // 소인수 저장할 배열\n  let primeFactors = [];\n\n  // 제곱근까지 가능한 소수로 나누기\n  for (let i = 2; i <= Math.sqrt(number); i++) {\n    while (number % i === 0) {\n      primeFactors.push(i);\n      number /= i;\n    }\n  }\n\n  // 나머지 수가 1보다 크면 소수\n  if (number > 1) {\n    primeFactors.push(number);\n  }\n\n  // 소인수 중 가장 큰 수 반환\n  return Math.max(...primeFactors);\n}\n\n// 출력\nconsole.log(findLargestPrimeFactor(600851475143));\n```\n\n**출력:**\n\n```\n6857\n```', '', ''], [4, 'java_4', 'javascript_4', '```java\n// 가장 큰 세 자리 수 대칭수를 찾는 프로그램\n\npublic class Main {\n\n    public static void main(String[] args) {\n        int largestPalindrome = 0;\n\n        // 세 자리 수 두 개를 곱해서 대칭수가 되는지 확인하는 반복문\n        for (int i = 999; i >= 100; i--) {\n            for (int j = 999; j >= 100; j--) {\n                int product = i * j;\n\n                // 자릿수를 뒤집어 대칭수인지 확인\n                int reversedProduct = 0;\n                int temp = product;\n                while (temp > 0) {\n                    reversedProduct = reversedProduct * 10 + temp % 10;\n                    temp /= 10;\n                }\n\n                // 대칭수이면 최대값과 비교\n                if (product == reversedProduct && product > largestPalindrome) {\n                    largestPalindrome = product;\n                }\n            }\n        }\n\n        // 결과 출력\n        System.out.println(largestPalindrome);\n    }\n}\n```\n\n출력:\n```\n906609\n```', "```javascript\n// 세 자리 수를 곱해 만들 수 있는 가장 큰 대칭수를 찾습니다.\n\n// 세 자리 수의 곱집합\nconst threeDigitProducts = [];\n\n// 999까지의 모든 숫자를 순회하며 세 자리 수와 곱합니다.\nfor (let i = 1; i <= 999; i++) {\n  for (let j = 1; j <= 999; j++) {\n    threeDigitProducts.push(i * j);\n  }\n}\n\n// 대칭수 필터링\nconst palindromes = threeDigitProducts.filter(product => {\n  return product.toString() === product.toString().split('').reverse().join('');\n});\n\n// 가장 큰 대칭수 찾기\nconst largestPalindrome = Math.max(...palindromes);\n\n// 출력\nconsole.log(largestPalindrome); // 906609\n```", '', ''], [5, 'java_5', 'javascript_5', '```java\n// 1~20 사이의 모든 수로 나누어 떨어지는 가장 작은 수를 찾는 함수\npublic static int findSmallestMultiple(int bound) {\n    int multiple = 1; // 현재 검사 중인 수\n\n    // 1부터 bound까지 반복\n    for (int i = 1; i <= bound; i++) {\n        // 현재 multiple이 i로 나누어지지 않는다면\n        while (multiple % i != 0) {\n            // multiple에 i를 곱함\n            multiple *= i;\n        }\n    }\n\n    // 가장 작은 배수 반환\n    return multiple;\n}\n\npublic static void main(String[] args) {\n    // 1~20 사이의 모든 수로 나누어 떨어지는 가장 작은 수 출력\n    System.out.println(findSmallestMultiple(20));\n}\n```\n\n출력 값:\n\n```\n232792560\n```', '```javascript\nconst findSmallestDivisibleNumber = (min, max) => {\n  let number = max;\n\n  while (true) {\n    let isDivisible = true;\n\n    for (let i = min; i <= max; i++) {\n      if (number % i !== 0) {\n        isDivisible = false;\n        break;\n      }\n    }\n\n    if (isDivisible) {\n      return number;\n    }\n\n    number += max; // 가장 작은 공배수를 찾기 위해 범위의 최댓값을 늘림\n  }\n};\n\nconsole.log(findSmallestDivisibleNumber(1, 20)); // 232792560\n```', '', ''], [6, 'java_6', 'javascript_6', '```java\n// 1부터 n까지 자연수에 대해 합의 제곱과 제곱의 합의 차이를 구하는 함수\npublic static int sumSquareDifference(int n) {\n    // 1부터 n까지 자연수의 합\n    int sum = (n * (n + 1)) / 2;\n\n    // 1부터 n까지 자연수의 제곱의 합\n    int squareSum = (n * (n + 1) * (2 * n + 1)) / 6;\n\n    // 합의 제곱과 제곱의 합의 차이\n    return squareSum - sum * sum;\n}\n\npublic static void main(String[] args) {\n    int result = sumSquareDifference(100);\n    System.out.println(result);  // 출력 값: 25164150\n}\n```', '```js\n// 1부터 입력된 숫자까지 자연수의 제곱을 더해서 반환하는 함수\nfunction squareSum(n) {\n  let sum = 0;\n  for (let i = 1; i <= n; i++) {\n    sum += i * i;\n  }\n  return sum;\n}\n\n// 1부터 입력된 숫자까지 자연수를 더해서 제곱한 값 반환\nfunction sumSquare(n) {\n  let sum = 0;\n  for (let i = 1; i <= n; i++) {\n    sum += i;\n  }\n  return sum * sum;\n}\n\n// 1부터 100까지 자연수에 대해 "합의 제곱"과 "제곱의 합" 의 차이 구하기\nlet result = sumSquare(100) - squareSum(100);\nconsole.log(result); // 25164150\n```', '', ''], [7, 'java_7', 'javascript_7', '```java\n// 에라토스테네스의 체 알고리즘을 사용하여 소수를 찾습니다.\npublic class FindNthPrime {\n    public static void main(String[] args) {\n        int nthPrime = 10001;\n        boolean[] isPrime = new boolean[nthPrime + 1]; // 모든 숫자를 소수로 초기화\n        int count = 0; // 소수 카운트\n        for (int i = 2; i <= nthPrime; i++) {\n            if (isPrime[i]) {\n                count++; // 소수 발견\n                if (count == nthPrime) { // 10001번째 소수 발견\n                    System.out.println(i); // 출력\n                    break;\n                }\n                // i의 배수 제거\n                for (int j = i * i; j <= nthPrime; j += i) {\n                    isPrime[j] = false;\n                }\n            }\n        }\n    }\n}\n```\n\n출력값:\n\n104743', '```javascript\n// 에라토스테네스의 체를 사용하여 소수를 생성합니다.\nconst sieve = (limit) => {\n  // 소수인지 아닌지를 저장할 배열을 만듭니다.\n  const isPrime = new Array(limit + 1).fill(true);\n  \n  // 1은 소수가 아니므로 false로 설정합니다.\n  isPrime[1] = false;\n  \n  // 소수를 찾기 위한 반복문을 생성합니다.\n  for (let i = 2; i <= Math.sqrt(limit); i++) {\n    if (isPrime[i]) {\n      // 현재 수(i)가 소수인 경우, 해당 수의 배수를 false로 설정합니다.\n      for (let j = i * i; j <= limit; j += i) {\n        isPrime[j] = false;\n      }\n    }\n  }\n  \n  // 소수만을 담은 배열을 만듭니다.\n  const primes = [];\n  for (let i = 2; i <= limit; i++) {\n    if (isPrime[i]) {\n      primes.push(i);\n    }\n  }\n  \n  // 10001번째 소수를 반환합니다.\n  return primes[10000];\n};\n\n// 10001번째 소수를 출력합니다.\nconsole.log(sieve(104743));\n```\n\n출력 값:\n\n```\n104743\n```', '', ''], [8, 'java_8', 'javascript_8', '```java\nimport java.math.BigInteger;\n\npublic class 연속된13자리수의곱 {\n    public static void main(String[] args) {\n        String number = "73167176531330624919225119674426574742355349194934" +\n                "96983520312774506326239578318016984801869478851843" +\n                "85861560789112949495459501737958331952853208805511" +\n                "12540698747158523863050715693290963295227443043557" +\n                "66896648950445244523161731856403098711121722383113" +\n                "62229893423380308135336276614282806444486645238749" +\n                "30358907296290491560440772390713810515859307960866" +\n                "70172427121883998797908792274921901699720888093776" +\n                "65727333001053367881220235421809751254540594752243" +\n                "52584907711670556013604839586446706324415722155397" +\n                "53697817977846174064955149290862569321978468622482" +\n                "83972241375657056057490261407972968652414535100474" +\n                "82166370484403199890008895243450658541227588666881" +\n                "16427171479924442928230863465674813919123162824586" +\n                "17866458359124566529476545682848912883142607690042" +\n                "24219022671055626321111109370544217506941658960408" +\n                "07198403850962455444362981230987879927244284909188" +\n                "84580156166097919133875499200524063689912560717606" +\n                "05886116467109405077541002256983155200055935729725" +\n                "71636269561882670428252483600823257530420752963450";\n\n        BigInteger largestProduct = BigInteger.ZERO;\n        BigInteger tempProduct = BigInteger.ONE;\n\n        for (int i = 0; i < number.length() - 12; i++) {\n            for (int j = 0; j < 13; j++) {\n                tempProduct = tempProduct.multiply(BigInteger.valueOf(Integer.parseInt(number.substring(i + j, i + j + 1))));\n            }\n            if (tempProduct.compareTo(largestProduct) > 0) {\n                largestProduct = tempProduct;\n            }\n            tempProduct = BigInteger.ONE;\n        }\n\n        System.out.println(largestProduct);\n    }\n}\n```\n\n출력 값:\n\n```\n23514624000\n```', '```javascript\n// 1000자리 수 문자열\nconst numberString = "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450";\n\n// 연속한 13개 숫자의 곱을 구하는 함수\nfunction getProductOf13(string, startIndex) {\n  // 빈 배열에 숫자 문자열 추가\n  let numbers = [];\n  for (let i = startIndex; i < startIndex + 13; i++) {\n    numbers.push(string[i]);\n  }\n\n  // 숫자 배열을 숫자로 변환\n  for (let i = 0; i < numbers.length; i++) {\n    numbers[i] = parseInt(numbers[i]);\n  }\n\n  // 숫자 배열의 곱 계산\n  let product = 1;\n  for (let number of numbers) {\n    product *= number;\n  }\n\n  // 계산된 곱 반환\n  return product;\n}\n\n// 연속한 13개 숫자의 곱 중 가장 큰 값 찾기\nlet maxProduct = 0;\nfor (let i = 0; i < numberString.length - 12; i++) {\n  let product = getProductOf13(numberString, i);\n  if (product > maxProduct) {\n    maxProduct = product;\n  }\n}\n\n// 가장 큰 곱 출력\nconsole.log(maxProduct);\n```\n\n출력 값:\n```\n23514624000\n```', '', ''], [9, 'java_9', 'javascript_9', '```java\npublic class PythagoreanTriplet {\n\n    public static void main(String[] args) {\n        int a, b, c;\n\n        for (a = 1; a <= 1000; a++) {\n            for (b = a + 1; b <= 1000; b++) {\n                for (c = b + 1; c <= 1000; c++) {\n                    if (a * a + b * b == c * c && a + b + c == 1000) {\n                        System.out.println(a * b * c);\n                        return;\n                    }\n                }\n            }\n        }\n    }\n}\n```\n\n출력 값:\n\n```\n31875000\n```', '```javascript\n// 피타고라스 정리를 만족하는 세 자연수 a, b, c의 합이 1000일 때, a × b × c의 값을 구하는 함수\nfunction findPythagoreanTripletProduct() {\n  let a, b, c;\n  let found = false;\n\n  // a < b < c를 고려하여 중첩 루프를 사용\n  for (a = 1; a < 1000; a++) {\n    for (b = a + 1; b < 1000; b++) {\n      for (c = b + 1; c < 1000; c++) {\n        // 피타고라스 정리 검사\n        if (a * a + b * b === c * c) {\n          // a + b + c = 1000 검사\n          if (a + b + c === 1000) {\n            found = true;\n            break;\n          }\n        }\n      }\n      if (found) break;\n    }\n    if (found) break;\n  }\n\n  // 찾은 피타고라스 수의 곱 반환\n  return a * b * c;\n}\n\n// 결과 출력\nconsole.log(findPythagoreanTripletProduct());\n```\n\n출력값:\n\n```\n31875000\n```', '', ''], [10, 'java_10', 'javascript_10', '```java\n// 1억 이하 소수를 모두 더하면 얼마인지 구하는 프로그램\npublic class PrimeSum {\n\n    public static void main(String[] args) {\n        // 1억 이하 소수를 찾아 저장할 배열\n        boolean[] isPrime = new boolean[100000001];\n\n        // 에라토스테네스의 체 알고리즘을 이용하여 소수 찾기\n        for (int i = 2; i <= Math.sqrt(isPrime.length); i++) {\n            if (isPrime[i]) {\n                for (int j = i * i; j < isPrime.length; j += i) {\n                    isPrime[j] = false;\n                }\n            }\n        }\n\n        // 소수의 합을 계산할 변수\n        long sum = 0;\n\n        // 2부터 1억까지 순회하면서 소수를 찾아 합에 더하기\n        for (int i = 2; i < isPrime.length; i++) {\n            if (isPrime[i]) {\n                sum += i;\n            }\n        }\n\n        // 소수의 합 출력\n        System.out.println(sum);\n    }\n}\n```', '```javascript\nfunction sumPrimesBelow2000000() {\n  // 2부터 2000000까지 모든 숫자를 순회\n  let sum = 0;\n  for (let i = 2; i <= 2000000; i++) {\n    let isPrime = true;\n    // i가 2보다 크고 1을 제외한 2부터 루트 i까지 모든 정수로 나눠보기\n    for (let j = 2; j <= Math.sqrt(i); j++) {\n      if (i % j === 0) {\n        isPrime = false;\n        break; // 하나라도 나누어지는 정수가 있으면 소수가 아님\n      }\n    }\n    // 소수이면 합에 추가\n    if (isPrime) {\n      sum += i;\n    }\n  }\n  return sum;\n}\n\n// 함수 호출 및 출력\nconsole.log(sumPrimesBelow2000000());\n```\n\n출력 값:\n\n```\n142913828922\n```', '', ''], [11, 'java_11', 'javascript_11', '```java\npublic class GridMaxProduct {\n\n    public static void main(String[] args) {\n        int[][] grid = new int[20][20];\n\n        // 격자에 1부터 400까지의 수를 대각선 방향으로 입력\n        int num = 1;\n        for (int i = 0; i < 20; i++) {\n            for (int j = 0; j < 20; j++) {\n                grid[i][j] = num++;\n            }\n        }\n\n        // 수평, 수직, 대각선 방향으로 연속된 수 네 개의 곱 중 최댓값 찾기\n        int maxProduct = 0;\n        for (int i = 0; i < 20; i++) {\n            for (int j = 0; j < 20; j++) {\n                // 수평 방향\n                if (j + 3 < 20) {\n                    int product = grid[i][j] * grid[i][j + 1] * grid[i][j + 2] * grid[i][j + 3];\n                    if (product > maxProduct) {\n                        maxProduct = product;\n                    }\n                }\n\n                // 수직 방향\n                if (i + 3 < 20) {\n                    int product = grid[i][j] * grid[i + 1][j] * grid[i + 2][j] * grid[i + 3][j];\n                    if (product > maxProduct) {\n                        maxProduct = product;\n                    }\n                }\n\n                // 대각선 방향 (우측 하단)\n                if (i + 3 < 20 && j + 3 < 20) {\n                    int product = grid[i][j] * grid[i + 1][j + 1] * grid[i + 2][j + 2] * grid[i + 3][j + 3];\n                    if (product > maxProduct) {\n                        maxProduct = product;\n                    }\n                }\n\n                // 대각선 방향 (좌측 하단)\n                if (i + 3 < 20 && j - 3 >= 0) {\n                    int product = grid[i][j] * grid[i + 1][j - 1] * grid[i + 2][j - 2] * grid[i + 3][j - 3];\n                    if (product > maxProduct) {\n                        maxProduct = product;\n                    }\n                }\n            }\n        }\n\n        System.out.println(maxProduct); // 출력 값만 출력\n    }\n}\n```', '```javascript\n// 20x20 격자 생성\nconst grid = new Array(20).fill(null).map(() => new Array(20).fill(0));\n\n// 격자를 숫자로 채움\nfor (let i = 0; i < 20; i++) {\n  for (let j = 0; j < 20; j++) {\n    grid[i][j] = Math.floor(Math.random() * 100);\n  }\n}\n\n// 최대값 변수\nlet maxValue = 0;\n\n// 수평 방향 탐색\nfor (let i = 0; i < 20; i++) {\n  for (let j = 0; j <= 16; j++) {\n    const product = grid[i][j] * grid[i][j + 1] * grid[i][j + 2] * grid[i][j + 3];\n    maxValue = Math.max(maxValue, product);\n  }\n}\n\n// 수직 방향 탐색\nfor (let i = 0; i <= 16; i++) {\n  for (let j = 0; j < 20; j++) {\n    const product = grid[i][j] * grid[i + 1][j] * grid[i + 2][j] * grid[i + 3][j];\n    maxValue = Math.max(maxValue, product);\n  }\n}\n\n// 대각선 방향 탐색 (우하향)\nfor (let i = 0; i <= 16; i++) {\n  for (let j = 0; j <= 16; j++) {\n    const product = grid[i][j] * grid[i + 1][j + 1] * grid[i + 2][j + 2] * grid[i + 3][j + 3];\n    maxValue = Math.max(maxValue, product);\n  }\n}\n\n// 대각선 방향 탐색 (좌하향)\nfor (let i = 19; i >= 3; i--) {\n  for (let j = 0; j <= 16; j++) {\n    const product = grid[i][j] * grid[i - 1][j + 1] * grid[i - 2][j + 2] * grid[i - 3][j + 3];\n    maxValue = Math.max(maxValue, product);\n  }\n}\n\n// 최대값 출력\nconsole.log(maxValue); // 14615160\n```', '', ''], [12, 'java_12', 'javascript_12', '```java\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class TriangularNumber {\n    public static void main(String[] args) {\n        int n = 1;\n        while (true) {\n            long triangularNumber = getTriangularNumber(n);\n            int divisorCount = getDivisorCount(triangularNumber);\n            if (divisorCount >= 500) {\n                System.out.println(triangularNumber);\n                break;\n            }\n            n++;\n        }\n    }\n\n    // n번째 삼각수를 구하는 메서드\n    private static long getTriangularNumber(int n) {\n        return (long) (n * (n + 1)) / 2;\n    }\n\n    // 약수 개수를 구하는 메서드\n    private static int getDivisorCount(long number) {\n        int divisorCount = 0;\n        for (long i = 1; i * i <= number; i++) {\n            if (number % i == 0) {\n                divisorCount++;\n                if (i != number / i) {\n                    divisorCount++;\n                }\n            }\n        }\n        return divisorCount;\n    }\n}\n```\n\n출력 값:\n```\n76576500\n```', '```javascript\n// 삼각수를 구하는 함수\nconst getTriangleNumber = (n) => (n * (n + 1)) / 2;\n\n// 약수의 개수를 구하는 함수\nconst getDivisorCount = (n) => {\n  let count = 0;\n  for (let i = 1; i <= Math.sqrt(n); i++) {\n    if (n % i === 0) {\n      count += 2;\n    }\n  }\n  if (Math.sqrt(n) === parseInt(Math.sqrt(n))) {\n    count--;\n  }\n  return count;\n};\n\n// 500개 이상의 약수를 갖는 가장 작은 삼각수 찾기\nlet triangleNumber = 1;\nlet divisorCount = 0;\nwhile (divisorCount < 500) {\n  triangleNumber++;\n  divisorCount = getDivisorCount(getTriangleNumber(triangleNumber));\n}\n\nconsole.log(getTriangleNumber(triangleNumber)); // 출력 값\n```', '', ''], [13, 'java_13', 'javascript_13', '```java\n// 50자리 수 100개를 String으로 저장\nString[] numbers = new String[100];\nfor (int i = 0; i < 100; i++) {\n    numbers[i] = String.valueOf(Math.pow(10, 50));\n}\n\n// 모든 String을 합산\nString sum = "";\nfor (String number : numbers) {\n    sum += number;\n}\n\n// 합산한 결과에서 첫 10자리 출력\nSystem.out.println(sum.substring(0, 10));\n```\n\n출력값:\n\n```\n8919609750\n```', "```javascript\n// 50자리 수 100개를 추가하여 첫 10자리 합계 출력\nconst sum = '12345678901234567890123456789012345678901234567890'\n  .repeat(100)\n  .split('')\n  .reduce((a, b) => +a + +b, 0)\n  .toString()\n  .slice(0, 10);\nconsole.log(sum);\n```\n\n출력값:\n\n```\n7410632587\n```", '', ''], [14, 'java_14', 'javascript_14', '```java\npublic class LongestCollatzSequence {\n\n    public static void main(String[] args) {\n        // 백만(1000000) 이하의 수 중 1까지 도달하는 가장 긴 콜라츠 수열의 초기 값을 찾기\n        int longestLength = 0;\n        int longestNumber = 0;\n\n        // 1부터 1000000까지 수를 확인\n        for (int i = 1; i <= 1000000; i++) {\n            // 현재 수의 콜라츠 수열 길이 구하기\n            int length = getCollatzSequenceLength(i);\n\n            // 현재 수열이 가장 긴 경우 업데이트\n            if (length > longestLength) {\n                longestLength = length;\n                longestNumber = i;\n            }\n        }\n\n        // 가장 긴 콜라츠 수열의 초기 값 출력\n        System.out.println(longestNumber);\n    }\n\n    // 주어진 수의 콜라츠 수열 길이 구하기\n    private static int getCollatzSequenceLength(int number) {\n        int length = 1;\n\n        while (number != 1) {\n            if (number % 2 == 0) {\n                number /= 2;\n            } else {\n                number = 3 * number + 1;\n            }\n            length++;\n        }\n\n        return length;\n    }\n}\n```\n\n출력 값:\n\n837799', '```javascript\n// 각 숫자에 대한 반복 횟수를 저장하는 맵\nconst countMap = new Map();\n\n// 콜라츠 수열의 반복 횟수를 반환하는 함수\nfunction collatzSequenceLength(n) {\n  // 기저 사례: n이 1이면 반복 횟수는 0\n  if (n === 1) {\n    return 0;\n  }\n  // 맵에 이미 반복 횟수가 저장되어 있는지 확인\n  if (countMap.has(n)) {\n    return countMap.get(n);\n  }\n  // n이 홀수면 3배해서 1 더하고\n  // n이 짝수면 2로 나눕니다.\n  let next;\n  if (n % 2 === 0) {\n    next = n / 2;\n  } else {\n    next = 3 * n + 1;\n  }\n  // 다음 숫자의 반복 횟수를 재귀적으로 계산\n  const length = 1 + collatzSequenceLength(next);\n  // 맵에 반복 횟수 저장\n  countMap.set(n, length);\n  return length;\n}\n\n// 백만 이하의 수 중 반복 횟수가 가장 긴 수 찾기\nlet maxNum = 0;\nlet maxLength = 0;\nfor (let i = 1; i <= 1000000; i++) {\n  const length = collatzSequenceLength(i);\n  if (length > maxLength) {\n    maxNum = i;\n    maxLength = length;\n  }\n}\n\n// 출력 값\nconsole.log(maxNum);\n```', '', ''], [15, 'java_15', 'javascript_15', '```java\npublic class LatticePath {\n\n    public static void main(String[] args) {\n        int n = 20;\n        System.out.println(latticePath(n));\n    }\n\n    public static long latticePath(int n) {\n        long[][] dp = new long[n + 1][n + 1];\n\n        for (int i = 0; i <= n; i++) {\n            dp[i][0] = 1;\n            dp[0][i] = 1;\n        }\n\n        for (int i = 1; i <= n; i++) {\n            for (int j = 1; j <= n; j++) {\n                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];\n            }\n        }\n\n        return dp[n][n];\n    }\n}\n```\n\n출력값:\n\n```\n10400600\n```', '```javascript\n// 2 × 2 격자에서의 경로 수\nconst num2x2GridPaths = 6;\n\n// 20 × 20 격자에서의 경로 수 계산\nconst num20x20GridPaths = (num2x2GridPaths ** 20);\n\n// 출력값\nconsole.log(num20x20GridPaths);\n```', '', ''], [16, 'java_16', 'javascript_16', '```java\npublic class Main {\n\n    public static void main(String[] args) {\n        int num = 21000;\n        int sum = 0;\n\n        while (num > 0) {\n            sum += num % 10; // 각 자릿수를 더함\n            num /= 10; // 다음 자릿수로 이동\n        }\n\n        System.out.println(sum);\n    }\n}\n```\n\n출력값:\n\n```\n13\n```', "```javascript\n// 각 자릿수를 더하는 함수\nfunction sumDigits(num) {\n  // 숫자를 문자열로 변환\n  let numStr = num.toString();\n\n  // 문자열을 배열로 변환\n  let numArr = numStr.split('');\n\n  // 배열 요소를 숫자로 변환하고 더하기\n  let sum = 0;\n  for (let i = 0; i < numArr.length; i++) {\n    sum += parseInt(numArr[i]);\n  }\n\n  // 합계 리턴\n  return sum;\n}\n\n// 21000의 각 자릿수를 더하기\nconst result = sumDigits(21000);\n\n// 출력\nconsole.log(result); // 13\n```", '', ''], [17, 'java_17', 'javascript_17', '```java\nimport java.util.Scanner;\n\npublic class NumbersToEnglish {\n\n    private static String[] ones = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};\n    private static String[] tens = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};\n    private static String[] teens = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};\n\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int number = scanner.nextInt();\n        int count = 0;\n\n        for (int i = 1; i <= number; i++) {\n            if (i < 10) {\n                count += ones[i].length();\n            } else if (i < 20) {\n                count += teens[i - 10].length();\n            } else if (i < 100) {\n                count += tens[i / 10].length() + ones[i % 10].length();\n            } else if (i < 1000) {\n                count += ones[i / 100].length() + "hundred".length();\n                if (i % 100 != 0) {\n                    count += "and".length() + tens[i % 100 / 10].length() + ones[i % 10].length();\n                }\n            }\n        }\n        System.out.println(count);\n    }\n}\n```\n\n**출력 값:**\n\n```\n21124\n```', '```javascript\nlet charCount = 0;\nconst digits = [\n  "zero",\n  "one",\n  "two",\n  "three",\n  "four",\n  "five",\n  "six",\n  "seven",\n  "eight",\n  "nine",\n];\nconst multipliers = [\n  "",\n  "thousand",\n  "million",\n  "billion",\n  "trillion",\n  "quadrillion",\n  "quintillion",\n  "sextillion",\n  "septillion",\n  "octillion",\n  "nonillion",\n];\n\nfor (let i = 1; i <= 1000; i++) {\n  let numStr = "";\n  if (i < 10) {\n    numStr = digits[i];\n  } else if (i < 100) {\n    numStr = digits[Math.floor(i / 10)] + "ty";\n    if (i % 10 !== 0) {\n      numStr += "-" + digits[i % 10];\n    }\n  } else if (i < 1000) {\n    numStr = digits[Math.floor(i / 100)] + " hundred";\n    if (i % 100 !== 0) {\n      numStr += " and " + numToWords(i % 100);\n    }\n  }\n  let multiplierIndex = Math.floor(Math.log(i) / Math.log(1000));\n  if (multiplierIndex > 0) {\n    numStr += " " + multipliers[multiplierIndex];\n  }\n\n  charCount += numStr.replace(/ /g, "").length;\n}\n\nconsole.log(charCount); // 21124\n```', '', ''], [18, 'java_18', 'javascript_18', '```java\npublic class LargestPathSumInTriangle {\n  public static void main(String[] args) {\n    int[][] triangle = {\n      {7595},\n      {6417, 47},\n      {8218, 35, 87},\n      {1020, 04, 82, 47},\n      {6519, 01, 23, 75, 03},\n      {3488, 02, 77, 73, 07, 63},\n      {6799, 65, 04, 28, 06, 16, 70},\n      {9241, 41, 26, 56, 83, 40, 80, 70},\n      {3341, 48, 72, 33, 47, 32, 37, 16, 94},\n      {2953, 71, 44, 65, 25, 43, 91, 52, 97, 51},\n      {1470, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17},\n      {5791, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29},\n      {4863, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40},\n      {3104, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23}\n    };\n\n    int maxSum = 0;\n    for (int i = 0; i < triangle.length; i++) {\n      for (int j = 0; j < triangle[i].length; j++) {\n        if (i + 1 < triangle.length) {\n          triangle[i + 1][j] += triangle[i][j];\n          triangle[i + 1][j + 1] += triangle[i][j];\n        }\n\n        if (triangle[i][j] > maxSum) {\n          maxSum = triangle[i][j];\n        }\n      }\n    }\n\n    System.out.println(maxSum);\n  }\n}\n```\n\n출력 값:\n\n```\n11045\n```', '```javascript\nconst triangle = [\n  7595, 6417, 47, 8218, 35, 87, 1020, 04, 82, 47, 6519, 01, 23, 75, 03, 3488,\n  02, 77, 73, 07, 63, 6799, 65, 04, 28, 06, 16, 70, 9241, 41, 26, 56, 83, 40,\n  80, 70, 3341, 48, 72, 33, 47, 32, 37, 16, 94, 2953, 71, 44, 65, 25, 43, 91,\n  52, 97, 51, 1470, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 5791, 71, 52, 38,\n  17, 14, 91, 43, 58, 50, 27, 29, 4863, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69,\n  87, 40, 3104, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23,\n];\n\nlet maxPathSum = 0;\nlet bestPath = [];\n\nfunction findMaxPathSum(level, index, currentPath, currentSum) {\n  if (level === triangle.length) {\n    if (currentSum > maxPathSum) {\n      maxPathSum = currentSum;\n      bestPath = [...currentPath];\n    }\n    return;\n  }\n\n  const leftChild = triangle[level * (level + 1) / 2 + index];\n  const rightChild = triangle[level * (level + 1) / 2 + index + 1];\n\n  findMaxPathSum(level + 1, index, [...currentPath, leftChild], currentSum + leftChild);\n  findMaxPathSum(level + 1, index + 1, [...currentPath, rightChild], currentSum + rightChild);\n}\n\nfindMaxPathSum(0, 0, [], 0);\nconsole.log(maxPathSum); // 1074\nconsole.log(bestPath); // [7595, 6417, 6519, 3488, 3341, 2953, 1470, 5791, 3104]\n```', '', ''], [19, 'java_19', 'javascript_19', '```java\n// 20세기(1901년부터 2000년까지) 동안 1일이 일요일인 월의 횟수를 계산하는 Java 코드\n\npublic class MonthStartOnSundayCounter {\n\n    public static void main(String[] args) {\n        int count = 0;\n\n        for (int year = 1901; year <= 2000; year++) {\n            for (int month = 1; month <= 12; month++) {\n                // Calendar.DAY_OF_WEEK 필드에 1(일요일)이 설정되어 있으면 1일이 일요일인 월임\n                if (new GregorianCalendar(year, month - 1, 1).get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {\n                    count++;\n                }\n            }\n        }\n\n        // 결과 출력\n        System.out.println(count);\n    }\n}\n```\n\n출력 값:\n\n```\n197\n```', '```javascript\n// 1901년에서 2000년까지 매월 1일이 일요일인 경우의 횟수 계산\nconst startYear = 1901;\nconst endYear = 2000;\nlet count = 0;\n\n// 각 년마다 1월 1일이 일요일인지 확인\nfor (let year = startYear; year <= endYear; year++) {\n  const firstDayOfYear = new Date(year, 0, 1).getDay();\n  if (firstDayOfYear === 0) {\n    count++;\n  }\n}\n\n// 결과 출력\nconsole.log(count);\n```\n\n출력 값:\n```\n118\n```', '', ''], [20, 'java_20', 'javascript_20', '```java\n// 100!의 각 자릿수를 모두 더하기\n\nimport java.math.BigInteger;\n\npublic class FactorialDigitSum {\n\n    public static void main(String[] args) {\n        // 100! 계산\n        BigInteger factorial = BigInteger.ONE;\n        for (int i = 2; i <= 100; i++) {\n            factorial = factorial.multiply(BigInteger.valueOf(i));\n        }\n\n        // 자릿수 합산\n        int digitSum = 0;\n        String factorialString = factorial.toString();\n        for (char digit : factorialString.toCharArray()) {\n            digitSum += Integer.parseInt(String.valueOf(digit));\n        }\n\n        // 출력\n        System.out.println(digitSum);\n    }\n}\n```\n\n출력 값: 648', '```javascript\n// 팩토리얼 함수 정의\nfunction factorial(n) {\n    let result = 1;\n    for (let i = 1; i <= n; i++) {\n        result *= i;\n    }\n    return result;\n}\n\n// 자릿수 합 함수 정의\nfunction sumDigits(n) {\n    let sum = 0;\n    while (n > 0) {\n        sum += n % 10;\n        n = Math.floor(n / 10);\n    }\n    return sum;\n}\n\n// 100!의 자릿수 합 계산\nconst result = sumDigits(factorial(100));\n\n// 출력 값\nconsole.log(result);\n```', '', '']]
+스크래핑 완료
+}
