@@ -1,0 +1,26 @@
+IDX,TITLE,DIFF,SRC,DESCR,BM_CNT,REGDATE,IS_USE,VAR_CNT
+1,등차수열의 특정한 항만 더하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181931,두 정수 a d와 길이가 n인 boolean 배열 included가 주어집니다. 첫째항이 a 공차가 d인 등차수열에서 included[i]가 i + 1항을 의미할 때 이 등차수열의 1항부터 n항까지 included가 true인 항들만 더한 값을 return 하는 solution 함수를 작성해 주세요. 입출력 예 #1 ||1항|2항|3항|4항|5항| |-|-|---|---|---|---| |등차수열|3|7|11|15|19| |included|true|false|false|true|true| 입출력 예 #2 ||1항|2항|3항|4항|5항|6항|7항| |-|-|---|---|---|---|---|---| |등차수열|7|8|9|10|11|12|13| |included|false|false|false|true|false|false|false|,,2024-11-02,,
+2,코드 처리하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181932,"문자열 code가 주어집니다.
+code를 앞에서부터 읽으면서 만약 문자가 ""1""이면 mode를 바꿉니다. mode에 따라 code를 읽어가면서 문자열 ret을 만들어냅니다. mode는 0과 1이 있으며 idx를 0 부터 code의 길이 - 1 까지 1씩 키워나가면서 code[idx]의 값에 따라 다음과 같이 행동합니다. 문자열 code를 통해 만들어진 문자열 ret를 return 하는 solution 함수를 완성해 주세요. 단 시작할 때 mode는 0이며 return 하려는 ret가 만약 빈 문자열이라면 대신 ""EMPTY""를 return 합니다. 입출력 예 #1 따라서 ""acbac""를 return 합니다. ※ 2023년 05월 18일 지문이 수정되었습니다.",,2024-11-03,,
+3,flag에 따라 다른 값 반환하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181933,두 정수 a b와 boolean 변수 flag가 매개변수로 주어질 때 flag가 true면 a + b를 false면 a - b를 return 하는 solution 함수를 작성해 주세요. 입출력 예 #1 입출력 예 #2,,2024-11-04,,
+4,조건 문자열,0,https://school.programmers.co.kr/learn/courses/30/lessons/181934,"문자열에 따라 다음과 같이 두 수의 크기를 비교하려고 합니다.   두 문자열 ineq와 eq가 주어집니다. ineq는 ""<""와 "">""중 하나고 eq는 ""=""와 ""!""중 하나입니다. 그리고 두 정수 n과 m이 주어질 때 n과 m이 ineq와 eq의 조건에 맞으면 1을 아니면 0을 return하도록 solution 함수를 완성해주세요. 입출력 예 #1 입출력 예 #2 ※ 2023.05.31 테스트 케이스가 수정되었습니다. 기존에 제출한 코드가 통과하지 못할 수도 있습니다.",,2024-11-05,,
+5,홀짝에 따라 다른 값 반환하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181935,양의 정수 n이 매개변수로 주어질 때 n이 홀수라면 n 이하의 홀수인 모든 양의 정수의 합을 return 하고 n이 짝수라면 n 이하의 짝수인 모든 양의 정수의 제곱의 합을 return 하는 solution 함수를 작성해 주세요. 입출력 예 #1 입출력 예 #2,,2024-11-06,,
+6,공배수,0,https://school.programmers.co.kr/learn/courses/30/lessons/181936,정수 number와 n m이 주어집니다. number가 n의 배수이면서 m의 배수이면 1을 아니라면 0을 return하도록 solution 함수를 완성해주세요. 입출력 예 #1 입출력 예 #2,,2024-11-07,,
+7,n의 배수,0,https://school.programmers.co.kr/learn/courses/30/lessons/181937,정수 num과 n이 매개 변수로 주어질 때 num이 n의 배수이면 1을 return n의 배수가 아니라면 0을 return하도록 solution 함수를 완성해주세요. 입출력 예 #1 입출력 예 #2,,2024-11-08,,
+8,두 수의 연산값 비교하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181938,연산 ⊕는 두 정수에 대한 연산으로 두 정수를 붙여서 쓴 값을 반환합니다. 예를 들면 다음과 같습니다. 양의 정수 a와 b가 주어졌을 때 a ⊕ b와 2 * a * b 중 더 큰 값을 return하는 solution 함수를 완성해 주세요. 단 a ⊕ b와 2 * a * b가 같으면  a ⊕ b를 return 합니다. 입출력 예 #1 입출력 예 #2 ※ 2023년 04월 27일 입출력 예 설명이 수정되었습니다.,,2024-11-09,,
+9,더 크게 합치기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181939,연산 ⊕는 두 정수에 대한 연산으로 두 정수를 붙여서 쓴 값을 반환합니다. 예를 들면 다음과 같습니다. 양의 정수 a와 b가 주어졌을 때 a ⊕ b와 b ⊕ a 중 더 큰 값을 return 하는 solution 함수를 완성해 주세요. 단 a ⊕ b와 b ⊕ a가 같다면 a ⊕ b를 return 합니다. 입출력 예 #1 입출력 예 #2,,2024-11-10,,
+10,문자열 곱하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181940,문자열 my_string과 정수 k가 주어질 때 my_string을 k번 반복한 문자열을 return 하는 solution 함수를 작성해 주세요. 입출력 예 #1 입출력 예 #2,,2024-11-11,,
+11,문자 리스트를 문자열로 변환하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181941,문자들이 담겨있는 배열 arr가 주어집니다. arr의 원소들을 순서대로 이어 붙인 문자열을 return 하는 solution함수를 작성해 주세요.,,2024-11-12,,
+12,문자열 섞기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181942,길이가 같은 두 문자열 str1과 str2가 주어집니다. 두 문자열의 각 문자가 앞에서부터 서로 번갈아가면서 한 번씩 등장하는 문자열을 만들어 return 하는 solution 함수를 완성해 주세요.,,2024-11-13,,
+13,문자열 겹쳐쓰기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181943,문자열 my_string overwrite_string과 정수 s가 주어집니다. 문자열 my_string의 인덱스 s부터 overwrite_string의 길이만큼을 문자열 overwrite_string으로 바꾼 문자열을 return 하는 solution 함수를 작성해 주세요. 입출력 예 #1 입출력 예 #2,,2024-11-14,,
+14,홀짝 구분하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181944,"자연수 n이 입력으로 주어졌을 때 만약 n이 짝수이면 ""n is even""을 홀수이면 ""n is odd""를 출력하는 코드를 작성해 보세요. 입력 #1 출력 #1 입력 #2 출력 #2 ※ 2023년 05월 15일 지문이 수정되었습니다.",,2024-11-15,,
+15,문자열 돌리기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181945,"문자열 str이 주어집니다.
+문자열을 시계방향으로 90도 돌려서 아래 입출력 예와 같이 출력하는 코드를 작성해 보세요. 1 ≤ str의 길이 ≤ 10 입력 #1 출력 #1",,2024-11-16,,
+16,문자열 붙여서 출력하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181946,"두 개의 문자열 str1 str2가 공백으로 구분되어 입력으로 주어집니다.
+입출력 예와 같이 str1과 str2을 이어서 출력하는 코드를 작성해 보세요. 입력 #1 출력 #1 입력 #2 출력 #2",,2024-11-17,,
+17,덧셈식 출력하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181947,두 정수 a b가 주어질 때 다음과 같은 형태의 계산식을 출력하는 코드를 작성해 보세요. 입력 #1 출력 #1,,2024-11-18,,
+18,특수문자 출력하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181948,다음과 같이 출력하도록 코드를 작성해 주세요. 출력 예시,,2024-11-19,,
+19,대소문자 바꿔서 출력하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181949,영어 알파벳으로 이루어진 문자열 str이 주어집니다. 각 알파벳을 대문자는 소문자로 소문자는 대문자로 변환해서 출력하는 코드를 작성해 보세요. 입력 #1 출력 #1 ※2023년 05월 03일 제한사항이 수정되었습니다.,,2024-11-20,,
+20,문자열 반복해서 출력하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181950,"문자열 str과 정수 n이 주어집니다.
+str이 n번 반복된 문자열을 만들어 출력하는 코드를 작성해 보세요. 입력 #1 출력 #1",,2024-11-21,,
+21,a와 b 출력하기,0,https://school.programmers.co.kr/learn/courses/30/lessons/181951,정수 a와 b가 주어집니다. 각 수를 입력받아 입출력 예와 같은 형식으로 출력하는 코드를 작성해 보세요. 입력 #1 출력 #1,,2024-11-22,,
