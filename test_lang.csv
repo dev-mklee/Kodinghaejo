@@ -1,0 +1,960 @@
+IDX,T_IDX,LNG,CONTENT,REGDATE,IS_USE
+1,,,"**JAVA**
+
+```java
+class Solution {
+    public int solution(int a, int d, boolean[] included) {
+        int sum = 0;
+        for (int i = 0; i < included.length; i++) {
+            if (included[i]) {
+                sum += a + d * i;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+function solution(a, d, included) {
+  let sum = 0;
+  for (let i = 0; i < included.length; i++) {
+    if (included[i]) {
+      sum += a + d * i;
+    }
+  }
+  return sum;
+}
+```
+
+**SQL**
+
+```sql
+SELECT SUM(CASE WHEN included = TRUE THEN a + d * (i - 1) END)
+FROM (
+  SELECT a, d, i, included
+  FROM (
+    SELECT a, d, ROW_NUMBER() OVER (ORDER BY i) AS i, included
+    FROM (
+      SELECT a, d, included
+      FROM [Table]
+    ) AS t
+  ) AS subquery
+) AS query;
+```",2024-11-02,
+2,,,"**JAVA**
+```java
+class Solution {
+    public String solution(String code) {
+        char[] arr = code.toCharArray();
+        int mode = 0;
+        StringBuilder sb = new StringBuilder();
+
+        for (char c : arr) {
+            if (c == '1') {
+                mode = 1 - mode;
+                continue;
+            }
+            if (mode == 1) {
+                sb.append(c);
+            }
+        }
+
+        return sb.length() > 0 ? sb.toString() : ""EMPTY"";
+    }
+}
+```
+
+**JAVASCRIPT**
+```javascript
+ const solution = (code) => {
+    let mode = 0;
+    let ret = """"; 
+
+    for(let i = 0; i < code.length; i++){
+        if(code[i] === '1'){
+            mode = 1 - mode;
+            continue;
+        }
+        if(mode === 1) ret += code[i];
+    }
+
+    return ret.length > 0 ? ret : ""EMPTY"";
+};
+```
+
+**SQL**
+```sql
+CREATE FUNCTION solution(@code VARCHAR(100))
+RETURNS VARCHAR(100)
+AS
+BEGIN
+    DECLARE @mode INT = 0;
+    DECLARE @ret VARCHAR(100) = '';
+
+    WHILE LEN(@code) > 0
+    BEGIN
+        IF SUBSTRING(@code, 1, 1) = '1'
+        BEGIN
+            SET @mode = 1 - @mode;
+            SET @code = SUBSTRING(@code, 2, LEN(@code) - 1);
+        END
+        ELSE
+        BEGIN
+            IF @mode = 1
+            BEGIN
+                SET @ret = @ret + SUBSTRING(@code, 1, 1);
+            END
+            SET @code = SUBSTRING(@code, 2, LEN(@code) - 1);
+        END
+    END
+
+    IF LEN(@ret) > 0
+    BEGIN
+        RETURN @ret;
+    END
+    ELSE
+    BEGIN
+        RETURN 'EMPTY';
+    END
+END
+```",2024-11-03,
+3,,,"**JAVA**
+
+```java
+public class Solution {
+    public int Solution(int a, int b, boolean flag) {
+        return flag ? a + b : a - b;
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const Solution = (a, b, flag) => flag ? a + b : a - b;
+```
+
+**SQL**
+
+```sql
+CREATE FUNCTION Solution(@a INT, @b INT, @flag BIT)
+RETURNS INT
+AS
+BEGIN
+    RETURN CASE
+        WHEN @flag = 1 THEN @a + @b
+        ELSE @a - @b
+    END;
+END;
+```",2024-11-04,
+4,,,"**JAVA**
+
+```java
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String ineq = sc.next();
+        String eq = sc.next();
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        int result = 0;
+        switch (ineq) {
+            case ""<"":
+                result = (n < m) ? 1 : 0;
+                break;
+            case "">"":
+                result = (n > m) ? 1 : 0;
+                break;
+        }
+
+        if (eq.equals(""="")) {
+            result = (result == 1) ? 1 : 0;
+        } else {
+            result = (result == 0) ? 1 : 0;
+        }
+
+        System.out.println(result);
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+function solution(ineq, eq, n, m) {
+  let result = 0;
+  switch (ineq) {
+    case ""<"":
+      result = n < m ? 1 : 0;
+      break;
+    case "">"":
+      result = n > m ? 1 : 0;
+      break;
+  }
+
+  if (eq === ""="") {
+    result = result === 1 ? 1 : 0;
+  } else {
+    result = result === 0 ? 1 : 0;
+  }
+
+  return result;
+}
+```
+
+**SQL**
+
+```sql
+CREATE FUNCTION solution(@ineq VARCHAR(1), @eq VARCHAR(1), @n INT, @m INT)
+RETURNS INT
+AS
+BEGIN
+  DECLARE @result INT = 0;
+
+  CASE @ineq
+    WHEN '<' THEN SET @result = CASE WHEN @n < @m THEN 1 ELSE 0 END;
+    WHEN '>' THEN SET @result = CASE WHEN @n > @m THEN 1 ELSE 0 END;
+  END;
+
+  IF @eq = '=' AND @result = 1
+  BEGIN
+    SET @result = 1;
+  END;
+  ELSE IF @eq <> '=' AND @result = 0
+  BEGIN
+    SET @result = 1;
+  END;
+
+  RETURN @result;
+END;
+```",2024-11-05,
+5,,,"**JAVA**
+
+```java
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int result = 0;
+        if (n % 2 == 1) {
+            for (int i = 1; i <= n; i += 2) {
+                result += i;
+            }
+        } else {
+            for (int i = 1; i <= n; i += 2) {
+                result += i * i;
+            }
+        }
+        System.out.println(result);
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const solution = (n) => {
+  let result = 0;
+  if (n % 2 === 1) {
+    for (let i = 1; i <= n; i += 2) {
+      result += i;
+    }
+  } else {
+    for (let i = 1; i <= n; i += 2) {
+      result += i * i;
+    }
+  }
+  return result;
+};
+
+console.log(solution(5)); // 9
+console.log(solution(6)); // 56
+```
+
+**SQL**
+
+```sql
+CREATE FUNCTION solution(n INT) RETURNS INT
+BEGIN
+  DECLARE result INT DEFAULT 0;
+  IF n % 2 = 1 THEN
+    SET result = (SELECT SUM(i) FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i WHERE i <= n);
+  ELSE
+    SET result = (SELECT SUM(i * i) FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i FROM (SELECT i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i) AS i WHERE i <= n);
+  END IF;
+  RETURN result;
+END;
+```",2024-11-06,
+6,,,"**JAVA 언어 코드 예제:**
+
+```java
+class Solution {
+    public int solution(int number, int n, int m) {
+        return (number % n == 0 && number % m == 0) ? 1 : 0;
+    }
+}
+```
+
+**JAVASCRIPT 언어 코드 예제:**
+
+```javascript
+function solution(number, n, m) {
+  return (number % n === 0 && number % m === 0) ? 1 : 0;
+}
+```
+
+**SQL 언어 코드 예제:**
+
+```sql
+SELECT CASE
+  WHEN number % n = 0 AND number % m = 0 THEN 1
+  ELSE 0
+END AS result
+FROM table_name
+WHERE number = @number;
+```",2024-11-07,
+7,,,"**JAVA**
+
+```java
+class Solution {
+    public int solution(int num, int n) {
+        return num % n == 0 ? 1 : 0;
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const solution = (num, n) => {
+  return num % n === 0 ? 1 : 0;
+};
+```
+
+**SQL**
+
+```sql
+SELECT CASE
+  WHEN num % n = 0 THEN 1
+  ELSE 0
+END
+FROM my_table
+WHERE num = num_input
+AND n = n_input;
+```",2024-11-08,
+8,,,"```java
+class Solution {
+    public int solution(int a, int b) {
+        long res1 = (long)a * (long)b;
+        long res2 = Long.parseLong(String.valueOf(a) + String.valueOf(b));
+        return res1 > res2 ? (int)res1 : (int)res2;
+    }
+}
+```
+
+```javascript
+function solution(a, b) {
+  const res1 = a * b;
+  const res2 = Number(a.toString() + b.toString());
+  return res1 > res2 ? res1 : res2;
+}
+```
+
+```sql
+CREATE FUNCTION solution(a INT, b INT) RETURNS INT
+BEGIN
+  DECLARE res1 INT;
+  DECLARE res2 INT;
+  SET res1 = a * b;
+  SET res2 = CAST(CONCAT(a, b) AS UNSIGNED);
+  RETURN IF(res1 > res2, res1, res2);
+END
+```",2024-11-09,
+9,,,"**Java**
+```java
+class Solution {
+    public int solution(int a, int b) {
+        int combined1 = Integer.parseInt(Integer.toString(a) + Integer.toString(b));
+        int combined2 = Integer.parseInt(Integer.toString(b) + Integer.toString(a));
+        return combined1 > combined2 ? combined1 : combined2;
+    }
+}
+```
+
+**JavaScript**
+```javascript
+function solution(a, b) {
+  const combined1 = parseInt(a.toString() + b.toString());
+  const combined2 = parseInt(b.toString() + a.toString());
+  return combined1 > combined2 ? combined1 : combined2;
+}
+```
+
+**SQL**
+```sql
+CREATE FUNCTION solution(a INT, b INT) RETURNS INT
+BEGIN
+  DECLARE combined1 INT;
+  DECLARE combined2 INT;
+  SET combined1 = CAST(CONCAT(a, b) AS INT);
+  SET combined2 = CAST(CONCAT(b, a) AS INT);
+  RETURN IF(combined1 > combined2, combined1, combined2);
+END;
+```",2024-11-10,
+10,,,"**JAVA**
+
+```java
+public class Solution {
+    public String solution(String my_string, int k) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < k; i++) {
+            result.append(my_string);
+        }
+        return result.toString();
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+function solution(my_string, k) {
+  let result = """";
+  for (let i = 0; i < k; i++) {
+    result += my_string;
+  }
+  return result;
+}
+```
+
+**SQL**
+
+```sql
+CREATE FUNCTION solution(@my_string VARCHAR(MAX), @k INT)
+RETURNS VARCHAR(MAX)
+AS
+BEGIN
+    DECLARE @result VARCHAR(MAX) = '';
+    WHILE @k > 0
+    BEGIN
+        SET @result = @result + @my_string;
+        SET @k = @k - 1;
+    END
+    RETURN @result;
+END;
+```",2024-11-11,
+11,,,"**JAVA**
+
+```java
+public class Solution {
+    public String solution(char[] arr) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : arr) {
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const solution = (arr) => {
+  return arr.join('');
+};
+```
+
+**SQL**
+
+```sql
+SELECT GROUP_CONCAT(arr) FROM (
+  SELECT arr AS arr
+  FROM arr_table
+  ORDER BY arr
+);
+```",2024-11-12,
+12,,,"**JAVA**
+
+```java
+class Solution {
+    public String solution(String str1, String str2) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < str1.length(); i++) {
+            sb.append(str1.charAt(i)).append(str2.charAt(i));
+        }
+        return sb.toString();
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+function solution(str1, str2) {
+  let result = """";
+  for (let i = 0; i < str1.length; i++) {
+    result += str1[i] + str2[i];
+  }
+  return result;
+}
+```
+
+**SQL**
+
+```sql
+SELECT
+  GROUP_CONCAT(CASE
+    WHEN position IN (1, 3, 5, ...)
+    THEN str1
+    ELSE str2
+  END) AS result
+FROM (
+  SELECT
+    str1,
+    str2,
+    ROW_NUMBER() OVER (ORDER BY sequence) AS position
+  FROM (
+    SELECT
+      str1,
+      str2,
+      (
+        SELECT
+          MAX(sequence)
+        FROM YourTable
+      ) AS total_sequence
+    FROM YourTable
+  ) AS subquery
+) AS subquery2;
+```",2024-11-13,
+13,,,"**JAVA**
+
+```java
+import java.util.*;
+
+class Solution {
+    public String solution(String my_string, String overwrite_string, int s) {
+        StringBuilder sb = new StringBuilder(my_string);
+        sb.replace(s, s + overwrite_string.length(), overwrite_string);
+        return sb.toString();
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const solution = (my_string, overwrite_string, s) => {
+  return my_string.substring(0, s) + overwrite_string + my_string.substring(s + overwrite_string.length);
+};
+```
+
+**SQL**
+
+```sql
+-- Common Table Expression (CTE)을 사용하여 문자열을 수정합니다.
+
+WITH RECURSIVE SplittedString(value, position) AS (
+  SELECT my_string, s FROM your_table
+  UNION ALL
+  SELECT
+    SUBSTR(value, position + 1),
+    position + LENGTH(overwrite_string)
+  FROM SplittedString
+  WHERE position + LENGTH(overwrite_string) <= LENGTH(value)
+)
+
+SELECT
+  CASE
+    WHEN position IS NULL THEN my_string
+    ELSE
+      CASE
+        WHEN SUBSTR(value, position, LENGTH(overwrite_string)) = overwrite_string THEN
+          REPLACE(value, SUBSTR(value, position, LENGTH(overwrite_string)), overwrite_string)
+        ELSE
+          value
+      END
+  END AS replaced_string
+FROM SplittedString
+ORDER BY position DESC
+LIMIT 1;
+```",2024-11-14,
+14,,,"**JAVA**
+
+```java
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        if (n % 2 == 0) {
+            System.out.println(""n is even"");
+        } else {
+            System.out.println(""n is odd"");
+        }
+
+        scanner.close();
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const Solution = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+Solution.question('Enter a number: ', n => {
+    if (n % 2 === 0) {
+        console.log('n is even');
+    } else {
+        console.log('n is odd');
+    }
+    Solution.close();
+});
+```
+
+**SQL**
+
+```sql
+CREATE FUNCTION Solution(n INT) RETURNS VARCHAR(10)
+BEGIN
+    DECLARE result VARCHAR(10);
+    IF n % 2 = 0 THEN
+        SET result = 'n is even';
+    ELSE
+        SET result = 'n is odd';
+    END IF;
+    RETURN result;
+END
+```",2024-11-15,
+15,,,"**JAVA**
+
+```java
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        char[][] arr = new char[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = sc.next().charAt(0);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = 0; j < n; j++) {
+                sb.append(arr[j][i]);
+            }
+            sb.append(""\n"");
+        }
+
+        System.out.println(sb.toString());
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const input = [
+  [""a"", ""b"", ""c"", ""d""],
+  [""e"", ""f"", ""g"", ""h""],
+  [""i"", ""j"", ""k"", ""l""],
+  [""m"", ""n"", ""o"", ""p""],
+];
+
+const Solution = input[0].map((_, colIndex) =>
+  input.map((row) => row[colIndex]).reverse()
+);
+
+console.log(Solution.map((row) => row.join("" "")).join(""\n""));
+```
+
+**SQL**
+
+```sql
+WITH Solution AS (
+  SELECT
+    ROW_NUMBER() OVER (PARTITION BY 1 ORDER BY 1) AS row_pos,
+    COL_NUMBER() OVER (PARTITION BY 1 ORDER BY 1) AS col_pos,
+    T.*
+  FROM (
+    SELECT
+      *
+    FROM UNNEST([
+      ""a"",
+      ""b"",
+      ""c"",
+      ""d"",
+      ""e"",
+      ""f"",
+      ""g"",
+      ""h"",
+      ""i"",
+      ""j"",
+      ""k"",
+      ""l"",
+      ""m"",
+      ""n"",
+      ""o"",
+      ""p"",
+    ]) AS T
+  ) AS T
+)
+SELECT
+  GROUP_CONCAT(T.value, "" "")
+FROM Rotated AS T
+GROUP BY
+  row_pos
+ORDER BY
+  col_pos;
+```",2024-11-16,
+16,,,"**JAVA**
+
+```java
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        System.out.println(str1 + "" "" + str2);
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const Solution = require(""readline-sync"");
+
+const str1 = Solution.question(""첫 번째 문자열을 입력하세요: "");
+const str2 = Solution.question(""두 번째 문자열을 입력하세요: "");
+console.log(`${str1} ${str2}`);
+```
+
+**SQL**
+
+```sql
+DECLARE @str1 VARCHAR(MAX), @str2 VARCHAR(MAX);
+
+SET @str1 = '첫 번째 문자열';
+SET @str2 = '두 번째 문자열';
+
+SELECT @str1 + ' ' + @str2;
+```",2024-11-17,
+17,,,"**JAVA**
+
+```java
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int a = input.nextInt();
+        int b = input.nextInt();
+        System.out.println(a + "" + "" + b + "" = "" + (a + b));
+        System.out.println(a + "" - "" + b + "" = "" + (a - b));
+        System.out.println(a + "" * "" + b + "" = "" + (a * b));
+        System.out.println(a + "" / "" + b + "" = "" + (a / b));
+        System.out.println(a + "" % "" + b + "" = "" + (a % b));
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const Solution = require('readline-sync');
+
+const a = parseInt(Solution.question('정수 a: '));
+const b = parseInt(Solution.question('정수 b: '));
+
+console.log(`${a} + ${b} = ${a + b}`);
+console.log(`${a} - ${b} = ${a - b}`);
+console.log(`${a} * ${b} = ${a * b}`);
+console.log(`${a} / ${b} = ${a / b}`);
+console.log(`${a} % ${b} = ${a % b}`);
+```
+
+**SQL**
+
+```sql
+SELECT
+  a,
+  b,
+  a + b AS ""합계"",
+  a - b AS ""차이"",
+  a * b AS ""곱"",
+  a / b AS ""몫"",
+  a % b AS ""나머지""
+FROM (
+  SELECT
+    10 AS a,
+    5 AS b
+) AS t;
+```",2024-11-18,
+18,,,"**JAVA**
+
+```java
+System.out.println(""안녕하세요"");
+System.out.println(""반갑습니다"");
+System.out.println(""오늘은 좋은 하루입니다"");
+System.out.println(""자바 프로그래밍을 배우는 중입니다"");
+```
+
+**JAVASCRIPT**
+
+```javascript
+console.log(""안녕하세요"");
+console.log(""반갑습니다"");
+console.log(""오늘은 좋은 하루입니다"");
+console.log(""자바스크립트 프로그래밍을 배우는 중입니다"");
+```
+
+**SQL**
+
+```sql
+SELECT '안녕하세요' AS message;
+SELECT '반갑습니다' AS message;
+SELECT '오늘은 좋은 하루입니다' AS message;
+SELECT 'SQL 쿼리를 배우는 중입니다' AS message;
+```",2024-11-19,
+19,,,"## JAVA
+
+```java
+import java.util.Scanner;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+
+        StringBuilder sb = new StringBuilder();
+        for (char c : str.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                sb.append(Character.toLowerCase(c));
+            } else {
+                sb.append(Character.toUpperCase(c));
+            }
+        }
+
+        System.out.println(sb);
+    }
+}
+```
+
+## JAVASCRIPT
+
+```javascript
+const str = prompt(""영어 알파벳으로 이루어진 문자열을 입력하세요:"");
+
+const Solution = str.split("""").map((char) => {
+  if (char === char.toUpperCase()) {
+    return char.toLowerCase();
+  } else {
+    return char.toUpperCase();
+  }
+}).join("""");
+
+console.log(Solution);
+```
+
+## SQL
+
+```sql
+SELECT UPPER(str) AS converted_str
+FROM (
+  SELECT str
+  FROM YOUR_TABLE
+);
+```",2024-11-20,
+20,,,"```java
+public class Solution {
+
+    public static void main(String[] args) {
+        String str = ""Hello"";
+        int n = 3;
+        String repeatedString = """";
+        for (int i = 0; i < n; i++) {
+            repeatedString += str;
+        }
+        System.out.println(repeatedString);
+    }
+}
+```
+
+```javascript
+function repeatString(str, n) {
+  var repeatedString = """";
+  for (var i = 0; i < n; i++) {
+    repeatedString += str;
+  }
+  return repeatedString;
+}
+```
+
+```sql
+SELECT str || REPEAT(str, n - 1) AS repeated_string
+FROM (SELECT @str AS str, @n AS n) AS params;
+```",2024-11-21,
+21,,,"**JAVA**
+
+```java
+import java.util.Scanner;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        int b = scanner.nextInt();
+        scanner.close();
+
+        System.out.printf(""a=%d, b=%d\n"", a, b);
+    }
+}
+```
+
+**JAVASCRIPT**
+
+```javascript
+const Solution = require('Solution').createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+Solution.question('정수 a: ', (a) => {
+  Solution.question('정수 b: ', (b) => {
+    Solution.close();
+
+    console.log(`a=${a}, b=${b}`);
+  });
+});
+```
+
+**SQL**
+
+이 문제를 SQL로 풀 수는 없습니다.",2024-11-22,
