@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시판</title>
+  <!-- Standard css -->
+  <link rel="icon" href="/img/logo/favicon.png">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+  <!-- pub-js link -->
+  <script src="/js/pub-ui-custom.js"></script>
+</head>
+
+<body>
+  <!-- header 영역 -->
+  <div id="header"></div>
+
+  <div class="container">
+    <div class="main-content">
+      <div class="content-board-notice-view">
+        <div class="content-board-notice-view-wrap">
+          <h4>자유주제</h4>
+          <h5>개발자 세미나 What We Work 1회에서 발표자를 모집합니다.</h5>
+          <div class="profile-title" style="display: flex;">
+            <img src="/img/test-profile/nonoping.png" alt="" style="width: 40px; height: 40px;">
+            <p class="profile-name">회원 아무개씨</p>
+            <p class="profile-date">5시간전</p>
+          </div>
+          <p>
+            큰돌의 제 1회 작은 개발자 세미나. What We Work 1회를 개최합니다
+            모집인원 : 10 ~ 20명
+            시일 : 241109 토 14 ~ 18시 서울 천호역 어딘가
+            요금 : 무료 / 세미나 끝나고 회식할 분들은 돈걷어서 할 예정입니다.
+            내용 : 강연 + 모각코 + 네트워킹
+            강연자 모집 ::
+            강연자 또한 구글폼으로 지원받습니다.
+            강연자는 제가 소정의 기프티콘을 드릴 예정입니다.
+            주제는 What We Work에 관한 내용입니다. (기술 등)
+          </p>
+        </div>
+        <div class="content-board-notice-view-review">
+          <h5>댓글</h5>
+          <!-- 댓글 -->
+          <div id="content"></div>
+          <button style="margin-top: 20px;">전송</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- footer영역 -->
+  <div id="footer"></div>
+  <!-- toast API -->
+  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+  <script>
+    const editor = new toastui.Editor({
+      el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
+      height: '400px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+      initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+      initialValue: '내용을 입력해 주세요.',    // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+      initialEditType: 'wysiwyg'              // 마크다운 프리뷰 스타일 (tab || vertical)
+    });
+  </script>
+  <style>
+    .toastui-editor-mode-switch { display: none !important; }
+  </style>
+</body>
+</html>
