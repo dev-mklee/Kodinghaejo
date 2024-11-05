@@ -8,6 +8,10 @@
   <link rel="icon" href="/img/logo/favicon.png">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+  <!-- TOAST UI Chart -->
+  <link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.min.css">
+  <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
+  
   <!-- pub-js link -->
   <script src="/js/pub-ui-custom.js"></script>
   <style>
@@ -16,10 +20,10 @@
         margin: 20px; /* 전체 여백 */
     }
 
-    .system-menu {
+    .system-menu  {
         float: left; 
         width: 180px; 
-        height: auto; /* 높이 자동 조절 */
+        height: 500px; /* 높이 자동 조절 */
         padding: 20px; 
         margin-top: 20px; 
         margin-left: 20px; 
@@ -73,6 +77,23 @@
     .sub-menu a {
         font-size: 14px; /* 하위 메뉴 폰트 크기 조정 */
     }
+    
+    /* TOAST UI Chart CSS */
+    .chart-container {
+    	width: 1000px;
+    	height: auto;
+		padding: 20px; 
+        margin-top: 20px; 
+        margin-left: 120px;
+        display: flex; 
+	}
+	.pie-chart {
+		width: 100%;
+		height: 400px;
+		float: right;
+		margin-right: 20px; /* 차트 간격을 설정합니다. */
+		margin-bottom: 20px; /* 차트 간격을 설정합니다. */
+	}
   </style>
 </head>
 <header>
@@ -81,7 +102,7 @@
 <body>
     <div class="container">
         <div class="system-menu">
-            <p class="xi-wrench"> 시스템 관리</p>
+            <a class="xi-wrench" href="system">시스템 관리</a>
             <ul>
                 <li><a href="/systemMemberInfo">회원정보</a></li>
                 <li>
@@ -101,8 +122,107 @@
                     </ul>
                 </li>
             </ul>
-        </div> 
+        </div>
+		<div class="chart-container">
+			<div class="bar-chart">
+				<div id="barChart"></div>
+			</div>
+			<div class="pie-chart">
+				<div id="pieChart"></div>
+			</div>
+		</div>
     </div>
+<script>
+	// Pie 차트 데이터
+	const pieChartData = {
+		categories: ['언어'],
+		series: [
+		  {
+			name: 'JAVA',
+			data: 46.02,
+		  },
+		  {
+			name: 'javascript',
+			data: 20.47,
+		  },
+		  {
+			name: 'sql',
+			data: 17.71,
+		  },
+		  {
+			name: 'C',
+			data: 0,
+		  },
+		  {
+			name: 'C++',
+			data: 0,
+		  },
+		  {
+			name: 'Python',
+			data: 0,
+		  },
+		],
+	};
+	
+	const barChartData = {
+			categories: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			series: [
+			  {
+				name: '일반',
+				data: [100, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220]
+			  },
+			  {
+				name: '소셜',
+				data: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85]
+			  },
+			],
+		};
+	
+	// 공통 옵션
+	const commonOptions = {
+		chart: {
+			width: 600, height: 300,
+			title: {
+			      text: '문제풀이에 사용된 언어',
+			      align: 'center'
+			}
+		},
+		series: {
+			dataLabels: {
+				visible: true,
+				pieSeriesName: { visible: true },	
+			}
+		}
+	};
+	
+	const Option = {
+		chart: {
+			width: 700, height: 300,
+			title : {
+				text: '월별 가입자 수',
+				align: 'center'
+			}
+		},
+		xAxis: {
+		    title: '월',
+		    label: {
+		      interval: 1 // 레이블 간격 조정
+		    }
+		  },
+		  yAxis: {
+		    title: '가입자 수'
+		  },
+	};
+	
+	// 원형 차트 생성 및 렌더링
+	const pieChartContainer = document.getElementById('pieChart');
+	const pieChart = new toastui.Chart.pieChart({ el: pieChartContainer, data: pieChartData, options: commonOptions });
+	// 막대형 차트 생성 및 렌더링
+	const barChartContainer = document.getElementById('barChart');
+	const barChart = new toastui.Chart.columnChart({ el: barChartContainer, data: barChartData, options: Option });
+	
+	
+</script>		   
 </body>
 <footer>
     <div id="footer"></div>
