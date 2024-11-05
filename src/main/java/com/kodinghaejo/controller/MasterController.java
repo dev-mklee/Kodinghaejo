@@ -49,4 +49,8 @@ public class MasterController {
 	public void getSystemReply() {
 		
 	}
+	@GetMapping("/noticeboardWrite")
+	public void getNoticeboardWrite() {
+		
+	}
 }

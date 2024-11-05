@@ -16,20 +16,71 @@
   <script src="/js/pub-ui-custom.js"></script>
   <style>
     .container {
-        display: flex;
-        margin: 20px; /* 전체 여백 */
-    }
-
+    display: flex;
+    margin: 20px; /* 전체 여백 */
+	}
+	
+	.info-chart-container {
+	    display: flex;
+	    flex-direction: column; /* 세로 방향으로 배치 */
+	    flex: 1; /* 남은 공간을 차지하도록 설정 */
+	    background-color: #f0f0f0; /* 밝은 회색 배경색 추가 */
+	}
+	
+	.info-box-container {
+	    display: flex; /* 박스들이 가로로 나열될 수 있도록 설정 */
+	    margin-bottom: 20px; /* 차트와의 간격 */
+	}
+	
+	.info-box {
+		width: 300px;
+		height: 100px;
+	    background-color: #f0f0f0; /* 박스 배경색 */
+	    border: 1px solid #ccc; /* 박스 테두리 */
+	    border-radius: 5px; /* 모서리 둥글게 */
+	    padding: 10px 15px; /* 내부 여백 */
+	    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+	    font-size: 14px; /* 글자 크기 */
+	    margin-top: 100px;
+	    margin-left: 10px;
+	    margin-right: 28px; /* 각 박스 간의 간격 */
+	}
+	.sub-info-box {
+		display:flex;
+		justify-content: space-between;
+	}
+	
+	.info-box:last-child {
+	    margin-right: 0; /* 마지막 박스는 오른쪽 여백 없음 */
+	}
+	
+	.daily-count {
+		margin: 20px;
+	    font-size: 24px; /* 숫자 크기 */
+	    font-weight: bold; /* 굵게 표시 */
+	}
+	
+	.daily-label {
+		width: 100px;
+	    display: block; /* 두 번째 줄을 블록으로 표시 */
+	    font-size: 14px; /* 글자 크기 */
+	    color: #555; /* 색상 설정 */
+	}
+	.xi-user-plus-o, .xi-log-in, .xi-trophy, .xi-pen {
+		margin-top:15px;
+		color: #f0f0f0;
+		background-color: #e0e0e0;
+		box-sizing: border-box; 
+	    border-radius: 10px; 
+	}
     .system-menu  {
-        float: left; 
-        width: 180px; 
-        height: 500px; /* 높이 자동 조절 */
-        padding: 20px; 
-        margin-top: 20px; 
-        margin-left: 20px; 
-        border: 3px solid rgb(194, 194, 194); 
-        box-sizing: border-box; 
-        border-radius: 10px; 
+	    width: 230px; 
+	    height: 500px;
+	    padding: 20px; 
+	    margin-right: 20px; /* 오른쪽 여백 */
+	    border: 3px solid rgb(194, 194, 194); 
+	    box-sizing: border-box; 
+	    border-radius: 10px; 
     }
 
     .system-menu ul {
@@ -80,19 +131,20 @@
     
     /* TOAST UI Chart CSS */
     .chart-container {
-    	width: 1000px;
-    	height: auto;
-		padding: 20px; 
-        margin-top: 20px; 
-        margin-left: 120px;
-        display: flex; 
+	    display: flex; /* 차트 컨테이너를 수평으로 배치 */
+	    width: 100%; /* 너비를 100%로 설정 */
+	    gap: 20px;
 	}
-	.pie-chart {
-		width: 100%;
-		height: 400px;
-		float: right;
-		margin-right: 20px; /* 차트 간격을 설정합니다. */
-		margin-bottom: 20px; /* 차트 간격을 설정합니다. */
+	
+	.pie-chart,
+	.bar-chart {
+	    width: 40%; /* 각 차트의 너비를 50%로 설정 */
+	    height: 400px; /* 차트 높이 설정 */
+	    padding: 130px; /* 내부 여백 추가 */
+	}
+	canvas {
+		width: 600px !important;
+    	border-radius: 10px;
 	}
   </style>
 </head>
@@ -123,13 +175,64 @@
                 </li>
             </ul>
         </div>
-		<div class="chart-container">
-			<div class="bar-chart">
-				<div id="barChart"></div>
-			</div>
-			<div class="pie-chart">
-				<div id="pieChart"></div>
-			</div>
+        <div class="info-chart-container"> <!-- 새로운 컨테이너 추가 -->
+		    <!-- 상단 박스 추가 -->
+		    <div class="info-box-container">
+		        <div class="info-box" style="margin-left:130px;">
+		        	<div class="sub-info-box">
+		        		<div>
+			        		<span class="daily-count">5</span>
+			        		<span class="daily-label">오늘 가입자 수</span>
+			        	</div>
+			        	<div>
+			        		<div class="xi-user-plus-o xi-3x"></div>
+			        	</div>
+		        	</div>
+		        </div>
+		        <div class="info-box">
+		            <div class="sub-info-box">
+		        		<div>
+			        		<span class="daily-count">119</span>
+			        		<span class="daily-label">오늘 방문자 수</span>
+			        	</div>
+			        	<div>
+			        		<div class="xi-log-in xi-3x"></div>
+			        	</div>
+		        	</div>
+		        </div>
+		        <div class="info-box">
+		            <div class="sub-info-box">
+		        		<div>
+			        		<span class="daily-count">112</span>
+			        		<span class="daily-label">오늘 푼 문제 수</span>
+			        	</div>
+			        	<div>
+			        		<div class="xi-trophy xi-3x"></div>
+			        	</div>
+		        	</div>
+		        </div>
+		        <div class="info-box">
+		            <div class="sub-info-box">
+		        		<div>
+			        		<span class="daily-count">114</span>
+			        		<span class="daily-label">오늘 게시글 수</span>
+			        	</div>
+			        	<div>
+			        		<div class="xi-pen xi-3x"></div>
+			        	</div>
+		        	</div>
+		        </div>
+		    </div>
+		
+		    <!-- 차트가 수평으로 배치되는 부분 -->
+		    <div class="chart-container">
+		        <div class="bar-chart">
+		            <div id="barChart"></div>
+		        </div>
+		        <div class="pie-chart">
+		            <div id="pieChart"></div>
+		        </div>
+		    </div>
 		</div>
     </div>
 <script>
