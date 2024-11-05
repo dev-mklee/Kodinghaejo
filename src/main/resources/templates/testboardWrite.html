@@ -8,6 +8,7 @@
   <link rel="icon" href="/img/logo/favicon.png">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
   <!-- pub-js link -->
   <script src="/js/pub-ui-custom.js"></script>
 </head>
@@ -18,14 +19,14 @@
     <div class="main-content">
       <div class="content-board-notice-write">
         <div class="content-board-notice-write-wrap">
-          <h2>자유롭게 글을 작성해 보세요</h2>
+          <h2>문제 작성</h2>
           <div class="mt30"></div>
           <div class="category-menu">
-            <label for="category-section">카테고리<span class="asterisk"></span></label>
+            <label for="category-section">난이도<span class="asterisk"></span></label>
             <select name="category-section">
-              <option value="자유주제" selected>자유주제</option>
-              <option value="커리어 고민">커리어고민</option>
-              <!-- <option value="카테고리메뉴" disabled>카테고리메뉴</option> -->
+              <option value="0" selected>0단계</option>
+              <option value="1">1단계</option>
+              <option value="2">2단계</option>
             </select>
           </div>
           <div class="category-title">
@@ -48,19 +49,49 @@
  <div id="footer"></div>
   <!-- toast API : 나중에 모듈로 작성해서 만들기-->
   <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
   <script>
-    const editor = new toastui.Editor({
-      el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
-      height: '400px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
-      initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-      initialValue: '내용을 입력해 주세요.',    // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
-      initialEditType: 'wysiwyg'              // 마크다운 프리뷰 스타일 (tab || vertical)
-    });
-  </script>
-  <style>
-    .toastui-editor-mode-switch { display: none !important; }
-  </style>
+  const editor = new toastui.Editor({
+      el: document.querySelector('#content'), // 에디터를 적용할 요소
+      previewStyle: 'vertical', // 미리보기 스타일
+      height: '400px', // 에디터 높이
+      initialEditType: 'markdown',
+      initialValue: `### 문제 설명
+ex)정수 num1과 num2가 주어질 때, num1에서 num2를 뺀 값을 return하도록 solution 함수를 완성해주세요.
+
+ ---
+
+   ### 제한사항
+
+  - 첫번째 제한사항을 작성하세요.
+  - 두번째 제한사항을 작성하세요.
+  - 세번째 제한사항을 작성하세요.
+  - 네번째 제한사항을 작성하세요.
+
+   ### 입출력 예
+
+   | num1 | num2 | result |
+   |------|------|--------|
+   |  2   |  3   |   -1   |
+   | 100  |  2   |   98   |
+
+ ---
+
+   ### 입출력 예 설명
+
+   ##### 입출력 예 #1
+
+   - num1이 2이고 num2가 3이므로 2 - 3 = -1을 return합니다.
+
+   ##### 입출력 예 #2
+
+   - num1이 100이고 num2가 2이므로 100 - 2 = 98을 return합니다.`
+  });
+  
+  document.querySelector('#content').insertAdjacentHTML('afterbegin' ,editor.getHtml());
+</script>
+<style>
+  .toastui-editor-mode-switch { display: none !important; }
+</style>
    
 </body>
 </html>

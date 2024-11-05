@@ -7,18 +7,13 @@
         <li class="nav-hover"><a href="/">랭킹</a></li>
         <li class="nav-hover"><a href="/freeboard.html">게시판</a></li>
         <li class="nav-hover"><a href="/">개발자 라운지</a></li>
-        <li class="nav-hover">
-        	<th:block th:if="${session.role == 'MASTER'}">
-        		<a href="/system">시스템관리</a>
-        	</th:block>
-        </li>
       </ol>
     </div>
     <div class="main-navbar-list">
       <ul class="main-list-item login">
         <!-- 로그아웃시 -->
-        <li><a href="javascript:loginView('open')" class="btn_login">로그인</a></li>
-        <li><a href="/" class="btn_sign">회원가입</a></li>
+				<li><a href="#" class="btn_login" onclick="loginView('open')">로그인</a></li>
+        <li><a href="#" class="btn_sign">회원가입</a></li>
         <!--  로그인 했을경우  
         <li><span class="login_profile"><img src="img/test-profile/handyping.png" alt="" style="width: 30px; height: 30px;"><b>{조아핑}</b>님이 로그인 하셨습니다</span></li>
         <li><a href="/" class="btn_login">로그아웃</a></li>
@@ -26,185 +21,6 @@
         -->
       </ul>
     </div>
-    <style>
-    .main-nav-list-menu {
-    	display : none;
-    }
-    .main-navbar:hover + .main-nav-list-menu {
-    	display : block;
-    }
-    
-    .modal-background {
-    	display: none;
-    	position: fixed;
-    	z-index: 1;
-    	left: 0;
-    	right: 0;
-    	bottom: 0;
-    	width: 100%;
-    	height: 100%;
-    	background-color: rgba(11, 19, 30, .37);
-    	backdrop-filter: blur(3px);
-    	overflow: hidden;
-    }
-
-	.modal-login {
-		position: fixed;
-		padding: 24px;
-		top: 50%;
-		left: 50%;
-	    width: 360px;
-	    height: 432px;
-	    background-color: #fff;
-	    border-radius: 6px;
-	    z-index: 10;
-	    transform: translate(-50%, -50%);
-	    text-align: center;
-	}
-	
-	.modal-login .form-input {
-		width: 312px;
-		margin-bottom: 12px;
-		padding: 13px 12px;
-		line-height: 1.47;
-		font-size: 15px;
-		border: 1px solid #dee2e6;
-		letter-spacing: -.3px;
-	    border-radius: 4px;
-	    background-color: #fff;
-	}
-	
-	.modal-login .form-button {
-		background-color: black;
-		margin: 12px 0;
-		width: 312px;
-		height: 48px;
-		border: 1px solid black;
-		border-radius: 4px;
-		color: white;
-		font-size: 14px;
-		font-weight: bold;
-	}
-	
-	.modal-login .modal-action {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-bottom: 24px;
-	}
-	
-	.modal-action .action-text {
-		line-height: 1.38;
-		font-size: 13px;
-		color: #616568;
-		border-bottom: 1px solid #858a8d;
-		cursor: pointer;
-	}
-	
-	.modal-action .action-divider {
-		margin: 0 8px;
-		width: 1px;
-		height: 10px;
-		background-color: #858a8d;
-	}
-	
-	.modal-login .social-login {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	
-	.modal-login .social-login-line {
-		position: relative;
-		bottom: -8px;
-		display: block;
-		margin: 0;
-		width: 100%;
-		height: 1px;
-		background-color: #f1f3f5;
-		border: none;
-	}
-	
-	.modal-login .social-login-title {
-		padding: 0 8px;
-		margin-bottom: 16px;
-		font-size: 11px;
-		line-height: 16px;
-		letter-spacing: -.3px;
-		color: #abb0b5;
-		z-index: 1;
-		background-color: #fff;
-	}
-	
-	.modal-login .social-buttons {
-		display: flex;
-		margin: auto;
-		column-gap: 12px;
-	}
-	
-	.social-button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 44px;
-		height: 44px;
-		border: 0;
-		border-radius: 4px;
-		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
-		cursor: pointer;
-	}
-    </style>
-    <div class="modal-background">
-    	<div class="modal-login">
-    		<button onclick="loginView('close')" style="width: auto; min-width: auto; border: none; float: right;">X</button>
-    		<img src="/img/logo/icon.png" style="width: 200px; margin: 20px auto;">
-    		
-    		<form name="loginForm" id="loginForm" method="post">
-		   		<input type="text" name="email" id="email" class="form-input" placeholder="이메일">
-		   		<input type="password" name="password" id="password" class="form-input" placeholder="비밀번호">
-		   		
-		   		<button class="form-button" onclick="loginChk()">로그인</button>
-    		</form>
-    		<p class="modal-action">
-    			<a href="#" class="action-text">아이디(이메일) 찾기</a>
-    			<span class="action-divider"></span>
-    			<a href="#" class="action-text">비밀번호 찾기</a>
-    			<span class="action-divider"></span>
-    			<a href="#" class="action-text">회원가입</a>
-    		</p>
-    		<div class="social-login">
-    			<hr class="social-login-line">
-    			<span class="social-login-title">간편 로그인</span>
-    			<div class="social-buttons">
-	    			<button class="social-button">구글</button>
-	    			<button class="social-button">네이버</button>
-	    			<button class="social-button">카카오</button>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-    <script>
-    let modalBackground = document.querySelector('.modal-background');
-    
-    const loginView = (e) => {
-    	if (e == 'open') {
-    		document.body.style.cssText = 'position: fixed; top: -${ window.scrollY }px; overflow-y: scroll; width: 100%;';
-    		modalBackground.style.display = 'block';
-    	}
-    	
-    	if (e == 'close') {
-    		email.value = '';
-    		password.value = '';
-    		document.body.style.cssText = '';
-    		window.scrollTo(0, parseInt(document.body.style.top || '0', 10) * -1);
-    		modalBackground.style.display = 'none';
-    	}
-    }
-    
-    const loginChk  = () => {
-    	
-    }
-    </script>
   </nav>
   <!-- mega menu -->
   <div class="main-nav-list-menu">
@@ -234,9 +50,10 @@
       <div class="menu-item">
         <ul>
           <li><b>개발자 라운지</b></li>
+          <li><a href="/system">시스템 관리</a></li>
           <li><a href="/">채팅방 바로가기</a></li>
         </ul>
       </div>
     </div>
   </div>
-  </header>
+</header>
