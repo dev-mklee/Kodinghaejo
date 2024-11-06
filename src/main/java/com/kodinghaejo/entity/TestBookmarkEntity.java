@@ -24,7 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "test_bookmark")
+@Entity(name = "testBookmark")
 @Table(name = "jpa_test_bookmark")
 @IdClass(TestBookmarkEntityID.class)
 public class TestBookmarkEntity {
@@ -38,8 +38,8 @@ public class TestBookmarkEntity {
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "t_idx", nullable = false)
-	private TestEntity tIdx;
+	@JoinColumn(name = "test_idx", nullable = false)
+	private TestEntity testIdx;
 
 	@Column(name = "add_chk", length = 2, nullable = true)
 	private String addChk;

@@ -33,9 +33,6 @@ public class BoardController {
 		
 	}
 	
-	@GetMapping("/testboardWrite")
-	public void getTestboardWrite() {
-		
-	}
+	
 
 }

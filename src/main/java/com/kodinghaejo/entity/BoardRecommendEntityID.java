@@ -15,6 +15,6 @@ public class BoardRecommendEntityID implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String email;
-	private Long bIdx;	
+	private Long boardIdx;	
 
 }
