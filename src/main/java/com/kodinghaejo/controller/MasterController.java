@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.entity.TestEntity;
+import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.MasterService;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class MasterController {
 	
 	private final MasterService masterService;
 	
+    private TestRepository testRepository;
 	
 	@GetMapping("/page-admin/systemMain")
 	public void getSystemMain() {
@@ -37,8 +39,12 @@ public class MasterController {
 	
 	@GetMapping("/page-admin/systemTest")
 	public String getSystemTest(Model model) {
-		List<TestEntity> tests = masterService.testAllList(); // 문제 리스트를 가져옴
-        model.addAttribute("tests", tests); // 모델에 추가하여 Thymeleaf로 전달
+		List<TestDTO> tests = masterService.testAllList(); // 문제 리스트
+        model.addAttribute("tests", tests);
+        
+        long testCount = testRepository.count();
+        model.addAttribute("testCount", testCount);
+        
         return "/page-admin/systemTest"; // 템플릿 파일 이름
 	}
 	
@@ -82,10 +88,5 @@ public class MasterController {
 			log.error("Error during testWrite", e);
 			return "{\"message\": \"fail\"}";
 		}
-	}
-	
-	@GetMapping("/page-admin/codeboardWrite")
-	public void getCodeboardWrite() {
-		
 	}
 }

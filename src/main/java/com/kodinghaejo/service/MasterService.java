@@ -15,6 +15,6 @@ public interface MasterService {
 	void saveTestWrite(TestDTO testDTO);
 	
 	//문제 보여주기
-	public List<TestEntity> testAllList();
+	public List<TestDTO> testAllList();
 	
 }

@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>회원정보 관리</title>
+<title>문제 리스트 관리</title>
 <link rel="icon" href="/img/logo/favicon.png">
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <script src="/js/pub-ui-custom.js"></script>
 </head>
-<div id="header"></div>
 <body>
+<div id="header"></div>
 	<div class="container column mt50">
 		<div class="column-row">
 			<div class="c-column-2">
@@ -26,7 +26,7 @@
 					</div>
 					<div class="sys-description-box mb20">
 						<div class="box-itme">
-							<h3>문제 수 : 10</h3>
+							<h3>문제 수 : <span th:text="${testCount}"></span></h3>
 						</div>
 						<div class="box-itme">
 							<button class="testwrite-button"><a href="/page-admin/testboardWrite">문제 출제</a></button>
@@ -58,7 +58,14 @@
 								<td th:text="${test.idx}">1</td>
 								<td th:text="${test.title}">첫번째 문제입니다.</td>
 								<td th:text="${test.diff}">1레벨</td>
-								<td></td>
+								<td>
+						            <ul>
+						                <!-- testLngList를 순회하며 언어 코드 출력 -->
+						                <li th:each="lang : ${test.testLngList}" 
+										    th:text="${lang.lng == 'LNG-0001' ? 'JAVA' : (lang.lng == 'LNG-0002' ? 'javascript' : 'Unknown')}">
+										</li>
+						            </ul>
+						        </td>
 								<td th:text="${test.regdate}">2024-11-04</td>
 								<td>999명</td>
 								<td>50%</td>
