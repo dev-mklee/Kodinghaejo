@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +37,7 @@ public class AdminController {
 		
 	}
 	
+	//문제 리스트
 	@GetMapping("/admin/systemTest")
 	public String getSystemTest(Model model) {
 
@@ -80,6 +80,7 @@ public class AdminController {
 	public void getTestboardWrite() {
 		
 	}
+	//문제 작성
 	@ResponseBody
 	@PostMapping("/admin/testboardWrite")
 	public String testWrite(@RequestBody TestDTO testDTO) {
@@ -92,6 +93,7 @@ public class AdminController {
 		}
 	}
 	
+	//문제 수정화면
 	@GetMapping("/admin/testboardModify")
 	public String modifyTest(@RequestParam("id") Long id, Model model) {
 		try {
@@ -109,7 +111,7 @@ public class AdminController {
 	        return "{\"message\": \"fail\"}";
 	    }
     }
-	
+	//문제 수정
 	@ResponseBody
 	@PostMapping("/admin/testboardModify")
 	public String modifyTest(@RequestBody TestDTO testDTO) {
