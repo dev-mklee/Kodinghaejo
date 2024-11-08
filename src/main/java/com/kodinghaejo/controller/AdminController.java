@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kodinghaejo.dto.TestDTO;
-import com.kodinghaejo.entity.TestEntity;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.MasterService;
 
@@ -21,68 +22,100 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @AllArgsConstructor
 @Log4j2
-public class MasterController {
+public class AdminController {
 	
 	private final MasterService masterService;
 	
     private TestRepository testRepository;
 	
-	@GetMapping("/page-admin/systemMain")
+	@GetMapping("/admin/systemMain")
 	public void getSystemMain() {
 		
 	}
 	
-	@GetMapping("/page-admin/systemMemberInfo")
+	@GetMapping("/admin/systemMemberInfo")
 	public void getSystemMeberInfo() {
 		
 	}
 	
-	@GetMapping("/page-admin/systemTest")
+	@GetMapping("/admin/systemTest")
 	public String getSystemTest(Model model) {
+
 		List<TestDTO> tests = masterService.testAllList(); // 문제 리스트
         model.addAttribute("tests", tests);
         
         long testCount = testRepository.count();
         model.addAttribute("testCount", testCount);
         
-        return "/page-admin/systemTest"; // 템플릿 파일 이름
+        return "/admin/systemTest"; // 템플릿 파일 이름
 	}
 	
-	@GetMapping("/page-admin/systemChat")
+	@GetMapping("/admin/systemChat")
 	public void getSystemChat() {
 		
 	}
 	
-	@GetMapping("/page-admin/systemNotice")
+	@GetMapping("/admin/systemNotice")
 	public void getSystemNotice() {
 		
 	}
 	
-	@GetMapping("/page-admin/systemFreeBoard")
+	@GetMapping("/admin/systemFreeBoard")
 	public void getSystemFreeBoard() {
 		
 	}
-	@GetMapping("/page-admin/systemQBoard")
+	@GetMapping("/admin/systemQBoard")
 	public void getSystemQBoard() {
 		
 	}
-	@GetMapping("/page-admin/systemReply")
+	@GetMapping("/admin/systemReply")
 	public void getSystemReply() {
 		
 	}
-	@GetMapping("/page-admin/noticeboardWrite")
+	@GetMapping("/admin/noticeboardWrite")
 	public void getNoticeboardWrite() {
 		
 	}
-	@GetMapping("/page-admin/testboardWrite")
+	@GetMapping("/admin/testboardWrite")
 	public void getTestboardWrite() {
 		
 	}
 	@ResponseBody
-	@PostMapping("/page-admin/testboardWrite")
+	@PostMapping("/admin/testboardWrite")
 	public String testWrite(@RequestBody TestDTO testDTO) {
 		try {
 			masterService.saveTestWrite(testDTO);
+			return "{\"message\": \"good\"}";
+		} catch (Exception e) {
+			log.error("Error during testWrite", e);
+			return "{\"message\": \"fail\"}";
+		}
+	}
+	
+	@GetMapping("/admin/testboardModify")
+	public String modifyTest(@RequestParam("id") Long id, Model model) {
+		try {
+			
+	        TestDTO testDTO = masterService.getTestById(id); // 서비스에서 데이터 조회
+	        model.addAttribute("test", testDTO);
+	        
+	        List<String> diffList = List.of("0", "1", "2");
+	        model.addAttribute("diffList", diffList);
+	        
+	        
+	        return "/admin/testboardModify";
+	    } catch (Exception e) {
+	        log.error("Error during modifyTest", e);
+	        return "{\"message\": \"fail\"}";
+	    }
+    }
+	
+	@ResponseBody
+	@PostMapping("/admin/testboardModify")
+	public String modifyTest(@RequestBody TestDTO testDTO) {
+		try {
+			
+			masterService.saveTestModify(testDTO);
 			return "{\"message\": \"good\"}";
 		} catch (Exception e) {
 			log.error("Error during testWrite", e);

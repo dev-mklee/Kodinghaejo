@@ -63,4 +63,45 @@ public class MasterServiceImpl implements MasterService {
         
         return testDTOList;
     }
+	
+	//문제 수정
+	@Override
+	public void saveTestModify(TestDTO testDTO)  {		
+		TestEntity testEntity = testRepository.findById(testDTO.getIdx()).get();
+
+		testEntity.setDiff(testDTO.getDiff());
+		testEntity.setTitle(testDTO.getTitle());
+		testEntity.setDescr(testDTO.getDescr());
+		
+		testRepository.save(testEntity);
+		
+		for (TestLngDTO langDTO : testDTO.getTestLngList()) {
+	        TestLngEntity testLngEntity = testLngRepository.findByTestIdxAndLng(testEntity, langDTO.getLng()).get();
+
+	        // 언어 정보 수정
+	        testLngEntity.setContent(langDTO.getContent());
+	        testLngEntity.setCorrect(langDTO.getCorrect());
+	        testLngEntity.setMainSrc(langDTO.getMainSrc());
+	        testLngEntity.setRunSrc(langDTO.getRunSrc());
+	        // 수정된 엔티티 저장
+	        testLngRepository.save(testLngEntity);
+	    }
+	}
+	
+	//ID로 문제 데이터 조회
+	@Override
+	public TestDTO getTestById(Long id) {
+        TestEntity testEntity = testRepository.findById(id).get();
+        
+        List<TestLngDTO> testLngList = new ArrayList<>();
+        testLngRepository.findByTestIdx(testEntity).stream().forEach((e) -> testLngList.add(new TestLngDTO(e)));
+
+        TestDTO testDTO = new TestDTO(testEntity);
+        testDTO.setTestLngList(testLngList);
+        
+        // TestEntity를 TestDTO로 변환하여 반환
+        return testDTO;
+    }
+	
+	
 }

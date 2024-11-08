@@ -1,12 +1,15 @@
 package com.kodinghaejo.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -44,5 +47,8 @@ public class TestEntity {
 
 	@Column(name = "is_use", length = 2, nullable = false)
 	private String isUse;
-
+	
+	@OneToMany(mappedBy = "testIdx", fetch = FetchType.LAZY) // TestLngEntity의 testIdx와 연결
+    private List<TestLngEntity> testLngEntities;
+	
 }

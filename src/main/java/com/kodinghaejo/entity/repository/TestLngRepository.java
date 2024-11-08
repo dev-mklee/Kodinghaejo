@@ -1,6 +1,7 @@
 package com.kodinghaejo.entity.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,4 +15,7 @@ public interface TestLngRepository extends JpaRepository<TestLngEntity, Long> {
 	
 	//문제에 대한 모든 언어 가져오기
 	List<TestLngEntity> findByTestIdx(TestEntity testEntity);
+	
+	//testIdx와 lng로 testLngEntity 찾는 쿼리 메서드
+	Optional<TestLngEntity> findByTestIdxAndLng(TestEntity testEntity, String lng);
 }
