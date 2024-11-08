@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kodinghaejo.dto.BoardDTO;
+import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
+import com.kodinghaejo.dto.TestQuestionDTO;
+import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
 
@@ -23,6 +27,7 @@ public class AdminController {
 	
 	private final AdminService service;
 	private TestRepository testRepository;
+	private BoardRepository boardRepository;
 	
 	@GetMapping("/admin/systemMain")
 	public void getSystemMain() {
@@ -51,21 +56,48 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/systemNotice")
-	public void getSystemNotice() {
+	public String getSystemNotice(Model model) {
+		List<BoardDTO> boardDTOs = service.noticeboardList();
+		model.addAttribute("boards",boardDTOs);
 		
+		long boardCount = boardDTOs.size();
+		model.addAttribute("boardCount", boardCount);
+		
+
+		return "/admin/systemNotice";
 	}
 	
 	@GetMapping("/admin/systemFreeBoard")
-	public void getSystemFreeBoard() {
+	public String getSystemFreeBoard(Model model) {
+		List<BoardDTO> boardDTOs = service.freeboardList();
+		model.addAttribute("boards",boardDTOs);
 		
+		long boardCount = boardDTOs.size();
+		model.addAttribute("boardCount", boardCount);
+		
+
+		return "/admin/systemFreeBoard";
 	}
+	
 	@GetMapping("/admin/systemQBoard")
-	public void getSystemQBoard() {
+	public String getSystemQBoard(Model model) {
+		List<TestQuestionDTO> questionDTOs = service.questionList();
+		model.addAttribute("questions", questionDTOs);
 		
+		long questionCount = questionDTOs.size();
+		model.addAttribute("questionCount", questionCount);
+		
+		return "/admin/systemQBoard";
 	}
 	@GetMapping("/admin/systemReply")
-	public void getSystemReply() {
+	public String getSystemReply(Model model) {
+		List<ReplyDTO> replyDTOs = service.replyList();
+		model.addAttribute("replys", replyDTOs);
 		
+		long replyCount = replyDTOs.size();
+		model.addAttribute("replyCount", replyCount);
+		
+		return "/admin/systemReply";
 	}
 	@GetMapping("/admin/noticeboardWrite")
 	public void getNoticeboardWrite() {

@@ -3,14 +3,24 @@ package com.kodinghaejo.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.kodinghaejo.dto.BoardDTO;
+import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestLngDTO;
+import com.kodinghaejo.dto.TestQuestionDTO;
+import com.kodinghaejo.entity.BoardEntity;
+import com.kodinghaejo.entity.ReplyEntity;
 import com.kodinghaejo.entity.TestEntity;
 import com.kodinghaejo.entity.TestLngEntity;
+import com.kodinghaejo.entity.TestQuestionEntity;
+import com.kodinghaejo.entity.repository.BoardRepository;
+import com.kodinghaejo.entity.repository.ReplyRepository;
 import com.kodinghaejo.entity.repository.TestLngRepository;
+import com.kodinghaejo.entity.repository.TestQuestionRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +31,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	private final TestRepository testRepository;
 	private final TestLngRepository testLngRepository;
+	private final BoardRepository boardRepository;
+	private final TestQuestionRepository questionRepository;
+	private final ReplyRepository replyRepository;
 	
 	//문제 작성
 	@Override
@@ -63,5 +76,60 @@ public class AdminServiceImpl implements AdminService {
 		
 		return testDTOList;
 	}
-
+	
+	//자유게시판 관리 화면
+	@Override
+	public List<BoardDTO> freeboardList() {
+		List<BoardEntity> boardEntities = boardRepository.findByCatNot("공지사항");
+	    List<BoardDTO> boardDTOs = new ArrayList<>();
+	    
+	    for (BoardEntity board : boardEntities) {
+	        BoardDTO boardDTO = new BoardDTO(board);
+	        boardDTOs.add(boardDTO);
+	    }
+	    
+	    return boardDTOs;
+		
+	}
+	
+	//공지사항 관리 화면
+	@Override
+	public List<BoardDTO> noticeboardList() {
+		List<BoardEntity> boardEntities = boardRepository.findByCat("공지사항");
+		List<BoardDTO> boardDTOs = new ArrayList<>();
+		
+		for (BoardEntity board : boardEntities) {
+	        BoardDTO boardDTO = new BoardDTO(board);
+	        boardDTOs.add(boardDTO);
+	    }
+	    
+	    return boardDTOs;
+		
+	}
+	
+	//질문게시판 관리 화면
+	@Override
+	public List<TestQuestionDTO> questionList() {
+		List<TestQuestionEntity> questionEntities = questionRepository.findAll();
+		List<TestQuestionDTO> questionDTOs = new ArrayList<>();
+		
+		for (TestQuestionEntity question : questionEntities) {
+			TestQuestionDTO questionDTO = new TestQuestionDTO(question);
+			questionDTOs.add(questionDTO);
+		}
+		return questionDTOs;
+	}
+	
+	//댓글 관리 화면
+	@Override
+	public List<ReplyDTO> replyList() {
+		List<ReplyEntity> replyEntities = replyRepository.findAll();
+		List<ReplyDTO> replyDTOs = new ArrayList<>();
+		
+		for (ReplyEntity reply : replyEntities) {
+			ReplyDTO replyDTO = new ReplyDTO(reply);
+			replyDTOs.add(replyDTO);
+		}
+		return replyDTOs;
+	}
 }

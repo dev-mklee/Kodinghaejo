@@ -29,7 +29,7 @@
 						<button class="btn_search">검색</button>
 					</div>
 					<div class="sys-description-box  mb20">
-						<h3>공지글 수 : 10</h3>
+						<h3>공지글 수 : <span th:text="${boardCount}"></span></h3>
 						<div class="box-itme">
 							<button class="noticewrite-button"><a href="/noticeboardWrite">공지 작성</a></button>
 						</div>
@@ -57,94 +57,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>첫번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-11-04</td>
-								<td>4</td>
+							<tr th:each="board : ${boards}">
+								<td th:text="${board.idx}">1</td>
+								<td th:text="${board.title}">첫번째 공지글입니다.</td>
+								<td th:text="${board.writer}">운영자</td>
+								<td th:text="${board.regdate}">2024-11-04</td>
+								<td th:text="${board.hitCnt}">4</td>
 								<td>3</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>두번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-11-03</td>
-								<td>6</td>
-								<td>5</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>세번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-11-02</td>
-								<td>10</td>
-								<td>8</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>네번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-11-01</td>
-								<td>7</td>
-								<td>6</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>다섯번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-10-31</td>
-								<td>3</td>
-								<td>2</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td>여섯번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-10-30</td>
-								<td>5</td>
-								<td>3</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>7</td>
-								<td>일곱번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-10-29</td>
-								<td>2</td>
-								<td>1</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>8</td>
-								<td>여덟번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-10-28</td>
-								<td>12</td>
-								<td>10</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>9</td>
-								<td>아홉번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-10-27</td>
-								<td>9</td>
-								<td>7</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
-							</tr>
-							<tr>
-								<td>10</td>
-								<td>열번째 공지글입니다.</td>
-								<td>운영자</td>
-								<td>2024-10-26</td>
-								<td>8</td>
-								<td>6</td>
 								<td><a href="" class="btn_delete">삭제</a></td>
 							</tr>
 						</tbody>
