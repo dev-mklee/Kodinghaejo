@@ -13,14 +13,14 @@
 </head>
 <script>
 
-const registerForm = async() => {
+const modifyForm = async() => {
 	
 	 let cat = document.querySelector('select[name=category-section]').value; // 선택된 카테고리 값 가져오기
     let title = document.querySelector('#title');
     let writer = document.querySelector('#writer');
     let email = document.querySelector('#email');
     let isUse = document.querySelector('#isUse');
-    
+    const idx = document.getElementById('idx').value; 
 
     // Toast UI Editor의 content 내용 가져오기
     let content = editor.getMarkdown(); // 마크다운 텍스트로 가져오기
@@ -41,28 +41,33 @@ const registerForm = async() => {
     } 
     
     
-    let formData = new FormData(document.getElementById('WriteForm'));
-    formData.append("cat", cat); // 선택된 카테고리 값을 FormData에 추가
-    formData.append("content", content); // Toast UI Editor의 내용을 FormData에 추가
+    // FormData에 값 추가
+    let formData = new FormData(document.getElementById('ModifyForm'));
+    formData.append("cat", cat);
+    formData.set("content", content); // Editor 내용 추가
     
- 
+    // 서버에 수정 요청
+    try {
+      const response = await fetch('/board/modify', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json();
+      
+      if (data.message === 'good') {
+        alert("게시물이 수정되었습니다.");
+        document.location.href = `/board/freeboardView?idx=${idx}`;
+      } else {
+        alert("수정에 실패했습니다.");
+      }
+    } catch (error) {
+      alert("시스템 장애로 수정이 실패했습니다.");
+      console.error("Error:", error);
+    }
     
-    await fetch('/board/write', {
-		method: 'POST',
-		body: formData
-	}).then((response)=> response.json())
-		.then((data)=> {
-			if(data.message === 'good'){
-				alert("게시물이 등록되었습니다.");
-				document.location.href='/board/freeboard';
-			}
-	}).catch((error)=> {
-		alert("시스템 장애로 게시물 등록이 실패했습니다.");
-		console.log("error" + error);
-	})
-     
     
-
+    
+    
 }
 
 
@@ -74,7 +79,7 @@ const registerForm = async() => {
 
 <body>
   <!-- header 영역 -->
-  <div id="header" th:replace="include/header"></div>
+  <div id="header" th:replace="include/header :: header"></div>
   <div class="container">
     <div class="main-content">
       <div class="content-board-notice-write">
@@ -82,25 +87,26 @@ const registerForm = async() => {
         
         
         
-        <form class="WriteForm" id="WriteForm" name="WriteForm" method="post" enctype="multipart/form-data">     
-          <h2>자유롭게 글을 작성해 보세요</h2>
+        <form class="ModifyForm" id="ModifyForm" name="ModifyForm" method="post" enctype="multipart/form-data">     
+          <h2>게시물 수정</h2>
           <div class="mt30"></div>
           <div class="category-menu">
             <label for="category-section">카테고리<span class="asterisk"></span></label>
             <select name="category-section">
-              <option value="자유게시판" selected>자유게시판</option>
-              <option value="커리어고민">커리어고민</option>
+                <option value="자유게시판" th:selected="${view.cat == '자유게시판'}">자유게시판</option>
+                <option value="커리어고민" th:selected="${view.cat == '커리어고민'}">커리어고민</option>
               <!-- <option value="카테고리메뉴" disabled>카테고리메뉴</option> -->
             </select>
           
           </div>
           <div class="category-title">
             <label for="title">제목<span class="asterisk"></span></label>
-            <input type="text" id="title" name="title" placeholder="제목을 입력해 주세요" maxlength="100">
+            <input type="text" id="title" name="title" th:value="${view.title}" maxlength="100">
             
-            <input type="hidden" id="email" name="email" value="admin@kodinghaejo.com">
-            <input type="hidden" id="writer" name="writer" value="관리자">
-            <input type="hidden" id="isUse" name="isUse" value="Y">
+            <input type="hidden" id="idx" name="idx" th:value="${view.idx}">
+            <input type="hidden" id="email" name="email" value="{view.email}">
+            <input type="hidden" id="writer" name="writer" value="{view.writer}">
+            <input type="hidden" id="isUse" name="isUse" value="{view.isUse}">
             
           </div>
             
@@ -110,13 +116,13 @@ const registerForm = async() => {
             <div id="content"></div>
           </div>
           
-          </form> 
           
           <div class="category-footer mt30">
           
-          <input type="button" value="전송" onclick="registerForm()">
+          <input type="button" value="수정완료" onclick="modifyForm()">
             <button onclick="history.back();">뒤로가기</button>
           </div>
+          </form> 
           
           
           
@@ -127,16 +133,20 @@ const registerForm = async() => {
     </div>
   </div>
  <!-- footer영역 -->
-   <div id="footer" th:replace="include/footer"></div>
+   <div id="footer" th:replace="include/footer :: footer"></div>
   <!-- toast API : 나중에 모듈로 작성해서 만들기-->
   <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
   <script>
+ 
+ 
+  	const contentValue = `[[${view.content}]]`;
+  	
     const editor = new toastui.Editor({
       el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
       height: '400px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
-      initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-      initialValue: '내용을 입력해 주세요.',    // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+     
+      initialValue: contentValue,    // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
       initialEditType: 'wysiwyg',              // 마크다운 프리뷰 스타일 (tab || vertical)
       
        toolbarItems: [

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,30 +7,57 @@
     <!-- Standard css -->
     <link rel="icon" href="/img/logo/favicon.png" />
     <link rel="stylesheet" href="/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
-    />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"/>
     <!-- pub-js link -->
     <script src="/js/pub-ui-custom.js"></script>
+    <script src="/js/pub-script"></script>
   </head>
 
   <body>
   <!-- header 영역 -->
-  <div id="header"></div>
+  <div id="header" th:replace="include/header"></div>
     <div class="container">
       <div class="main-content">
         <div class="content-board-free">
           <div class="content-board-free-title">
             <h3>자유롭게 이야기를 나누어 보세요</h3>
-            <button class="board-free-btn" onclick="location.href='/freeboardWrite.html'" >작성하기</button>
+            <button class="board-free-btn" onclick="location.href='/board/freeboardWrite'" >작성하기</button>
           </div>
           <div class="content-board-free-content">
             <div class="free-content-box">
               <!-- content-box-item : 가로 3개 배열로 구성 -->
+              
+             
+             
+              <!-- 게시물 반복 출력 -->
+            <div class="content-box-item" th:each="post : ${posts}" th:if="${post.isUse == 'Y'}">
+              <h4 th:text="${post.cat}">카테고리</h4>
+              <a th:href="@{/board/freeboardView(idx=${post.idx})}">
+                <h5 th:text="${post.title}">게시물 제목</h5>
+                <p class="content-title" th:text="${post.content}">게시물 내용</p>
+              </a>
+              <div class="profile-title">
+                <p class="profile-name" th:text="${post.writer}">작성자</p>
+                <p class="profile-date" th:text="${post.regdate}">작성 시간</p>
+              </div>
+              <div class="profile-item">
+                <ol>
+                  <li><i class="xi-eye-o"></i>{0}</li>
+                  <li><i class="xi-comment-o"></i>{0}</li>
+                </ol>
+                <div class="like">
+                  <span><i class="xi-heart-o"></i>{0}</span>
+                   <!-- like 시 클릭 될 클래스 명<span><i class="xi-heart"></i>{0}</span> -->
+                </div>
+              </div>
+            </div>
+            <!-- 게시물 반복 출력 끝 -->
+             
+
+<!-- 
               <div class="content-box-item">
                 <h4>자유주제</h4>
-                <a href="/freeboardView.html">
+                <a href="/board/freeboardView">
                   <h5>[ Amazon Braket을 활용한 양자컴퓨팅 실습교육 참가자 모집 ] 양자컴퓨팅-상업적 도전과제 해결을 위한 교육 및 사업화 전략</h5>
                   <p class="content-title">
                       양자컴퓨팅 기초개념 교육과 실습을 해볼 수 있는 교육을 소개합니다!
@@ -53,12 +80,15 @@
                   </div>
                 </div>
               </div>
+           
+       
+           
             </div>
           </div>
         </div>
       </div>
     </div>
   <!-- footer영역 -->
-  <div id="footer"></div>
+    <div id="footer" th:replace="include/footer"></div>
   </body>
 </html>

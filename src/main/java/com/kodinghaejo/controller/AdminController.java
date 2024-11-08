@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
@@ -27,11 +28,13 @@ public class AdminController {
 	
     private TestRepository testRepository;
 	
+    //시스템 관리 메인화면
 	@GetMapping("/admin/systemMain")
 	public void getSystemMain() {
 		
 	}
 	
+	//회원정보 관리
 	@GetMapping("/admin/systemMemberInfo")
 	public void getSystemMeberInfo() {
 		
@@ -50,32 +53,43 @@ public class AdminController {
         return "/admin/systemTest"; // 템플릿 파일 이름
 	}
 	
+	//채팅방 관리
 	@GetMapping("/admin/systemChat")
 	public void getSystemChat() {
 		
 	}
 	
+	//공지 관리
 	@GetMapping("/admin/systemNotice")
 	public void getSystemNotice() {
 		
 	}
 	
+	//자유게시판 관리
 	@GetMapping("/admin/systemFreeBoard")
-	public void getSystemFreeBoard() {
+	public void getSystemFreeBoard(Model model) {
 		
 	}
+	
+	//질문게시판 관리
 	@GetMapping("/admin/systemQBoard")
 	public void getSystemQBoard() {
 		
 	}
+	
+	//댓글 관리
 	@GetMapping("/admin/systemReply")
 	public void getSystemReply() {
 		
 	}
+	
+	//공지작성화면
 	@GetMapping("/admin/noticeboardWrite")
 	public void getNoticeboardWrite() {
 		
 	}
+	
+	//문제 작성화면
 	@GetMapping("/admin/testboardWrite")
 	public void getTestboardWrite() {
 		
