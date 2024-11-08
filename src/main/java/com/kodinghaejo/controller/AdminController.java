@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.entity.repository.TestRepository;
-import com.kodinghaejo.service.MasterService;
+import com.kodinghaejo.service.AdminService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +24,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class AdminController {
 	
-	private final MasterService masterService;
+	private final AdminService adminService;
 	
     private TestRepository testRepository;
 	
@@ -41,7 +41,7 @@ public class AdminController {
 	@GetMapping("/admin/systemTest")
 	public String getSystemTest(Model model) {
 
-		List<TestDTO> tests = masterService.testAllList(); // 문제 리스트
+		List<TestDTO> tests = adminService.testAllList(); // 문제 리스트
         model.addAttribute("tests", tests);
         
         long testCount = testRepository.count();
@@ -84,7 +84,7 @@ public class AdminController {
 	@PostMapping("/admin/testboardWrite")
 	public String testWrite(@RequestBody TestDTO testDTO) {
 		try {
-			masterService.saveTestWrite(testDTO);
+			adminService.saveTestWrite(testDTO);
 			return "{\"message\": \"good\"}";
 		} catch (Exception e) {
 			log.error("Error during testWrite", e);
@@ -96,7 +96,7 @@ public class AdminController {
 	public String modifyTest(@RequestParam("id") Long id, Model model) {
 		try {
 			
-	        TestDTO testDTO = masterService.getTestById(id); // 서비스에서 데이터 조회
+	        TestDTO testDTO = adminService.getTestById(id); // 서비스에서 데이터 조회
 	        model.addAttribute("test", testDTO);
 	        
 	        List<String> diffList = List.of("0", "1", "2");
@@ -115,7 +115,7 @@ public class AdminController {
 	public String modifyTest(@RequestBody TestDTO testDTO) {
 		try {
 			
-			masterService.saveTestModify(testDTO);
+			adminService.saveTestModify(testDTO);
 			return "{\"message\": \"good\"}";
 		} catch (Exception e) {
 			log.error("Error during testWrite", e);

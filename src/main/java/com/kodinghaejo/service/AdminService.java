@@ -9,7 +9,7 @@ import com.kodinghaejo.entity.TestEntity;
 
 
 @Service
-public interface MasterService {
+public interface AdminService {
 	
 	//문제 작성
 	void saveTestWrite(TestDTO testDTO);

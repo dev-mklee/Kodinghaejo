@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class MasterServiceImpl implements MasterService {
+public class AdminServiceImpl implements AdminService {
 	
 	private final TestRepository testRepository;
 	private final TestLngRepository testLngRepository;
