@@ -106,6 +106,12 @@ public class AdminServiceImpl implements AdminService {
 	    return boardDTOs;
 		
 	}
+	//공지사항 삭제
+	@Override
+	public void deleteNotice(Long idx) {
+		BoardEntity boardEntity = boardRepository.findById(idx).get();
+		boardRepository.delete(boardEntity);
+	}
 	
 	//질문게시판 관리 화면
 	@Override

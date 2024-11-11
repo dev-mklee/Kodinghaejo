@@ -26,4 +26,7 @@ public interface AdminService {
 	
 	//댓글 관리화면
 	public List<ReplyDTO> replyList();
+	
+	//공지사항 삭제
+	public void deleteNotice(Long idx);
 }

@@ -2,11 +2,16 @@ package com.kodinghaejo.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kodinghaejo.dto.BoardDTO;
@@ -19,6 +24,7 @@ import com.kodinghaejo.service.AdminService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.bytebuddy.asm.Advice.Return;
 
 @Controller
 @AllArgsConstructor
@@ -65,6 +71,13 @@ public class AdminController {
 		
 
 		return "/admin/systemNotice";
+	}
+	
+	@DeleteMapping("/admin/systemNoticeDelete/{idx}") 
+	public ResponseEntity<Void> getNoticeDelete(@PathVariable("idx") Long idx) {
+		service.deleteNotice(idx);
+		
+		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/admin/systemFreeBoard")
