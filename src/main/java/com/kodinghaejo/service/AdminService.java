@@ -39,6 +39,9 @@ public interface AdminService {
 	//채팅방 관리화면
 	public List<ChatDTO> chatList();
 	
+	//참여인원 0인 채팅방 삭제
+	public void deleteEmptyChats();
+	
 	//게시글 삭제(자유게시판,공지사항)
 	public void deleteBoard(Long idx);
 	

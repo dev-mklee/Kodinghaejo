@@ -193,6 +193,16 @@ public class AdminServiceImpl implements AdminService {
 		return chatDTOs;
 	}
 	
+	//참여인원 0인 채팅방 삭제
+	@Override
+	public void deleteEmptyChats() {
+		List<ChatEntity> emptyChats = chatRepository.findChatsByLimit(0);
+	    
+	    for (ChatEntity chat : emptyChats) {
+	        chatRepository.deleteById(chat.getIdx());
+	    }
+	}
+	
 	//댓글 삭제
 	@Override
 	public void deleteReply(Long idx) {

@@ -9,4 +9,8 @@ import com.kodinghaejo.entity.ChatEntity;
 public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
 	
 	List<ChatEntity> findByTitleContaining(String searchKeyword);
+	
+	List<ChatEntity> findChatsByLimit(int limit);
+	
+	void deleteById(Long idx);
 }

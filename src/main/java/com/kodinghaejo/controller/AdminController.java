@@ -3,6 +3,7 @@ package com.kodinghaejo.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.stereotype.Controller;
@@ -109,6 +110,16 @@ public class AdminController {
 		return "/admin/systemChat";
 		
 	}
+	
+	@DeleteMapping("/admin/systemChatDelete")
+    public ResponseEntity<String> deleteEmptyChat() {
+        try {
+            service.deleteEmptyChats();
+            return ResponseEntity.ok("인원 없는 채팅방이 정리되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("채팅방 정리에 실패했습니다.");
+        }
+    }
 	
 	@GetMapping("/admin/systemNotice")
 	public String getSystemNotice(@RequestParam(required = false) String searchKeyword, Model model) {
