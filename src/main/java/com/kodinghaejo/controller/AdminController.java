@@ -29,6 +29,7 @@ import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.bytebuddy.asm.Advice.Return;
@@ -111,6 +112,7 @@ public class AdminController {
 		
 	}
 	
+	@Transactional
 	@DeleteMapping("/admin/systemChatDelete")
     public ResponseEntity<String> deleteEmptyChat() {
         try {
@@ -177,12 +179,15 @@ public class AdminController {
 		return "{\"message\":\"good\"}";
 	}	
 	
-	
+	@Transactional
 	@DeleteMapping("/admin/systemBoardDelete/{idx}") 
-	public ResponseEntity<Void> getBoardDelete(@PathVariable("idx") Long idx) {
-		service.deleteBoard(idx);
-		
-		return ResponseEntity.ok().build();
+	public ResponseEntity<String> getBoardDelete(@PathVariable("idx") Long idx) {
+		try {
+	        service.deleteBoard(idx);
+	        return ResponseEntity.ok("게시글이 정상적으로 삭제되었습니다.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
+	    }
 	}
 	
 	@GetMapping("/admin/systemFreeBoard")
@@ -220,11 +225,15 @@ public class AdminController {
 		return "/admin/systemQBoard";
 	}
 	
+	@Transactional
 	@DeleteMapping("/admin/systemQBoardDelete/{idx}") 
-	public ResponseEntity<Void> getQBoardDelete(@PathVariable("idx") Long idx) {
-		service.deleteQBoard(idx);
-		
-		return ResponseEntity.ok().build();
+	public ResponseEntity<String> getQBoardDelete(@PathVariable("idx") Long idx) {
+		try {
+	        service.deleteQBoard(idx);
+	        return ResponseEntity.ok("게시글이 정상적으로 삭제되었습니다.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
+	    }
 	}
 	
 	@GetMapping("/admin/systemReply")
@@ -246,10 +255,13 @@ public class AdminController {
 	}
 	
 	@DeleteMapping("/admin/systemReplyDelete/{idx}") 
-	public ResponseEntity<Void> getReplyDelete(@PathVariable("idx") Long idx) {
-		service.deleteReply(idx);
-		
-		return ResponseEntity.ok().build();
+	public ResponseEntity<String> getReplyDelete(@PathVariable("idx") Long idx) {
+		try {
+	        service.deleteReply(idx);
+	        return ResponseEntity.ok("댓글이 정상적으로 삭제되었습니다.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
+	    }
 	}
 	
 	@GetMapping("/admin/noticeboardWrite")
