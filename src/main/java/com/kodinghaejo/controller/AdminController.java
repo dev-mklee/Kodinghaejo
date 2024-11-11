@@ -140,6 +140,35 @@ public class AdminController {
 		return "/admin/systemNotice";
 	}
 	
+	//공지사항 수정화면
+	@GetMapping("/admin/noticeboardModify")
+	public String noticeModify(@RequestParam("id") Long id, Model model) {
+		try {
+			BoardDTO boardDTO = service.getNoticeById(id);
+			model.addAttribute("board", boardDTO);
+			
+			return "/admin/noticeboardModify";
+		} catch (Exception e) {
+	        log.error("Error during noticeModify", e);
+	        return "{\"message\": \"fail\"}";
+	    }
+	}
+	
+	//공지사항 수정
+	@ResponseBody
+	@PostMapping("/admin/noticeboardModify")
+	public String noticeModify(@RequestBody BoardDTO boardDTO) {
+		try {
+			
+			service.savenoticeModify(boardDTO);
+			return "{\"message\": \"good\"}";
+		} catch (Exception e) {
+			log.error("Error during noticeModify", e);
+			return "{\"message\": \"fail\"}";
+		}
+	}
+	
+	
 	//게시물 등록
 	@ResponseBody
 	@PostMapping("/admin/noticeWrite")

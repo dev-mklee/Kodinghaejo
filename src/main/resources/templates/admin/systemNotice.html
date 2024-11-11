@@ -79,7 +79,9 @@ const deleteNotice = (idx) => {
 						<tbody>
 							<tr th:each="board : ${boards}">
 								<td th:text="${board.idx}">1</td>
-								<td th:text="${board.title}">첫번째 공지글입니다.</td>
+								<td>
+									<a th:href="@{/admin/noticeboardModify?id={id}(id=${board.idx})}" th:text ="${board.title}">첫번째 공지사항입니다.</a>
+								</td>
 								<td th:text="${board.writer}">운영자</td>
 								<td th:text="${board.regdate}">2024-11-04</td>
 								<td th:text="${board.hitCnt}">4</td>

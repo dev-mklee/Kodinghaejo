@@ -140,6 +140,20 @@ public class AdminServiceImpl implements AdminService {
 		board.setHitCnt(0);
 		boardRepository.save(board.dtoToEntity(board));	
 	}
+	
+	//공지사항 수정
+	@Override
+	public void savenoticeModify(BoardDTO boardDTO) {
+		BoardEntity boardEntity = boardRepository.findById(boardDTO.getIdx()).get();
+		
+		boardEntity.setCat(boardDTO.getCat());
+		boardEntity.setTitle(boardDTO.getTitle());
+		boardEntity.setContent(boardDTO.getContent());
+		
+		boardRepository.save(boardEntity);
+	}
+	
+	
 	//게시글 삭제(자유게시판,공지사항)
 	@Override
 	public void deleteBoard(Long idx) {
@@ -345,5 +359,15 @@ public class AdminServiceImpl implements AdminService {
         }
 
         return chatMemberDTOs;
+    }
+	
+	//ID로 공지사항 데이터 조회
+	@Override
+	public BoardDTO getNoticeById(Long id) {
+        BoardEntity boardEntity = boardRepository.findById(id).get();
+        
+        BoardDTO boardDTO = new BoardDTO(boardEntity);
+        
+        return boardDTO;
     }
 }

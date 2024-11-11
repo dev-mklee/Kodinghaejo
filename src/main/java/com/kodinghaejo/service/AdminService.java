@@ -30,6 +30,12 @@ public interface AdminService {
 	//공지사항 작성
 	public void write(BoardDTO board);
 	
+	//ID로 공지사항 데이터 조회
+	public BoardDTO getNoticeById(Long id);
+	
+	//공지사항 수정
+	public void savenoticeModify(BoardDTO boardDTO);
+	
 	//질문게시판 관리화면
 	public List<TestQuestionDTO> questionList();
 	
