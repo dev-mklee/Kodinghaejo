@@ -106,6 +106,14 @@ public class AdminServiceImpl implements AdminService {
 	    return boardDTOs;
 		
 	}
+	
+	//공지사항 작성
+	@Override
+	public void write(BoardDTO board) {
+		board.setRegdate(LocalDateTime.now());
+		board.setHitCnt(0);
+		boardRepository.save(board.dtoToEntity(board));	
+	}
 	//게시글 삭제(자유게시판,공지사항)
 	@Override
 	public void deleteBoard(Long idx) {

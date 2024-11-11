@@ -21,6 +21,9 @@ public interface AdminService {
 	//공지사항 관리화면
 	public List<BoardDTO> noticeboardList();
 	
+	//공지사항 작성
+	public void write(BoardDTO board);
+	
 	//질문게시판 관리화면
 	public List<TestQuestionDTO> questionList();
 	

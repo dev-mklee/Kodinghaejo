@@ -18,6 +18,7 @@ import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
+import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
@@ -72,6 +73,15 @@ public class AdminController {
 
 		return "/admin/systemNotice";
 	}
+	
+	//게시물 등록
+	@ResponseBody
+	@PostMapping("/admin/noticeWrite")
+	public String noticeWrite(BoardDTO board) throws Exception {
+		service.write(board);
+		return "{\"message\":\"good\"}";
+	}	
+	
 	
 	@DeleteMapping("/admin/systemBoardDelete/{idx}") 
 	public ResponseEntity<Void> getBoardDelete(@PathVariable("idx") Long idx) {
@@ -147,5 +157,22 @@ public class AdminController {
 			return "{\"message\": \"fail\"}";
 		}
 	}
-
+	
+//	@GetMapping("/boardList")
+//	public String getBoardList(@RequestParam(defaultValue = "1") int page, Model model) {
+//	    int pageSize = 10;  // 페이지 당 게시글 수
+//	    int offset = (page - 1) * pageSize; // 시작 인덱스 계산
+//	    int totalCount = boardRepository.countAllBoards(); // 총 게시글 수
+//	    List<BoardEntity> boards = boardRepository.findBoards(offset, pageSize); // 해당 페이지의 게시글 조회
+//
+//	    // 총 페이지 수 계산
+//	    int totalPages = (int) Math.ceil((double) totalCount / pageSize);
+//	    
+//	    model.addAttribute("boards", boards);
+//	    model.addAttribute("totalPages", totalPages);
+//	    model.addAttribute("currentPage", page);
+//	    
+//	    return "boardList";  // Thymeleaf HTML 템플릿
+//	}
+	
 }
