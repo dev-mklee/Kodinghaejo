@@ -44,12 +44,10 @@ const deleteReply = (idx) => {
 				<div class="sys-system_menu">
 					<h2>댓글 관리</h2>
 					<div class="search-bar mb20">
-						<select name="searchType">
-							<option value="email">이메일</option>
-							<option value="nickname">닉네임</option>
-							<option value="name">이름</option>
-						</select> <input type="text" name="searchKeyword" placeholder="검색어 입력">
-						<button class="btn_search">검색</button>
+						<form method="get" action="/admin/systemReply">
+					        <input type="text" name="searchKeyword" placeholder="검색어 입력" th:value="${searchKeyword}" />
+					        <button type="submit" class="btn_search">검색</button>
+					    </form>
 					</div>
 					<div class="sys-description-box mb20">
 						<h3>댓글 수 : <span th:text="${replyCount}"></span></h3>

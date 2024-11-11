@@ -50,7 +50,7 @@ public class TestLngEntity {
 	@Column(name = "correct", length = 2000, nullable = false)
 	private String correct;
 
-	@Column(name = "main_src", length = 2000, nullable = false)
+	@Column(name = "subm_src", length = 2000, nullable = false)
 	private String mainSrc;
 
 	@Column(name = "regdate", nullable = false)

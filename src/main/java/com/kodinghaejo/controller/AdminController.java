@@ -1,6 +1,7 @@
 package com.kodinghaejo.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.event.PublicInvocationEvent;
@@ -15,11 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kodinghaejo.dto.BoardDTO;
+import com.kodinghaejo.dto.ChatDTO;
+import com.kodinghaejo.dto.ChatMemberDTO;
+import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.repository.BoardRepository;
+import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
 
@@ -35,6 +40,7 @@ public class AdminController {
 	private final AdminService service;
 	private TestRepository testRepository;
 	private BoardRepository boardRepository;
+	private MemberRepository memberRepository;
 	
 	@GetMapping("/admin/systemMain")
 	public void getSystemMain() {
@@ -42,29 +48,78 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/systemMemberInfo")
-	public void getSystemMeberInfo() {
+	public String getSystemMeberInfo( @RequestParam(value = "searchType", required = false) String searchType,
+            @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+            Model model) {
+		List<MemberDTO> memberDTOs;
 		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+	        memberDTOs = service.searchMembers(searchType, searchKeyword);
+	        
+	        model.addAttribute("members", memberDTOs);
+	        model.addAttribute("searchType", searchType);
+	        model.addAttribute("searchKeyword", searchKeyword);
+	        model.addAttribute("memberCount", memberDTOs.size());
+	    } else {
+	        memberDTOs = service.memberAllList();
+	    }
+		
+		model.addAttribute("members", memberDTOs);
+		
+		long memberCount = memberRepository.count();
+		model.addAttribute("memberCount", memberCount);
+		
+		return "/admin/systemMemberInfo";
 	}
 	
 	@GetMapping("/admin/systemTest")
-	public String getSystemTest(Model model) {
-		List<TestDTO> tests = service.testAllList(); // 문제 리스트
-		model.addAttribute("tests", tests);
+	public String getSystemTest(@RequestParam(required = false) String searchKeyword, Model model) {
+		List<TestDTO> testDTOs; // service.testAllList(); // 문제 리스트
 		
-		long testCount = testRepository.count();
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+	        testDTOs = service.searchtestListByTitle(searchKeyword);
+	    } else {
+	        testDTOs = service.testAllList();
+	    }
+		
+		model.addAttribute("tests", testDTOs);
+		
+		long testCount = testDTOs.size();
 		model.addAttribute("testCount", testCount);
 		
 		return "/admin/systemTest"; // 템플릿 파일 이름
 	}
 	
 	@GetMapping("/admin/systemChat")
-	public void getSystemChat() {
+	public String getSystemChat(@RequestParam(required = false) String searchKeyword, Model model) {
+		List<ChatDTO> chatDTOs;
+		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+	        chatDTOs = service.searchChatListByTitle(searchKeyword);
+	    } else {
+	        chatDTOs = service.chatList();
+	    }
+		
+		model.addAttribute("chats",chatDTOs);
+		
+		long chatCount = chatDTOs.size();
+		model.addAttribute("chatCount", chatCount);
+		
+
+		return "/admin/systemChat";
 		
 	}
 	
 	@GetMapping("/admin/systemNotice")
-	public String getSystemNotice(Model model) {
-		List<BoardDTO> boardDTOs = service.noticeboardList();
+	public String getSystemNotice(@RequestParam(required = false) String searchKeyword, Model model) {
+		List<BoardDTO> boardDTOs;
+		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+	        boardDTOs = service.searchNoticeListByTitle(searchKeyword);
+	    } else {
+	        boardDTOs = service.noticeboardList();
+	    }
+		
 		model.addAttribute("boards",boardDTOs);
 		
 		long boardCount = boardDTOs.size();
@@ -91,20 +146,32 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/systemFreeBoard")
-	public String getSystemFreeBoard(Model model) {
-		List<BoardDTO> boardDTOs = service.freeboardList();
-		model.addAttribute("boards",boardDTOs);
-		
-		long boardCount = boardDTOs.size();
-		model.addAttribute("boardCount", boardCount);
-		
-
-		return "/admin/systemFreeBoard";
+	public String getSystemFreeBoard(@RequestParam(required = false) String searchKeyword, Model model) {
+	    List<BoardDTO> boardDTOs;
+	    
+	    if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+	        boardDTOs = service.searchFreeboardListByTitle(searchKeyword);
+	    } else {
+	        boardDTOs = service.freeboardList();
+	    }
+	    model.addAttribute("boards", boardDTOs);
+	    
+	    long boardCount = boardDTOs.size();
+	    model.addAttribute("boardCount", boardCount);
+	    
+	    return "/admin/systemFreeBoard";
 	}
 	
 	@GetMapping("/admin/systemQBoard")
-	public String getSystemQBoard(Model model) {
-		List<TestQuestionDTO> questionDTOs = service.questionList();
+	public String getSystemQBoard(@RequestParam(required = false) String searchKeyword, Model model) {
+		List<TestQuestionDTO> questionDTOs;
+		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+			questionDTOs = service.searchQboardListByTitle(searchKeyword);
+		} else {
+			questionDTOs = service.questionList();
+		}
+		
 		model.addAttribute("questions", questionDTOs);
 		
 		long questionCount = questionDTOs.size();
@@ -121,8 +188,15 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/systemReply")
-	public String getSystemReply(Model model) {
-		List<ReplyDTO> replyDTOs = service.replyList();
+	public String getSystemReply(@RequestParam(required = false) String searchKeyword, Model model) {
+		List<ReplyDTO> replyDTOs;
+		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+			replyDTOs = service.searchReplyListByContent(searchKeyword);
+		} else {
+			replyDTOs = service.replyList();
+		}
+		
 		model.addAttribute("replys", replyDTOs);
 		
 		long replyCount = replyDTOs.size();

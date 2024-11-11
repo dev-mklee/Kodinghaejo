@@ -3,6 +3,9 @@ package com.kodinghaejo.service;
 import java.util.List;
 
 import com.kodinghaejo.dto.BoardDTO;
+import com.kodinghaejo.dto.ChatDTO;
+import com.kodinghaejo.dto.ChatMemberDTO;
+import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
@@ -14,6 +17,9 @@ public interface AdminService {
 	
 	//문제 보여주기
 	public List<TestDTO> testAllList();
+	
+	//회원정보 관리화면
+	public List<MemberDTO> memberAllList();
 	
 	//자유게시판 관리화면
 	public List<BoardDTO> freeboardList();
@@ -30,6 +36,9 @@ public interface AdminService {
 	//댓글 관리화면
 	public List<ReplyDTO> replyList();
 	
+	//채팅방 관리화면
+	public List<ChatDTO> chatList();
+	
 	//게시글 삭제(자유게시판,공지사항)
 	public void deleteBoard(Long idx);
 	
@@ -38,4 +47,27 @@ public interface AdminService {
 	
 	//댓글 삭제
 	public void deleteReply(Long idx);
+	
+	//문제 검색
+	public List<TestDTO> searchtestListByTitle(String searchKeyword);
+	
+	//회원정보 검색
+	public List<MemberDTO> searchMembers(String searchType, String searchKeyword);
+	
+	//자유게시판 검색
+	public List<BoardDTO> searchFreeboardListByTitle(String searchKeyword);
+	
+	//공지사항 검색
+	public List<BoardDTO> searchNoticeListByTitle(String searchKeyword);
+	
+	//질문게시판 검색
+	public List<TestQuestionDTO> searchQboardListByTitle(String searchKeyword);
+	
+	//댓글 검색
+	public List<ReplyDTO> searchReplyListByContent(String searchKeyword);
+	
+	//채팅방 검색
+	public List<ChatDTO> searchChatListByTitle(String searchKeyword);
+
+	public List<ChatMemberDTO> getChatMembers();
 }

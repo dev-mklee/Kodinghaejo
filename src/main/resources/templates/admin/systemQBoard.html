@@ -44,8 +44,10 @@ const deleteQBoard = (idx) => {
 				<div class="sys-system_menu">
 					<h2>질문게시판 관리</h2>
 					<div class="search-bar mb20">
-						<input type="text" name="searchKeyword" placeholder="검색어 입력">
-						<button class="btn_search">검색</button>
+						<form method="get" action="/admin/systemQBoard">
+					        <input type="text" name="searchKeyword" placeholder="검색어 입력" th:value="${searchKeyword}" />
+					        <button type="submit" class="btn_search">검색</button>
+					    </form>
 					</div>
 					<div class="sys-description-box mb20">
 						<h3>질문글 수 : <span th:text="${questionCount}"></span></h3>
