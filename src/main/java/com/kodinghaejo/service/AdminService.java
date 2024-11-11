@@ -27,6 +27,12 @@ public interface AdminService {
 	//댓글 관리화면
 	public List<ReplyDTO> replyList();
 	
-	//공지사항 삭제
-	public void deleteNotice(Long idx);
+	//게시글 삭제(자유게시판,공지사항)
+	public void deleteBoard(Long idx);
+	
+	//게시글 삭제(질문게시판)
+	public void deleteQBoard(Long idx);
+	
+	//댓글 삭제
+	public void deleteReply(Long idx);
 }

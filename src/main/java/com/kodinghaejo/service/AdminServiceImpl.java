@@ -106,9 +106,9 @@ public class AdminServiceImpl implements AdminService {
 	    return boardDTOs;
 		
 	}
-	//공지사항 삭제
+	//게시글 삭제(자유게시판,공지사항)
 	@Override
-	public void deleteNotice(Long idx) {
+	public void deleteBoard(Long idx) {
 		BoardEntity boardEntity = boardRepository.findById(idx).get();
 		boardRepository.delete(boardEntity);
 	}
@@ -125,6 +125,13 @@ public class AdminServiceImpl implements AdminService {
 		}
 		return questionDTOs;
 	}
+	//질문 삭제
+	@Override
+	public void deleteQBoard(Long idx) {
+		TestQuestionEntity questionEntity = questionRepository.findById(idx).get();
+		questionRepository.delete(questionEntity);
+	}
+	
 	
 	//댓글 관리 화면
 	@Override
@@ -137,5 +144,12 @@ public class AdminServiceImpl implements AdminService {
 			replyDTOs.add(replyDTO);
 		}
 		return replyDTOs;
+	}
+	
+	//댓글 삭제
+	@Override
+	public void deleteReply(Long idx) {
+		ReplyEntity replyEntity = replyRepository.findById(idx).get();
+		replyRepository.delete(replyEntity);
 	}
 }

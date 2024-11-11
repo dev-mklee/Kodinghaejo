@@ -9,6 +9,29 @@
 <link rel="stylesheet"
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <script src="/js/pub-ui-custom.js"></script>
+
+<script>
+const deleteQBoard = (idx) => {
+    if (confirm("해당 게시글을 삭제하시겠습니까?")) {
+        fetch(`/admin/systemQBoardDelete/${idx}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("게시글이 삭제되었습니다.");
+                location.reload(); // 페이지 새로고침하여 목록 갱신
+            } else {
+                alert("게시글 삭제에 실패했습니다.");
+            }
+        })
+        .catch(error => {
+            console.error('삭제 중 오류 발생:', error);
+            alert("삭제 요청 중 오류가 발생했습니다.");
+        });
+    }
+}
+</script>
+
 </head>
 <body>
 	<div id="header" th:replace="include/header"></div>
@@ -45,7 +68,7 @@
 								<td th:text="${question.title}">이 문제 버그났어요.</td>
 								<td th:text="${question.writer}">한건희</td>
 								<td th:text="${question.regdate}">2024-11-04</td>
-								<td><a href="" class="btn_delete">삭제</a></td>
+								<td><a href="" class="btn_delete" th:onclick="'deleteQBoard(' + ${question.idx} + ')'">삭제</a></td>
 							</tr>
 						</tbody>
 					</table>

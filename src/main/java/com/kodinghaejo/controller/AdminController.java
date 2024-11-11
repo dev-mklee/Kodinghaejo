@@ -73,9 +73,9 @@ public class AdminController {
 		return "/admin/systemNotice";
 	}
 	
-	@DeleteMapping("/admin/systemNoticeDelete/{idx}") 
-	public ResponseEntity<Void> getNoticeDelete(@PathVariable("idx") Long idx) {
-		service.deleteNotice(idx);
+	@DeleteMapping("/admin/systemBoardDelete/{idx}") 
+	public ResponseEntity<Void> getBoardDelete(@PathVariable("idx") Long idx) {
+		service.deleteBoard(idx);
 		
 		return ResponseEntity.ok().build();
 	}
@@ -102,6 +102,14 @@ public class AdminController {
 		
 		return "/admin/systemQBoard";
 	}
+	
+	@DeleteMapping("/admin/systemQBoardDelete/{idx}") 
+	public ResponseEntity<Void> getQBoardDelete(@PathVariable("idx") Long idx) {
+		service.deleteQBoard(idx);
+		
+		return ResponseEntity.ok().build();
+	}
+	
 	@GetMapping("/admin/systemReply")
 	public String getSystemReply(Model model) {
 		List<ReplyDTO> replyDTOs = service.replyList();
@@ -112,6 +120,14 @@ public class AdminController {
 		
 		return "/admin/systemReply";
 	}
+	
+	@DeleteMapping("/admin/systemReplyDelete/{idx}") 
+	public ResponseEntity<Void> getReplyDelete(@PathVariable("idx") Long idx) {
+		service.deleteReply(idx);
+		
+		return ResponseEntity.ok().build();
+	}
+	
 	@GetMapping("/admin/noticeboardWrite")
 	public void getNoticeboardWrite() {
 		

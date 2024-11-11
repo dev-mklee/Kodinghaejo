@@ -12,7 +12,7 @@
 <script>
 const deleteNotice = (idx) => {
     if (confirm("공지사항을 삭제하시겠습니까?")) {
-        fetch(`/admin/systemNoticeDelete/${idx}`, {
+        fetch(`/admin/systemBoardDelete/${idx}`, {
             method: 'DELETE'
         })
         .then(response => {
