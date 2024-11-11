@@ -1,6 +1,7 @@
 package com.kodinghaejo.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -95,5 +96,20 @@ public class BoardServiceImpl implements BoardService {
 		replyEntity.setContent(reply.getContent());	
 		replyRepository.save(replyEntity);
 	}
-
+	
+	//공지사항 화면
+	@Override
+	public List<BoardDTO> getAllNotices() {
+		List<BoardEntity> boardEntities = boardRepository.findByCat("공지사항");
+		List<BoardDTO> boardDTOs = new ArrayList<>();
+		
+		for (BoardEntity board : boardEntities) {
+	        BoardDTO boardDTO = new BoardDTO(board);
+	        boardDTOs.add(boardDTO);
+	    }
+	    
+	    return boardDTOs;
+		
+	}
+	
 }

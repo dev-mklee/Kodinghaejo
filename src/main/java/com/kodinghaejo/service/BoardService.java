@@ -37,4 +37,7 @@ public interface BoardService {
 	//댓글 수정
 	public void replyUpdate(ReplyInterface replyDTO);
 	
+	//공지사항 화면
+	public List<BoardDTO> getAllNotices();
+	
 }

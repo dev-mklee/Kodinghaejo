@@ -95,6 +95,11 @@ public class BoardController {
 	}
 
 	@GetMapping("/board/noticeboard")
-	public void getNoticeboard() { }
+	public String getNoticeboard(Model model) {
+		List<BoardDTO> boardDTOs = service.getAllNotices();
+		model.addAttribute("notices", boardDTOs);
+		
+		return "/board/noticeboard";
+	}
 
 }
