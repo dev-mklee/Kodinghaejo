@@ -76,7 +76,6 @@ const deleteNotice = (idx) => {
 								<th>작성자</th>
 								<th>작성일</th>
 								<th>조회수</th>
-								<th>추천수</th>
 								<th>삭제</th>
 							</tr>
 						</thead>
@@ -89,7 +88,6 @@ const deleteNotice = (idx) => {
 								<td th:text="${board.writer}">운영자</td>
 								<td th:text="${board.regdate}">2024-11-04</td>
 								<td th:text="${board.hitCnt}">4</td>
-								<td>3</td>
 								<td><a class="btn_delete" th:onclick="'deleteNotice(' + ${board.idx} + ')'">삭제</a></td>
 							</tr>
 						</tbody>

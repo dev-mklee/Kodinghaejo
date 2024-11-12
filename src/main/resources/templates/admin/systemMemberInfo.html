@@ -57,6 +57,7 @@
 								<th>가입일자</th>
 								<th>상세보기</th>
 								<th>회원탈퇴</th>
+								<th>활동중</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -70,6 +71,7 @@
 								<td th:text="${member.regdate}">2024-01-01</td>
 								<td><a href="" class="btn_view">상세보기</a></td>
 								<td><a href="" class="btn_delete">탈퇴</a></td>
+								<td th:text="${member.isUse}"></td>
 							</tr>
 						</tbody>
 					</table>
