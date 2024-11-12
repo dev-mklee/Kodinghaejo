@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.kodinghaejo.dto.ReplyInterface;
 import com.kodinghaejo.entity.ReplyEntity;
-import com.kodinghaejo.entity.TestQuestionEntity;
 
 public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
 

@@ -1,5 +1,6 @@
 package com.kodinghaejo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,8 +46,14 @@ public class AdminController {
 	private MemberRepository memberRepository;
 	
 	@GetMapping("/admin/systemMain")
-	public void getSystemMain() {
+	public String getSystemMain(Model model) {
+		long todaySignups = service.getTodaySignups();
+		model.addAttribute("todaySignups", todaySignups);
 		
+		long todayFreeboardCount = service.getTodayFreeBoardCount();
+		model.addAttribute("todayFreeboardCount", todayFreeboardCount);
+        
+		return "/admin/systemMain";
 	}
 	
 	@GetMapping("/admin/systemMemberInfo")
@@ -283,22 +290,5 @@ public class AdminController {
 			return "{\"message\": \"fail\"}";
 		}
 	}
-	
-//	@GetMapping("/boardList")
-//	public String getBoardList(@RequestParam(defaultValue = "1") int page, Model model) {
-//	    int pageSize = 10;  // 페이지 당 게시글 수
-//	    int offset = (page - 1) * pageSize; // 시작 인덱스 계산
-//	    int totalCount = boardRepository.countAllBoards(); // 총 게시글 수
-//	    List<BoardEntity> boards = boardRepository.findBoards(offset, pageSize); // 해당 페이지의 게시글 조회
-//
-//	    // 총 페이지 수 계산
-//	    int totalPages = (int) Math.ceil((double) totalCount / pageSize);
-//	    
-//	    model.addAttribute("boards", boards);
-//	    model.addAttribute("totalPages", totalPages);
-//	    model.addAttribute("currentPage", page);
-//	    
-//	    return "boardList";  // Thymeleaf HTML 템플릿
-//	}
 	
 }

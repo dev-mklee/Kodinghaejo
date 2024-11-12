@@ -79,4 +79,10 @@ public interface AdminService {
 	public List<ChatDTO> searchChatListByTitle(String searchKeyword);
 
 	public List<ChatMemberDTO> getChatMembers();
+	
+	//일별가입자수 체크
+	public long getTodaySignups();
+	
+	//일별 자유게시판 작성 수
+	public long getTodayFreeBoardCount();
 }

@@ -1,5 +1,6 @@
 package com.kodinghaejo.entity.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,11 +26,5 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 	//공지사항 검색
 	List<BoardEntity> findByTitleContainingAndCatNot(String searchKeyword, String category);
 	
-//	// 특정 페이지에 해당하는 게시글 목록 조회
-//    @Query("SELECT b FROM board b ORDER BY b.regdate DESC")
-//    List<BoardEntity> findBoards(@Param("offset") int offset, @Param("limit") int limit);
-//    
-//    // 전체 게시글 수 조회
-//    @Query("SELECT COUNT(b) FROM board b")
-//    int countAllBoards();
+	public long countByCatAndRegdateBetween(String cat, LocalDateTime start, LocalDateTime end);
 }

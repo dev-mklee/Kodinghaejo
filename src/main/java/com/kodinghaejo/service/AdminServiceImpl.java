@@ -1,6 +1,8 @@
 package com.kodinghaejo.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -370,4 +372,20 @@ public class AdminServiceImpl implements AdminService {
         
         return boardDTO;
     }
+	
+	//일별 가입자수 체크
+	public long getTodaySignups() {
+		LocalDateTime startOfday = LocalDateTime.now().with(LocalTime.MIN);
+		LocalDateTime endOfday = LocalDateTime.now().with(LocalTime.MAX);
+		
+ 		return memberRepository.countByRegdateBetween(startOfday, endOfday);
+	}
+	
+	//일별 자유게시판 작성수
+	public long getTodayFreeBoardCount() {
+		LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+	    LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59, 999999999);
+
+	    return boardRepository.countByCatAndRegdateBetween("자유게시판", startOfDay, endOfDay);
+	}
 }
