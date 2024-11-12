@@ -25,6 +25,10 @@ import lombok.extern.log4j.Log4j2;
 public class TestController {
 
 	private final TestService service;
+	
+	//코딩테스트 문제 모아보기
+	@GetMapping("/test/problemCollect")
+	public void getProblemCollect() { }
 
 	//코딩테스트 문제 상세 화면
 	@GetMapping("/test/challenge")
@@ -49,7 +53,8 @@ public class TestController {
 		log.info("==================== result.getLng(): {} ====================", result.getLng());
 		log.info("==================== result.getContent(): {} ====================", result.getContent());
 		log.info("==================== result.getCorrect(): {} ====================", result.getCorrect());
-		log.info("==================== result.getMainSrc(): {} ====================", result.getMainSrc());
+		log.info("==================== result.getRunSrc(): {} ====================", result.getRunSrc());
+		log.info("==================== result.getSubmSrc(): {} ====================", result.getSubmSrc());
 		log.info("==================== result.getRegdate(): {} ====================", result.getRegdate());
 		log.info("==================== result.getIsUse(): {} ====================", result.getIsUse());
 		
@@ -57,17 +62,23 @@ public class TestController {
 		data.put("idx", result.getIdx());
 		data.put("content_src", result.getContent());
 		data.put("correct_src", result.getCorrect());
-		data.put("main_src", result.getMainSrc());
+		data.put("run_src", result.getRunSrc());
+		data.put("subm_src", result.getSubmSrc());
 		
 		return data;
 	}
 
-	//코딩테스트 문제 제출 처리
+	//코딩테스트 문제 실행 및 제출 처리
 	@ResponseBody
-	@PostMapping("/test/submit")
-	public String submitCode(@RequestParam("tl_idx") Long tlIdx, @RequestParam("code") String code,
-			@RequestParam("correct_src") String correctSrc, @RequestParam("main_src") String mainSrc,
+	@PostMapping("/test/challenge")
+	public String postChallenge(@RequestParam("type") String type, @RequestParam("tl_idx") Long tlIdx,
+			@RequestParam("code") String code, @RequestParam("correct_src") String correctSrc,
+			@RequestParam("run_src") String runSrc, @RequestParam("subm_src") String submSrc,
 			@RequestParam("language") String language) throws Exception {
+		if (!type.equals("run") && !type.equals("submit"))
+			return "{\"message\":\"TYPE_NOT_AVAILABLE\"}";
+		
+		//자바스크립트인 경우
 		if (language.equals("javascript"))
 			code += "\n\nmodule.exports = solution;";
 		
@@ -79,9 +90,10 @@ public class TestController {
 		Files.createDirectories(path.getParent()); //경로가 없으면 생성
 
 		Files.write(path, code.getBytes()); //코드 파일로 저장
-		service.createVerifyFiles(mainSrc, correctSrc);
+		service.createVerifyFiles((type.equals("run") ? runSrc : type.equals("submit") ? submSrc : ""), correctSrc);
 		
 		// 코드 실행 로직 호출
 		return service.testCode(language, path.toString()); //실행 결과 반환
 	}
+
 }

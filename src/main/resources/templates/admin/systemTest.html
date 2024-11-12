@@ -58,7 +58,9 @@
 						<tbody>
 							<tr th:each="test : ${tests}">
 								<td th:text="${test.idx}">1</td>
-								<td th:text="${test.title}">첫번째 문제입니다.</td>
+								<td>
+									<a th:href="@{/admin/testboardModify?id={id}(id=${test.idx})}" th:text="${test.title}">첫번째 문제입니다.</a>
+								</td>
 								<td th:text="${test.diff}">1레벨</td>
 								<td>
 						            <ul>

@@ -13,10 +13,17 @@ import com.kodinghaejo.dto.TestQuestionDTO;
 public interface AdminService {
 
 	//문제 작성
-	public void saveTestWrite(TestDTO test);
+	void saveTestWrite(TestDTO testDTO);
 	
 	//문제 보여주기
 	public List<TestDTO> testAllList();
+	
+
+	//문제 수정
+	public void saveTestModify(TestDTO testDTO);
+	
+	//ID로 문제 데이터 조회
+	public TestDTO getTestById(Long id);
 	
 	//회원정보 관리화면
 	public List<MemberDTO> memberAllList();
@@ -86,3 +93,5 @@ public interface AdminService {
 	//일별 자유게시판 작성 수
 	public long getTodayFreeBoardCount();
 }
+
+

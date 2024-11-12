@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -56,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
 		testEntity.setRegdate(LocalDateTime.now());
 		testRepository.save(testEntity);
 		
-		if (!testDTO.getTestLngList().isEmpty()) {
+		if (testDTO.getTestLngList() != null) {
 			for (TestLngDTO langDTO : testDTO.getTestLngList()) {
 				TestLngEntity langEntity = langDTO.dtoToEntity(langDTO);
 				langEntity.setTestIdx(testEntity);
@@ -91,6 +90,52 @@ public class AdminServiceImpl implements AdminService {
 		return testDTOList;
 	}
 	
+	//문제 수정
+	@Override
+	public void saveTestModify(TestDTO testDTO)  {		
+		TestEntity testEntity = testRepository.findById(testDTO.getIdx()).get();
+
+		testEntity.setDiff(testDTO.getDiff());
+		testEntity.setTitle(testDTO.getTitle());
+		testEntity.setDescr(testDTO.getDescr());
+		
+		testRepository.save(testEntity);
+		
+		for (TestLngDTO langDTO : testDTO.getTestLngList()) {
+			TestLngEntity testLngEntity;
+			
+			if (testLngRepository.findByTestIdxAndLng(testEntity, langDTO.getLng()).isEmpty()) {
+				testLngEntity = langDTO.dtoToEntity(langDTO);
+				testLngEntity.setTestIdx(testEntity);
+			} else {
+				testLngEntity = testLngRepository.findByTestIdxAndLng(testEntity, langDTO.getLng()).get();
+
+				// 언어 정보 수정
+				testLngEntity.setContent(langDTO.getContent());
+				testLngEntity.setCorrect(langDTO.getCorrect());
+				testLngEntity.setRunSrc(langDTO.getRunSrc());
+				testLngEntity.setSubmSrc(langDTO.getSubmSrc());
+			}
+			// 수정된 엔티티 저장
+			testLngRepository.save(testLngEntity);
+		}
+	}
+	
+	//ID로 문제 데이터 조회
+	@Override
+	public TestDTO getTestById(Long id) {
+		TestEntity testEntity = testRepository.findById(id).get();
+		
+		List<TestLngDTO> testLngList = new ArrayList<>();
+		testLngRepository.findByTestIdx(testEntity).stream().forEach((e) -> testLngList.add(new TestLngDTO(e)));
+
+		TestDTO testDTO = new TestDTO(testEntity);
+		testDTO.setTestLngList(testLngList);
+		
+		// TestEntity를 TestDTO로 변환하여 반환
+		return testDTO;
+	}
+	
 	//회원정보 관리 화면
 	@Override
 	public List<MemberDTO> memberAllList() {
@@ -109,14 +154,14 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<BoardDTO> freeboardList() {
 		List<BoardEntity> boardEntities = boardRepository.findByCatNot("공지사항");
-	    List<BoardDTO> boardDTOs = new ArrayList<>();
-	    
-	    for (BoardEntity board : boardEntities) {
-	        BoardDTO boardDTO = new BoardDTO(board);
-	        boardDTOs.add(boardDTO);
-	    }
-	    
-	    return boardDTOs;
+		List<BoardDTO> boardDTOs = new ArrayList<>();
+		
+		for (BoardEntity board : boardEntities) {
+			BoardDTO boardDTO = new BoardDTO(board);
+			boardDTOs.add(boardDTO);
+		}
+		
+		return boardDTOs;
 		
 	}
 	
@@ -127,11 +172,11 @@ public class AdminServiceImpl implements AdminService {
 		List<BoardDTO> boardDTOs = new ArrayList<>();
 		
 		for (BoardEntity board : boardEntities) {
-	        BoardDTO boardDTO = new BoardDTO(board);
-	        boardDTOs.add(boardDTO);
-	    }
-	    
-	    return boardDTOs;
+			BoardDTO boardDTO = new BoardDTO(board);
+			boardDTOs.add(boardDTO);
+		}
+		
+		return boardDTOs;
 		
 	}
 	
@@ -213,10 +258,10 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void deleteEmptyChats() {
 		List<ChatEntity> emptyChats = chatRepository.findChatsByLimit(0);
-	    
-	    for (ChatEntity chat : emptyChats) {
-	        chatRepository.deleteById(chat.getIdx());
-	    }
+		
+		for (ChatEntity chat : emptyChats) {
+			chatRepository.deleteById(chat.getIdx());
+		}
 	}
 	
 	//댓글 삭제
@@ -252,34 +297,47 @@ public class AdminServiceImpl implements AdminService {
 	
 	//회원정보 검색
 	public List<MemberDTO> searchMembers(String searchType, String searchKeyword) {
-	    List<MemberEntity> memberEntities;
 
-	    // 검색어가 없을 경우 전체 회원 목록 조회
-	    if (searchKeyword == null || searchKeyword.isEmpty()) {
-	        memberEntities = memberRepository.findAll();
-	    } else {
-	        // 검색어가 있을 경우 조건에 따라 검색
-	        switch (searchType) {
-	            case "email":
-	                memberEntities = memberRepository.findByEmailContaining(searchKeyword);
-	                break;
-	            case "nickname":
-	                memberEntities = memberRepository.findByNicknameContaining(searchKeyword);
-	                break;
-	            case "name":
-	                memberEntities = memberRepository.findByUsernameContaining(searchKeyword);
-	                break;
-	            default:
-	                memberEntities = new ArrayList<>(); // 검색 조건이 잘못된 경우 빈 리스트 반환
-	        }
-	    }
-	    List<MemberDTO> memberDTOs = new ArrayList<>();
-	    for (MemberEntity member : memberEntities) {
-	    	MemberDTO memberDTO = new MemberDTO(member);
-	        memberDTOs.add(memberDTO);
-	    }
-	    
-	    return memberDTOs;
+		List<MemberEntity> memberEntities;
+
+		// 검색어가 없을 경우 전체 회원 목록 조회
+		if (searchKeyword == null || searchKeyword.isEmpty()) {
+			memberEntities = memberRepository.findAll();
+		} else {
+			// 검색어가 있을 경우 조건에 따라 검색
+			switch (searchType) {
+				case "email":
+					memberEntities = memberRepository.findByEmailContaining(searchKeyword);
+					break;
+				case "nickname":
+					memberEntities = memberRepository.findByNicknameContaining(searchKeyword);
+					break;
+				case "name":
+					memberEntities = memberRepository.findByUsernameContaining(searchKeyword);
+					break;
+				default:
+					memberEntities = new ArrayList<>(); // 검색 조건이 잘못된 경우 빈 리스트 반환
+			}
+		}
+		List<MemberDTO> memberDTOs = new ArrayList<>();
+		for (MemberEntity member : memberEntities) {
+			MemberDTO memberDTO = new MemberDTO(member);
+			memberDTOs.add(memberDTO);
+		}
+		
+		return memberDTOs;
+	}
+	
+	
+	
+	//ID로 공지사항 데이터 조회
+	@Override
+	public BoardDTO getNoticeById(Long id) {
+		BoardEntity boardEntity = boardRepository.findById(id).get();
+		
+		BoardDTO boardDTO = new BoardDTO(boardEntity);
+		
+		return boardDTO;
 	}
 	
 	
@@ -361,16 +419,6 @@ public class AdminServiceImpl implements AdminService {
         }
 
         return chatMemberDTOs;
-    }
-	
-	//ID로 공지사항 데이터 조회
-	@Override
-	public BoardDTO getNoticeById(Long id) {
-        BoardEntity boardEntity = boardRepository.findById(id).get();
-        
-        BoardDTO boardDTO = new BoardDTO(boardEntity);
-        
-        return boardDTO;
     }
 	
 	//일별 가입자수 체크

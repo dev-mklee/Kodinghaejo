@@ -31,8 +31,8 @@ import lombok.Setter;
 public class TestLngEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TEST_LANG_SEQ")
-	@SequenceGenerator(name = "TEST_LANG_SEQ", sequenceName = "jpa_test_lang_seq", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TEST_LNG_SEQ")
+	@SequenceGenerator(name = "TEST_LNG_SEQ", sequenceName = "jpa_test_lng_seq", initialValue = 1, allocationSize = 1)
 	@Column(name = "idx", nullable = false)
 	private Long idx;
 
@@ -50,8 +50,11 @@ public class TestLngEntity {
 	@Column(name = "correct", length = 2000, nullable = false)
 	private String correct;
 
+	@Column(name = "run_src", length = 2000, nullable = false)
+	private String runSrc;
+	
 	@Column(name = "subm_src", length = 2000, nullable = false)
-	private String mainSrc;
+	private String submSrc;
 
 	@Column(name = "regdate", nullable = false)
 	private LocalDateTime regdate;

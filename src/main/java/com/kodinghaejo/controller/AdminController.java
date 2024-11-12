@@ -1,12 +1,10 @@
 package com.kodinghaejo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.event.PublicInvocationEvent;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,12 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
-import com.kodinghaejo.dto.ChatMemberDTO;
+
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
-import com.kodinghaejo.entity.BoardEntity;
+
 import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
@@ -33,7 +31,6 @@ import com.kodinghaejo.service.AdminService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import net.bytebuddy.asm.Advice.Return;
 
 @Controller
 @AllArgsConstructor
@@ -41,10 +38,12 @@ import net.bytebuddy.asm.Advice.Return;
 public class AdminController {
 	
 	private final AdminService service;
+	
 	private TestRepository testRepository;
 	private BoardRepository boardRepository;
 	private MemberRepository memberRepository;
 	
+	//시스템 관리 메인화면
 	@GetMapping("/admin/systemMain")
 	public String getSystemMain(Model model) {
 		long todaySignups = service.getTodaySignups();
@@ -56,67 +55,61 @@ public class AdminController {
 		return "/admin/systemMain";
 	}
 	
+	//회원정보 관리
 	@GetMapping("/admin/systemMemberInfo")
-	public String getSystemMeberInfo( @RequestParam(value = "searchType", required = false) String searchType,
-            @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
-            Model model) {
+	public void getSystemMeberInfo(@RequestParam(value = "searchType", required = false) String searchType,
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword, Model model) {
 		List<MemberDTO> memberDTOs;
-		
+
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-	        memberDTOs = service.searchMembers(searchType, searchKeyword);
-	        
-	        model.addAttribute("members", memberDTOs);
-	        model.addAttribute("searchType", searchType);
-	        model.addAttribute("searchKeyword", searchKeyword);
-	        model.addAttribute("memberCount", memberDTOs.size());
-	    } else {
-	        memberDTOs = service.memberAllList();
-	    }
-		
+			memberDTOs = service.searchMembers(searchType, searchKeyword);
+
+			model.addAttribute("members", memberDTOs);
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("searchKeyword", searchKeyword);
+			model.addAttribute("memberCount", memberDTOs.size());
+		} else {
+			memberDTOs = service.memberAllList();
+		}
+
 		model.addAttribute("members", memberDTOs);
-		
+
 		long memberCount = memberRepository.count();
 		model.addAttribute("memberCount", memberCount);
-		
-		return "/admin/systemMemberInfo";
 	}
 	
+	//문제 리스트
 	@GetMapping("/admin/systemTest")
-	public String getSystemTest(@RequestParam(required = false) String searchKeyword, Model model) {
+	public void getSystemTest(@RequestParam(required = false) String searchKeyword, Model model) {
 		List<TestDTO> testDTOs; // service.testAllList(); // 문제 리스트
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-	        testDTOs = service.searchtestListByTitle(searchKeyword);
-	    } else {
-	        testDTOs = service.testAllList();
-	    }
+			testDTOs = service.searchtestListByTitle(searchKeyword);
+		} else {
+			testDTOs = service.testAllList();
+		}
 		
 		model.addAttribute("tests", testDTOs);
 		
 		long testCount = testDTOs.size();
 		model.addAttribute("testCount", testCount);
-		
-		return "/admin/systemTest"; // 템플릿 파일 이름
 	}
 	
+	//채팅방 관리
 	@GetMapping("/admin/systemChat")
-	public String getSystemChat(@RequestParam(required = false) String searchKeyword, Model model) {
+	public void getSystemChat(@RequestParam(required = false) String searchKeyword, Model model) {
 		List<ChatDTO> chatDTOs;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-	        chatDTOs = service.searchChatListByTitle(searchKeyword);
-	    } else {
-	        chatDTOs = service.chatList();
-	    }
+			chatDTOs = service.searchChatListByTitle(searchKeyword);
+		} else {
+			chatDTOs = service.chatList();
+		}
 		
 		model.addAttribute("chats",chatDTOs);
 		
 		long chatCount = chatDTOs.size();
 		model.addAttribute("chatCount", chatCount);
-		
-
-		return "/admin/systemChat";
-		
 	}
 	
 	@Transactional
@@ -130,23 +123,23 @@ public class AdminController {
         }
     }
 	
+	//공지 관리
 	@GetMapping("/admin/systemNotice")
-	public String getSystemNotice(@RequestParam(required = false) String searchKeyword, Model model) {
+	public void getSystemNotice(@RequestParam(required = false) String searchKeyword, Model model) {
 		List<BoardDTO> boardDTOs;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-	        boardDTOs = service.searchNoticeListByTitle(searchKeyword);
-	    } else {
-	        boardDTOs = service.noticeboardList();
-	    }
+			boardDTOs = service.searchNoticeListByTitle(searchKeyword);
+		} else {
+			boardDTOs = service.noticeboardList();
+		}
+
 		
 		model.addAttribute("boards",boardDTOs);
 		
 		long boardCount = boardDTOs.size();
 		model.addAttribute("boardCount", boardCount);
-		
 
-		return "/admin/systemNotice";
 	}
 	
 	//공지사항 수정화면
@@ -197,25 +190,25 @@ public class AdminController {
 	    }
 	}
 	
+	//자유게시판 관리
 	@GetMapping("/admin/systemFreeBoard")
-	public String getSystemFreeBoard(@RequestParam(required = false) String searchKeyword, Model model) {
-	    List<BoardDTO> boardDTOs;
-	    
-	    if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-	        boardDTOs = service.searchFreeboardListByTitle(searchKeyword);
-	    } else {
-	        boardDTOs = service.freeboardList();
-	    }
-	    model.addAttribute("boards", boardDTOs);
-	    
-	    long boardCount = boardDTOs.size();
-	    model.addAttribute("boardCount", boardCount);
-	    
-	    return "/admin/systemFreeBoard";
+	public void getSystemFreeBoard(@RequestParam(required = false) String searchKeyword, Model model) {
+		List<BoardDTO> boardDTOs;
+		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+				boardDTOs = service.searchFreeboardListByTitle(searchKeyword);
+		} else {
+				boardDTOs = service.freeboardList();
+		}
+		model.addAttribute("boards", boardDTOs);
+		
+		long boardCount = boardDTOs.size();
+		model.addAttribute("boardCount", boardCount);
 	}
 	
+	//질문게시판 관리
 	@GetMapping("/admin/systemQBoard")
-	public String getSystemQBoard(@RequestParam(required = false) String searchKeyword, Model model) {
+	public void getSystemQBoard(@RequestParam(required = false) String searchKeyword, Model model) {
 		List<TestQuestionDTO> questionDTOs;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
@@ -228,23 +221,22 @@ public class AdminController {
 		
 		long questionCount = questionDTOs.size();
 		model.addAttribute("questionCount", questionCount);
-		
-		return "/admin/systemQBoard";
 	}
 	
 	@Transactional
 	@DeleteMapping("/admin/systemQBoardDelete/{idx}") 
 	public ResponseEntity<String> getQBoardDelete(@PathVariable("idx") Long idx) {
 		try {
-	        service.deleteQBoard(idx);
-	        return ResponseEntity.ok("게시글이 정상적으로 삭제되었습니다.");
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
-	    }
+			service.deleteQBoard(idx);
+			return ResponseEntity.ok("게시글이 정상적으로 삭제되었습니다.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
+		}
 	}
 	
+	//댓글 관리
 	@GetMapping("/admin/systemReply")
-	public String getSystemReply(@RequestParam(required = false) String searchKeyword, Model model) {
+	public void getSystemReply(@RequestParam(required = false) String searchKeyword, Model model) {
 		List<ReplyDTO> replyDTOs;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
@@ -257,28 +249,27 @@ public class AdminController {
 		
 		long replyCount = replyDTOs.size();
 		model.addAttribute("replyCount", replyCount);
-		
-		return "/admin/systemReply";
 	}
-	
+
 	@DeleteMapping("/admin/systemReplyDelete/{idx}") 
 	public ResponseEntity<String> getReplyDelete(@PathVariable("idx") Long idx) {
 		try {
-	        service.deleteReply(idx);
-	        return ResponseEntity.ok("댓글이 정상적으로 삭제되었습니다.");
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
-	    }
+			service.deleteReply(idx);
+			return ResponseEntity.ok("댓글이 정상적으로 삭제되었습니다.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
+		}
 	}
 	
+	//공지작성화면
 	@GetMapping("/admin/noticeboardWrite")
-	public void getNoticeboardWrite() {
-		
-	}
+	public void getNoticeboardWrite() { }
+	
+	//문제 작성화면
 	@GetMapping("/admin/testboardWrite")
-	public void getTestboardWrite() {
-		
-	}
+	public void getTestboardWrite() { }
+	
+	//문제 작성
 	@ResponseBody
 	@PostMapping("/admin/testboardWrite")
 	public String testWrite(@RequestBody TestDTO testDTO) {
@@ -291,4 +282,36 @@ public class AdminController {
 		}
 	}
 	
+	//문제 수정화면
+	@GetMapping("/admin/testboardModify")
+	public String modifyTest(@RequestParam("id") Long id, Model model) {
+		try {
+			
+			TestDTO testDTO = service.getTestById(id); // 서비스에서 데이터 조회
+			model.addAttribute("test", testDTO);
+			
+			List<String> diffList = List.of("0", "1", "2");
+			model.addAttribute("diffList", diffList);
+			
+			
+			return "/admin/testboardModify";
+		} catch (Exception e) {
+			log.error("Error during modifyTest", e);
+			return "{\"message\": \"fail\"}";
+		}
+	}
+	//문제 수정
+	@ResponseBody
+	@PostMapping("/admin/testboardModify")
+	public String modifyTest(@RequestBody TestDTO testDTO) {
+		try {
+			
+			service.saveTestModify(testDTO);
+			return "{\"message\": \"good\"}";
+		} catch (Exception e) {
+			log.error("Error during testWrite", e);
+			return "{\"message\": \"fail\"}";
+		}
+	}
+
 }

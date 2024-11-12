@@ -9,5 +9,5 @@ import com.kodinghaejo.entity.TestEntity;
 public interface TestRepository extends JpaRepository<TestEntity, Long> {
 	
 	List<TestEntity> findByTitleContaining(String searchKeyword);
-	
+
 }

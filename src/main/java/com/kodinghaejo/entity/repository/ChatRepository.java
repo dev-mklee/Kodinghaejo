@@ -13,4 +13,5 @@ public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
 	List<ChatEntity> findChatsByLimit(int limit);
 	
 	void deleteById(Long idx);
+
 }
