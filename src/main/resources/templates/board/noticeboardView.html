@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="kr">
-
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +10,36 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
   <!-- pub-js link -->
   <script src="/js/pub-ui-custom.js"></script>
+  <script>
+const deleteNotice = (idx) => {
+    if (confirm("공지사항을 삭제하시겠습니까?")) {
+        fetch(`/admin/systemBoardDelete/${idx}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            console.log("Response status:", response.status);
+            return response.text().then(message => ({ status: response.status, message }));
+        })
+        .then(({ status, message }) => {
+            if (status === 200) {
+                alert(message);
+                location.href="/board/noticeboard"
+            } else {
+                alert(`삭제 실패: ${message}`);
+            }
+        })
+        .catch(error => {
+            console.error('삭제 중 오류 발생:', error);
+            alert("삭제 요청 중 오류가 발생했습니다.");
+        });
+    }
+}
+</script>
+  
 </head>
 <body>
   <!-- header 영역 -->
-  <div id="header"></div>
+  <div id="header" th:replace="include/header"></div>
   <div class="container">
     <div class="main-content">
       <div class="content-board-notice">
@@ -22,27 +47,30 @@
       </div>
       <div class="board-notice-view">
         <div class="notice-view-title">
-          <p class="notice-view-title-head">[업데이트 소식] 11월 1주차 - 앱 업데이트</p>
+          <p class="notice-view-title-head">[[${view.title}]]</p>
           <div class="notice-view-title-list">
             <div class="profile-title">
               <img src="/img/test-profile/nonoping.png" alt="">
               <div class="profile-title-content">
-                <p class="profile-name">맛스타 아무개씨</p>
-                <p class="profile-date">5시간전</p>
+                <p class="profile-name">[[${view.writer}]]</p>
+                <p class="profile-date">[[${view.regdate}]]</p>
               </div>
             </div>
             <div class="like">
-              <span><i class="xi-heart-o"></i>{0}</span>
-              <!-- like 시 클릭 될 클래스 명<span><i class="xi-heart"></i>{0}</span> -->
+              <span><i class="xi-eye-o"></i><span th:text="${view.hitCnt}">{0}</span></span>
+              <span><i th:if="${isLiked == 'no'}" th:onclick="|toggleLike('${view.idx}', 'up')|" th:id="@{'like-up-' + ${view.idx}}" class="xi-heart-o"></i><i th:if="${isLiked == 'yes'}" th:onclick="|toggleLike('${view.idx}', 'down')|" th:id="@{'like-down-' + ${view.idx}}" class="xi-heart"></i><span id="like-count-${view.idx}" th:text="${likeCount}">{0}</span></span>
             </div>
           </div>
         </div>
         <div class="board-notice-view-content">
-          <p>글쓰기 영역입니다</p>
-
+          <p>[[${view.content}]]</p>
           <hr class="dashed">
           <div class="btn_group">
-            <a href="#" class="btn_menu" onclick="history.back();">목록가기</a>
+          	<th:block th:if="${session.email == view.email.email}">
+	          	<a th:href="@{/admin/noticeboardModify?id={id}(id=${view.idx})}" class="btn_menu">수정하기</a>
+	          	<a class="btn_menu" th:onclick="'deleteNotice(' + ${view.idx} + ')'">삭제하기</a>
+            </th:block>
+            <a class="btn_menu" onclick="history.back();">목록가기</a>
             <!-- 관리자만 수정 -->
             <!-- <a href="" class="_btn">수정하기</a> -->
           </div>
@@ -51,7 +79,7 @@
     </div>
   </div>
   <!-- footer영역 -->
-  <div id="footer"></div>
+<div id="footer" th:replace="include/footer"></div>
 </body>
 
 </html>

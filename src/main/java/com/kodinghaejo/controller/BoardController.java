@@ -230,6 +230,22 @@ public class BoardController {
 		model.addAttribute("boardPageList", page.getMypageMyboardPageList("board", boardPageNum, replyPageNum, postNum, pageListCount, boardTotalCount, replyTotalCount)); //게시글 페이징 처리
 		model.addAttribute("replyPageList", page.getMypageMyboardPageList("reply", boardPageNum, replyPageNum, postNum, pageListCount, boardTotalCount, replyTotalCount)); //댓글 페이징 처리
 	}
-
+	
+	//공지사항 게시판
+	@GetMapping("/board/noticeboardview")
+	public void getNoticeBoardView(@RequestParam("idx") Long idx,
+			Model model, HttpSession session) throws Exception {
+		model.addAttribute("view", service.view(idx));
+		
+		//세션 email값 가져 오기
+			String sessionEmail = (String)session.getAttribute("email");
+		
+			//조회수 증가
+		if (sessionEmail != null) {
+		 	if(!sessionEmail.equals(service.view(idx).getEmail().getEmail())){
+		 		service.hitno(idx);
+			}
+		}
+	}
 
 }

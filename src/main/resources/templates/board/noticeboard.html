@@ -25,7 +25,7 @@
         <ul class="board-notice-list">
           <!-- list-item -->
           <li th:each="notice : ${notices}">
-            <a th:href="@{/board/notice/{id}(id=${notice.idx})}">
+            <a th:href="@{/board/noticeboardview(idx=${notice.idx})}">
               <h3>
                 <!-- new 일때 : 2일 까지만? -->
                 <i class="xi-new" th:if="${notice.regdate.isAfter(T(java.time.LocalDateTime).now().minusDays(2))}"></i>

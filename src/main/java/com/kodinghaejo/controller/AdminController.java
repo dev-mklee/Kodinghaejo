@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -159,7 +160,7 @@ public class AdminController {
 	//공지사항 수정
 	@ResponseBody
 	@PostMapping("/admin/noticeboardModify")
-	public String noticeModify(@RequestBody BoardDTO boardDTO) {
+	public String noticeModify(@ModelAttribute BoardDTO boardDTO) {
 		try {
 			
 			service.savenoticeModify(boardDTO);
