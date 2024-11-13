@@ -439,21 +439,6 @@ public class AdminServiceImpl implements AdminService {
 		return chatDTOs;
 	}
 	
-	//채팅방 멤버
-	public List<ChatMemberDTO> getChatMembers() {
-        // 채팅 멤버 정보를 DB에서 가져옵니다.
-        List<ChatMemberEntity> chatMemberEntities = chatMemberRepository.findAll();
-
-        // Entity를 DTO로 변환
-        List<ChatMemberDTO> chatMemberDTOs = new ArrayList<>();
-        for (ChatMemberEntity entity : chatMemberEntities) {
-            ChatMemberDTO dto = new ChatMemberDTO(entity);
-            chatMemberDTOs.add(dto);
-        }
-
-        return chatMemberDTOs;
-    }
-	
 	//일별 가입자수 체크
 	public long getTodaySignups() {
 		LocalDateTime startOfday = LocalDateTime.now().with(LocalTime.MIN);

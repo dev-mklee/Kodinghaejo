@@ -16,11 +16,12 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 	public Optional<MemberEntity> findByEmailAndIsUse(String email, String isUse);
 	public Optional<MemberEntity> findByUsernameAndTelAndIsUse(String username, String tel, String isUse);
 
-	
-    List<MemberEntity> findByEmailContaining(String email);
-    List<MemberEntity> findByNicknameContaining(String nickname);
-    List<MemberEntity> findByUsernameContaining(String username);
+	//이메일,닉네임,이름 별 검색
+    public List<MemberEntity> findByEmailContaining(String email);
+    public List<MemberEntity> findByNicknameContaining(String nickname);
+    public List<MemberEntity> findByUsernameContaining(String username);
     
+    //일별 가입자 수
     public long countByRegdateBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
     
 

@@ -45,7 +45,7 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 	//공지사항 검색
 	List<BoardEntity> findByTitleContainingAndCatNot(String searchKeyword, String category);
 	
-
+	//카테고리별 일별 게시글 수
 	public long countByCatAndRegdateBetween(String cat, LocalDateTime start, LocalDateTime end);
 
 

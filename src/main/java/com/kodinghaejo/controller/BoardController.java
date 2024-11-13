@@ -198,7 +198,8 @@ public class BoardController {
 
 		return response;
 	}
-
+	
+	//공지사항 리스트
 	@GetMapping("/board/noticeboard")
 	public String getNoticeboard(Model model) {
 		List<BoardDTO> boardDTOs = service.getAllNotices();
@@ -231,16 +232,16 @@ public class BoardController {
 		model.addAttribute("replyPageList", page.getMypageMyboardPageList("reply", boardPageNum, replyPageNum, postNum, pageListCount, boardTotalCount, replyTotalCount)); //댓글 페이징 처리
 	}
 	
-	//공지사항 게시판
+	//공지사항 게시판 상세보기
 	@GetMapping("/board/noticeboardview")
 	public void getNoticeBoardView(@RequestParam("idx") Long idx,
 			Model model, HttpSession session) throws Exception {
+		
 		model.addAttribute("view", service.view(idx));
-		
 		//세션 email값 가져 오기
-			String sessionEmail = (String)session.getAttribute("email");
+		String sessionEmail = (String)session.getAttribute("email");
 		
-			//조회수 증가
+		//조회수 증가
 		if (sessionEmail != null) {
 		 	if(!sessionEmail.equals(service.view(idx).getEmail().getEmail())){
 		 		service.hitno(idx);

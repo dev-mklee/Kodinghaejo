@@ -21,13 +21,7 @@ const registerForm = async() => {
 		let email = document.querySelector('#email');
 		let isUse = document.querySelector('#isUse');
 		
-
-		// Toast UI Editor의 content 내용 가져오기
-		let content = editor.getMarkdown(); // 마크다운 텍스트로 가져오기
-		
- 
-		
-		//필수값 등록시 값 입력 여부 확인
+		let content = editor.getMarkdown();
 	
 		if(title.value === ''){
 				alert('제목을 입력하세요!!!');
@@ -48,7 +42,6 @@ const registerForm = async() => {
 		const idx = parseInt('[[ ${board.idx} ]]');
 		formData.append("idx", idx);
  
-		
 		await fetch('/admin/noticeboardModify', {
 		method: 'POST',
 		body: formData
@@ -64,23 +57,14 @@ const registerForm = async() => {
 	})
 
 }
-
-
 </script>
-
-
-
-
-
 <body>
 	<!-- header 영역 -->
-	<div id="header" th:replace="include/header"></div>
+<div id="header" th:replace="include/header"></div>
 	<div class="container">
 		<div class="main-content">
 			<div class="content-board-notice-write">
 				<div class="content-board-notice-write-wrap">
-				
-				
 				
 				<form class="WriteForm" id="WriteForm" name="WriteForm" method="post" enctype="multipart/form-data">		 
 					<h2>공지사항 수정</h2>
@@ -89,44 +73,31 @@ const registerForm = async() => {
 						<label for="category-section">카테고리<span class="asterisk"></span></label>
 						<select name="category-section">
 							<option value="공지사항" th:selected ="${board.cat == '공지사항'}">공지사항</option>
-							<!-- <option value="카테고리메뉴" disabled>카테고리메뉴</option> -->
 						</select>
-					
 					</div>
 					<div class="category-title">
 						<label for="title">제목<span class="asterisk"></span></label>
 						<input type="text" id="title" name="title" maxlength="100" th:value="${board.title}">
-						
+
 						<input type="hidden" id="email" name="email" value="admin@kodinghaejo.com">
 						<input type="hidden" id="writer" name="writer" value="관리자">
 						<input type="hidden" id="isUse" name="isUse" value="Y">
-						
 					</div>
-						
-						
-						 <div class="category-content ">
+					<div class="category-content ">
 						<label for="content">내용<span class="asterisk"></span></label>
 						<div id="content"></div>
 					</div>
-					
-					</form> 
-					
+				</form> 
 					<div class="category-footer mt30">
-					
-					<input type="button" id="modifyButton" value="수정" onclick="registerForm()" data-id="${board.idx}">
+						<input type="button" id="modifyButton" value="수정" onclick="registerForm()" data-id="${board.idx}">
 						<button onclick="history.back();">뒤로가기</button>
 					</div>
-					
-					
-					
-					
-					
 				</div>	 
 			</div>
 		</div>
 	</div>
  <!-- footer영역 -->
-	 <div id="footer" th:replace="include/footer"></div>
+<div id="footer" th:replace="include/footer"></div>
 	<!-- toast API : 나중에 모듈로 작성해서 만들기-->
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
@@ -142,12 +113,10 @@ const registerForm = async() => {
 			initialValue: editorContent,	
 			
 			 toolbarItems: [
-						// 기본 툴바 항목에서 'image' 항목을 제외하고 나열합니다.
 					['heading', 'bold', 'italic', 'strike'],
 					['hr', 'quote'],
 					['ul', 'ol', 'task'],
 					['table', 'link'],
-					// 'image' 항목을 제거했습니다.
 					['code', 'codeblock']
 			 ]
 	

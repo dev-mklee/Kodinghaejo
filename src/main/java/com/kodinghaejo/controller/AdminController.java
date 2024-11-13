@@ -113,6 +113,7 @@ public class AdminController {
 		model.addAttribute("chatCount", chatCount);
 	}
 	
+	//채팅인원 0인 채팅방 삭제 
 	@Transactional
 	@DeleteMapping("/admin/systemChatDelete")
     public ResponseEntity<String> deleteEmptyChat() {
@@ -172,7 +173,7 @@ public class AdminController {
 	}
 	
 	
-	//게시물 등록
+	//공지사항 등록
 	@ResponseBody
 	@PostMapping("/admin/noticeWrite")
 	public String noticeWrite(BoardDTO board) throws Exception {
@@ -180,6 +181,7 @@ public class AdminController {
 		return "{\"message\":\"good\"}";
 	}	
 	
+	//게시물 삭제
 	@Transactional
 	@DeleteMapping("/admin/systemBoardDelete/{idx}") 
 	public ResponseEntity<String> getBoardDelete(@PathVariable("idx") Long idx) {
@@ -224,6 +226,7 @@ public class AdminController {
 		model.addAttribute("questionCount", questionCount);
 	}
 	
+	//질문게시판 글 삭제
 	@Transactional
 	@DeleteMapping("/admin/systemQBoardDelete/{idx}") 
 	public ResponseEntity<String> getQBoardDelete(@PathVariable("idx") Long idx) {
@@ -251,7 +254,8 @@ public class AdminController {
 		long replyCount = replyDTOs.size();
 		model.addAttribute("replyCount", replyCount);
 	}
-
+	
+	//댓글 삭제
 	@DeleteMapping("/admin/systemReplyDelete/{idx}") 
 	public ResponseEntity<String> getReplyDelete(@PathVariable("idx") Long idx) {
 		try {

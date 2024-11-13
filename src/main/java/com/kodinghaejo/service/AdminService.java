@@ -85,7 +85,6 @@ public interface AdminService {
 	//채팅방 검색
 	public List<ChatDTO> searchChatListByTitle(String searchKeyword);
 
-	public List<ChatMemberDTO> getChatMembers();
 	
 	//일별가입자수 체크
 	public long getTodaySignups();

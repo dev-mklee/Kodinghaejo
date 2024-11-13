@@ -21,8 +21,8 @@ const deleteNotice = (idx) => {
         })
         .then(({ status, message }) => {
             if (status === 200) {
-                alert(message); // 서버에서 전달한 성공 메시지
-                location.reload(); // 페이지 새로고침하여 목록 갱신
+                alert(message);
+                location.reload();
             } else {
                 alert(`삭제 실패: ${message}`);
             }
@@ -34,10 +34,9 @@ const deleteNotice = (idx) => {
     }
 }
 </script>
-
 </head>
-<div id="header" th:replace="include/header"></div>
 <body>
+<div id="header" th:replace="include/header"></div>
 	<div class="container column mt50">
 		<div class="column-row">
 			<div class="c-column-2">
@@ -95,10 +94,8 @@ const deleteNotice = (idx) => {
 				</div>
 			</div>
 		</div>
-
 	</div>
+<div id="footer" th:replace="include/footer"></div>
 </body>
-<footer>
-	<div id="footer" th:replace="include/footer"></div>
-</footer>
+
 </html>
