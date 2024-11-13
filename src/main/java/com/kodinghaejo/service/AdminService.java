@@ -10,6 +10,8 @@ import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public interface AdminService {
 
 	//문제 작성
@@ -91,6 +93,15 @@ public interface AdminService {
 	
 	//일별 자유게시판 작성 수
 	public long getTodayFreeBoardCount();
+	
+	//일별 방문자 수 체크
+	public long getTodayVisitorCount(HttpServletRequest request);
+	
+	//일별 방문자 수 증가
+	public void upTodayVisitorCount(HttpServletRequest request);
+	
+	//방문자 IP
+	public String getUserIp(HttpServletRequest request);
 }
 
 

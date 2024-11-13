@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,7 @@ import com.kodinghaejo.entity.repository.TestQuestionAnswerRepository;
 import com.kodinghaejo.entity.repository.TestQuestionRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -454,4 +457,38 @@ public class AdminServiceImpl implements AdminService {
 
 	    return boardRepository.countByCatAndRegdateBetween("자유게시판", startOfDay, endOfDay);
 	}
-}
+	
+	private Set<String> userIps = new HashSet<>();
+
+	//일별 방문자 수 증가
+	@Override
+	public void upTodayVisitorCount(HttpServletRequest request) {
+		LocalDate today = LocalDate.now();
+		
+		String ip = getUserIp(request);
+		
+		if (!today.equals(LocalDate.now())) {
+            userIps.clear();
+            today = LocalDate.now();
+        }
+
+        if (!userIps.contains(ip)) {
+            userIps.add(ip);
+        }
+	}
+	
+	//일별 방문자 수 체크
+	public long getTodayVisitorCount(HttpServletRequest request) {
+		return userIps.size();
+	}
+	
+	//방문자 IP
+	@Override
+	public String getUserIp(HttpServletRequest request) {
+		String ipAddress = request.getHeader("X-Forwarded-For");
+		if(ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
+			ipAddress = request.getRemoteAddr();
+		}
+		return ipAddress;
+	}
+}	

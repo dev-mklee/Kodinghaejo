@@ -29,6 +29,7 @@ import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -46,9 +47,12 @@ public class AdminController {
 	
 	//시스템 관리 메인화면
 	@GetMapping("/admin/systemMain")
-	public String getSystemMain(Model model) {
+	public String getSystemMain(Model model, HttpServletRequest request) {
 		long todaySignups = service.getTodaySignups();
 		model.addAttribute("todaySignups", todaySignups);
+		
+		long todayVisitorCount = service.getTodayVisitorCount(request);
+		model.addAttribute("todayVisitorCount", todayVisitorCount);
 		
 		long todayFreeboardCount = service.getTodayFreeBoardCount();
 		model.addAttribute("todayFreeboardCount", todayFreeboardCount);
