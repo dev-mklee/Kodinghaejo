@@ -61,5 +61,6 @@ public class BoardEntity {
 
 	@Column(name = "is_use", length = 2, nullable = false)
 	private String isUse;
+	
 
 }

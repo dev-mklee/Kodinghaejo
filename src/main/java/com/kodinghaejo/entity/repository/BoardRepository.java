@@ -2,6 +2,7 @@ package com.kodinghaejo.entity.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.data.repository.query.Param;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.MemberEntity;
+import com.kodinghaejo.entity.ReplyEntity;
 
 import jakarta.transaction.Transactional;
 
@@ -48,6 +50,5 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 
 
 	public Page<BoardEntity> findByEmailAndIsUse(MemberEntity email, String isUse, Pageable pageable);
-
 
 }

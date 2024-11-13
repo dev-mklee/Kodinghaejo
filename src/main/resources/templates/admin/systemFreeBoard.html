@@ -91,8 +91,8 @@ const deleteFreeBoard = (idx) => {
 								<td th:text="${board.writer}">홍길동</td>
 								<td th:text="${board.regdate}">2024-11-04</td>
 								<td th:text="${board.hitCnt}">4</td>
-								<td>3</td>
-								<td>0</td>
+								<td th:text="${board.goodCnt}">3</td>
+								<td th:text="${board.badCnt}">0</td>
 								<td><a href="" class="btn_delete" th:onclick="'deleteFreeBoard(' + ${board.idx} + ')'">삭제</a></td>
 								<td th:text="${board.isUse}"></td>
 							</tr>

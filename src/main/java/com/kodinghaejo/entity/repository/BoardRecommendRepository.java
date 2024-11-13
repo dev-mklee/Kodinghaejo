@@ -12,6 +12,9 @@ public interface BoardRecommendRepository extends JpaRepository<BoardRecommendEn
 
 	//게시글의 추천 수
 	public Long countByBoardIdxAndGoodChk(BoardEntity boardEntity, String goodChk);
+	
+	//게시글의 신고 수
+	public Long countByBoardIdxAndBadChk(BoardEntity boardEntity, String badChk);
 
 	//실제 컬럼명인 B_IDX로 좋아요 개수 조회
 	@Query(value = "SELECT COUNT(*) FROM jpa_board_recommend WHERE board_idx = :boardIdx and good_chk = 'Y'", nativeQuery = true)

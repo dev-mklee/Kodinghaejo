@@ -23,13 +23,16 @@ import com.kodinghaejo.entity.MemberEntity;
 import com.kodinghaejo.entity.ReplyEntity;
 import com.kodinghaejo.entity.TestEntity;
 import com.kodinghaejo.entity.TestLngEntity;
+import com.kodinghaejo.entity.TestQuestionAnswerEntity;
 import com.kodinghaejo.entity.TestQuestionEntity;
+import com.kodinghaejo.entity.repository.BoardRecommendRepository;
 import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.ChatMemberRepository;
 import com.kodinghaejo.entity.repository.ChatRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.ReplyRepository;
 import com.kodinghaejo.entity.repository.TestLngRepository;
+import com.kodinghaejo.entity.repository.TestQuestionAnswerRepository;
 import com.kodinghaejo.entity.repository.TestQuestionRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 
@@ -47,6 +50,8 @@ public class AdminServiceImpl implements AdminService {
 	private final ChatRepository chatRepository;
 	private final ChatMemberRepository chatMemberRepository;
 	private final MemberRepository memberRepository;
+	private final BoardRecommendRepository boardRecommendRepository;
+	private final TestQuestionAnswerRepository questionAnswerRepository;
 	
 	//문제 작성
 	@Override
@@ -158,6 +163,8 @@ public class AdminServiceImpl implements AdminService {
 		
 		for (BoardEntity board : boardEntities) {
 			BoardDTO boardDTO = new BoardDTO(board);
+			boardDTO.setGoodCnt(boardRecommendRepository.countByBoardIdxAndGoodChk(board, "Y"));
+			boardDTO.setBadCnt(boardRecommendRepository.countByBoardIdxAndBadChk(board, "Y"));
 			boardDTOs.add(boardDTO);
 		}
 		
@@ -236,6 +243,32 @@ public class AdminServiceImpl implements AdminService {
 		
 		for (ReplyEntity reply : replyEntities) {
 			ReplyDTO replyDTO = new ReplyDTO(reply);
+			switch (reply.getRePrnt()) {
+				case "FR":
+					BoardEntity board = boardRepository.findById(reply.getPrntIdx()).orElse(null);
+					if(board != null) {
+						replyDTO.setPrntTitle(boardRepository.findById(reply.getPrntIdx()).get().getTitle());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+				case "Q":
+					TestQuestionEntity question = questionRepository.findById(reply.getPrntIdx()).orElse(null);
+					if(question != null) {
+						replyDTO.setPrntTitle(questionRepository.findById(reply.getPrntIdx()).get().getTitle());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+				case "QA":
+					TestQuestionAnswerEntity answer = questionAnswerRepository.findById(reply.getPrntIdx()).orElse(null);
+					if(answer != null) {
+						replyDTO.setPrntTitle(questionAnswerRepository.findById(reply.getPrntIdx()).get().getContent());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+			}
 			replyDTOs.add(replyDTO);
 		}
 		return replyDTOs;

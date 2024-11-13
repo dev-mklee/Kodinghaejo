@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.kodinghaejo.dto.ReplyInterface;
+import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.ReplyEntity;
 
 public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {

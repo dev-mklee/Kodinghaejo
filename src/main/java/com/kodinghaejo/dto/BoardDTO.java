@@ -30,6 +30,7 @@ public class BoardDTO {
 	
 	//해당 게시물의 추천 수
 	private Long goodCnt;
+	private Long badCnt;
 
 	//Entity --> DTO 이동
 	public BoardDTO(BoardEntity entity) {
