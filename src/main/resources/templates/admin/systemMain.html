@@ -142,7 +142,6 @@
 	    padding: 130px;
 	}
 	canvas {
-		width: 600px !important;
     	border-radius: 10px;
 	}
   </style>
@@ -217,9 +216,10 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
     <div id="footer" th:replace="include/footer"></div>	
-<script>
-	// Pie 차트 데이터
+<script th:inline="javascript">
 	const pieChartData = {
 		categories: ['언어'],
 		series: [
@@ -249,22 +249,23 @@
 		  },
 		],
 	};
+
+	const monthlySignups = /*[[${monthlySignupsJson}]]*/ '{}';
+	const parsedData = JSON.parse(monthlySignups);
+	const categories = Object.keys(parsedData).map(month => `${month}월`);
+	const data = Object.values(parsedData);
+	
 	
 	const barChartData = {
-			categories: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+			categories: categories,
 			series: [
 			  {
-				name: '일반',
-				data: [100, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220]
-			  },
-			  {
-				name: '소셜',
-				data: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85]
+				name: '가입자',
+				data: data
 			  },
 			],
 		};
-	// 공통 옵션
-	const commonOptions = {
+	const pieOptions = {
 		chart: {
 			width: 600, height: 300,
 			title: {
@@ -280,11 +281,11 @@
 		}
 	};
 	
-	const Option = {
+	const barOption = {
 		chart: {
 			width: 700, height: 300,
 			title : {
-				text: '월별 가입자 수',
+				text: '2024년 월별 가입자 수',
 				align: 'center'
 			}
 		},
@@ -295,16 +296,16 @@
 		    }
 		  },
 		  yAxis: {
-		    title: '가입자 수'
+		    title: '가입자'
 		  },
 	};
 	
 	// 원형 차트 생성 및 렌더링
 	const pieChartContainer = document.getElementById('pieChart');
-	const pieChart = new toastui.Chart.pieChart({ el: pieChartContainer, data: pieChartData, options: commonOptions });
+	const pieChart = new toastui.Chart.pieChart({ el: pieChartContainer, data: pieChartData, options: pieOptions });
 	// 막대형 차트 생성 및 렌더링
 	const barChartContainer = document.getElementById('barChart');
-	const barChart = new toastui.Chart.columnChart({ el: barChartContainer, data: barChartData, options: Option });
+	const barChart = new toastui.Chart.columnChart({ el: barChartContainer, data: barChartData, options: barOption });
 </script>	   
 </body>
 

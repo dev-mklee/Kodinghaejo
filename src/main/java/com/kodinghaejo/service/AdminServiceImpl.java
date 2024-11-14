@@ -3,10 +3,15 @@ package com.kodinghaejo.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Year;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -491,4 +496,16 @@ public class AdminServiceImpl implements AdminService {
 		}
 		return ipAddress;
 	}
+	
+	public Map<Integer, Long> getMonthlySignups() {
+		int currentYear = Year.now().getValue();
+		List<Object[]> results = memberRepository.findMonthlySignups(currentYear);
+		Map<Integer, Long> monthlySignups = new HashMap<>();
+		for (Object[] result : results) {
+			Integer month = (Integer) result[0];
+			Long count = (Long) result[1];
+			monthlySignups.put(month, count);
+			}
+		return monthlySignups;
+		}
 }	

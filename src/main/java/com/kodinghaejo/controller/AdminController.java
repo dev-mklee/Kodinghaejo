@@ -1,6 +1,7 @@
 package com.kodinghaejo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
+import com.nimbusds.jose.shaded.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -57,6 +59,10 @@ public class AdminController {
 		long todayFreeboardCount = service.getTodayFreeBoardCount();
 		model.addAttribute("todayFreeboardCount", todayFreeboardCount);
         
+		Map<Integer, Long> monthlySignups = service.getMonthlySignups();
+		String monthlySignupsJson = new Gson().toJson(monthlySignups);
+		model.addAttribute("monthlySignupsJson", monthlySignupsJson);
+		
 		return "/admin/systemMain";
 	}
 	

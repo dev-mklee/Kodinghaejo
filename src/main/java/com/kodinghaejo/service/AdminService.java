@@ -1,6 +1,7 @@
 package com.kodinghaejo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
@@ -102,6 +103,9 @@ public interface AdminService {
 	
 	//방문자 IP
 	public String getUserIp(HttpServletRequest request);
+	
+	//월별 가입자수 체크
+	public Map<Integer, Long> getMonthlySignups();
 }
 
 
