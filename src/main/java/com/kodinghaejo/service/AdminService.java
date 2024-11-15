@@ -110,6 +110,9 @@ public interface AdminService {
 	//월별 가입자수 체크
 	public Map<Integer, Long> getMonthlySignups();
 	
+	//문제풀이에 사용된 언어
+	public Map<String, Integer> getLngSubmitCount();
+	
 	//회원탈퇴
 	public void deleteMember(String email);
 }

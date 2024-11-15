@@ -3,6 +3,7 @@ package com.kodinghaejo.controller;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
 
@@ -30,7 +32,6 @@ import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
-import com.kodinghaejo.service.MemberService;
 import com.nimbusds.jose.shaded.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,6 +68,14 @@ public class AdminController {
 		Map<Integer, Long> monthlySignups = service.getMonthlySignups();
 		String monthlySignupsJson = new Gson().toJson(monthlySignups);
 		model.addAttribute("monthlySignupsJson", monthlySignupsJson);
+		
+		Map<String, Integer> lngCount = service.getLngSubmitCount();
+		try {
+			model.addAttribute("lngCount", new ObjectMapper().writeValueAsString(lngCount));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			model.addAttribute("lngCount", "{}");
+		}
 		
 		return "/admin/systemMain";
 	}

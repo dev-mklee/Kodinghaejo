@@ -540,7 +540,20 @@ public class AdminServiceImpl implements AdminService {
 			}
 		return monthlySignups;
 		}
-
+	
+	//문제풀이에 사용된 언어
+	public Map<String, Integer> getLngSubmitCount() {
+		List<Object[]> results = submitRepository.countSubmitByLng();
+		Map<String, Integer> lngCount = new HashMap<>();
+		
+		for (Object[] result : results) {
+			String language = "LNG-0001".equals(result[0]) ? "JAVA" : "JavaScript";
+			lngCount.put(language, ((Long) result[1]).intValue());
+		}
+		return lngCount;
+	}
+	
+	
 	//회원 탈퇴
 	@Transactional
 	@Override

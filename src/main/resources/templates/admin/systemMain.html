@@ -220,34 +220,13 @@
 	</div>
     <div id="footer" th:replace="include/footer"></div>	
 <script th:inline="javascript">
+	
+	const lngCount = /*[[${lngCount}]]*/ '{}';
+	const parsedLngData = JSON.parse(lngCount);
+	
 	const pieChartData = {
 		categories: ['언어'],
-		series: [
-		  {
-			name: 'JAVA',
-			data: 46.02,
-		  },
-		  {
-			name: 'javascript',
-			data: 20.47,
-		  },
-		  {
-			name: 'sql',
-			data: 17.71,
-		  },
-		  {
-			name: 'C',
-			data: 0,
-		  },
-		  {
-			name: 'C++',
-			data: 0,
-		  },
-		  {
-			name: 'Python',
-			data: 0,
-		  },
-		],
+		series: Object.entries(parsedLngData).map(([name, data]) => ({ name, data }))
 	};
 
 	const monthlySignups = /*[[${monthlySignupsJson}]]*/ '{}';
