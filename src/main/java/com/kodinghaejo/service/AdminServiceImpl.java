@@ -30,6 +30,7 @@ import com.kodinghaejo.entity.TestEntity;
 import com.kodinghaejo.entity.TestLngEntity;
 import com.kodinghaejo.entity.TestQuestionAnswerEntity;
 import com.kodinghaejo.entity.TestQuestionEntity;
+import com.kodinghaejo.entity.TestSubmitEntity;
 import com.kodinghaejo.entity.repository.BoardRecommendRepository;
 import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.ChatRepository;
@@ -78,28 +79,41 @@ public class AdminServiceImpl implements AdminService {
 	//문제 보여주기
 	@Override
 	public List<TestDTO> testAllList() {
-		List<TestEntity> testEntities = testRepository.findAll(); // 문제 목록 조회
+		List<TestEntity> testEntities = testRepository.findAll();
 		List<TestDTO> testDTOList = new ArrayList<>();
 		
 		for (TestEntity test : testEntities) {
-			TestDTO testDTO = new TestDTO(test);  // 기존의 TestEntity 정보를 TestDTO로 변환
+			TestDTO testDTO = new TestDTO(test);
 			
-			// 해당 문제에 대한 언어 정보 조회
-			List<TestLngEntity> testLangs = testLngRepository.findByTestIdx(test); // testIdx로 언어 정보 조회
+			List<TestLngEntity> testLangs = testLngRepository.findByTestIdx(test);
 			List<TestLngDTO> testLngDTOs = new ArrayList<>();
 			
 			for (TestLngEntity lang : testLangs) {
 				TestLngDTO langDTO = new TestLngDTO();
-				langDTO.setLng(lang.getLng());  // 언어 코드만 추가
-				testLngDTOs.add(langDTO);  // 언어 DTO 목록에 추가
+				
+				langDTO.setLng(lang.getLng());
+				testLngDTOs.add(langDTO);
 			}
 			
-			testDTO.setTestLngList(testLngDTOs);  // TestDTO에 언어 정보 세팅
-			testDTOList.add(testDTO);  // 최종 리스트에 추가
+			testDTO.setTestLngList(testLngDTOs);
+			
+			long submitCount = submitRepository.countByTestIdx(test.getIdx());
+	        testDTO.setSubmitCount(submitCount);
+			
+	        long correctCount = submitRepository.countByTestIdxAndSubmSts(test.getIdx(), "Y");
+	        
+	        double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
+	        testDTO.setCorrectRate(correctRate);
+	        
+			testDTOList.add(testDTO);
 		}
 		
 		return testDTOList;
 	}
+	
+	public long getSubmissionCount(Long testIdx) {
+        return submitRepository.countByTestIdx(testIdx);
+    }
 	
 	//문제 수정
 	@Override

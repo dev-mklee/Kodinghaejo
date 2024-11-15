@@ -25,7 +25,10 @@ public class TestDTO {
 	private LocalDateTime regdate;
 	private String isUse;
 	private List<TestLngDTO> testLngList;
-
+	
+	private long submitCount;
+    private double correctRate;
+    
 	//Entity --> DTO 이동
 	public TestDTO(TestEntity entity) {
 		this.idx = entity.getIdx();

@@ -71,8 +71,8 @@
 						            </ul>
 						        </td>
 								<td th:text="${test.regdate}">2024-11-04</td>
-								<td>999명</td>
-								<td>50%</td>
+								<td th:text="${test.submitCount}">999명</td>
+								<td th:text="${test.correctRate} + ' ' + '%' ">50%</td>
 							</tr>
 						</tbody>
 					</table>

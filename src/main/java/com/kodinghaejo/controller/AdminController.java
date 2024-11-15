@@ -97,7 +97,7 @@ public class AdminController {
 	//문제 리스트
 	@GetMapping("/admin/systemTest")
 	public void getSystemTest(@RequestParam(required = false) String searchKeyword, Model model) {
-		List<TestDTO> testDTOs; // service.testAllList(); // 문제 리스트
+		List<TestDTO> testDTOs;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
 			testDTOs = service.searchtestListByTitle(searchKeyword);
