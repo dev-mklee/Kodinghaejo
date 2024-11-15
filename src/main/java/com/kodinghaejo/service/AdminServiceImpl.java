@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
+import com.kodinghaejo.dto.CommonCodeDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
@@ -24,6 +25,7 @@ import com.kodinghaejo.dto.TestLngDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.ChatEntity;
+import com.kodinghaejo.entity.CommonCodeEntity;
 import com.kodinghaejo.entity.MemberEntity;
 import com.kodinghaejo.entity.ReplyEntity;
 import com.kodinghaejo.entity.TestEntity;
@@ -34,6 +36,7 @@ import com.kodinghaejo.entity.TestSubmitEntity;
 import com.kodinghaejo.entity.repository.BoardRecommendRepository;
 import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.ChatRepository;
+import com.kodinghaejo.entity.repository.CommonCodeRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.ReplyRepository;
 import com.kodinghaejo.entity.repository.TestLngRepository;
@@ -59,6 +62,7 @@ public class AdminServiceImpl implements AdminService {
 	private final BoardRecommendRepository boardRecommendRepository;
 	private final TestQuestionAnswerRepository questionAnswerRepository;
 	private final TestSubmitRepository submitRepository;
+	private final CommonCodeRepository codeRepository;
 	
 	//문제 작성
 	@Override
@@ -564,4 +568,30 @@ public class AdminServiceImpl implements AdminService {
             memberRepository.delete(member);
         });
     }
+	
+	//공통코드 관리화면
+	@Override
+	public List<CommonCodeDTO> codeList() {
+		List<CommonCodeEntity> codeEntities = codeRepository.findAll();
+		List<CommonCodeDTO> codeDTOs = new ArrayList<>();
+		
+		for (CommonCodeEntity code : codeEntities) {
+			CommonCodeDTO codeDTO = new CommonCodeDTO(code);
+			codeDTOs.add(codeDTO);
+		}
+		return codeDTOs;
+	}
+	
+	//공통코드 검색
+	@Override
+	public List<CommonCodeDTO> searchCodeListByCode(String searchKeyword) {
+		List<CommonCodeEntity> codeEntities = codeRepository.findByCodeContaining(searchKeyword);
+		List<CommonCodeDTO> codeDTOs = new ArrayList<>();
+		
+		for (CommonCodeEntity code : codeEntities) {
+			CommonCodeDTO codeDTO = new CommonCodeDTO(code);
+			codeDTOs.add(codeDTO);
+		}
+		return codeDTOs;
+	}
 }	

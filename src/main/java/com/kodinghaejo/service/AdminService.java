@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.ChatMemberDTO;
+import com.kodinghaejo.dto.CommonCodeDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
@@ -115,6 +116,12 @@ public interface AdminService {
 	
 	//회원탈퇴
 	public void deleteMember(String email);
+	
+	//공통코드 관리화면
+	public List<CommonCodeDTO> codeList();
+	
+	//공통코드 검색
+	public List<CommonCodeDTO> searchCodeListByCode(String searchKeyword);
 }
 
 

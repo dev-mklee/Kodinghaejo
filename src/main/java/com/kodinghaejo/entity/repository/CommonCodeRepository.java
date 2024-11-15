@@ -10,4 +10,6 @@ public interface CommonCodeRepository extends JpaRepository<CommonCodeEntity, St
 
 	public List<CommonCodeEntity> findByIsUse(String isUse);
 	
+	public List<CommonCodeEntity> findByCodeContaining(String SearchKeyword);
+	
 }

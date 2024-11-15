@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회원정보 관리</title>
+<link rel="icon" href="/img/logo/favicon.png">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<script src="/js/pub-ui-custom.js"></script>
+<script>
+const deleteCode = (idx) => {
+    if (confirm("공지사항을 삭제하시겠습니까?")) {
+        fetch(`/admin/systemBoardDelete/${idx}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            console.log("Response status:", response.status);
+            return response.text().then(message => ({ status: response.status, message }));
+        })
+        .then(({ status, message }) => {
+            if (status === 200) {
+                alert(message);
+                location.reload();
+            } else {
+                alert(`삭제 실패: ${message}`);
+            }
+        })
+        .catch(error => {
+            console.error('삭제 중 오류 발생:', error);
+            alert("삭제 요청 중 오류가 발생했습니다.");
+        });
+    }
+}
+</script>
+</head>
+<body>
+<div id="header" th:replace="include/header"></div>
+	<div class="container column mt50">
+		<div class="column-row">
+			<div class="c-column-2">
+				<div id="system_menu" th:replace="include/system"></div>
+			</div>
+			<div class="c-column-8">
+				<div class="sys-system_menu">
+					<h2>공통코드 관리</h2>
+					<div class="search-bar mb-20">
+						<form method="get" action="/admin/systemCommonCode">
+					        <input type="text" name="searchKeyword" placeholder="검색어 입력" th:value="${searchKeyword}" />
+					        <button type="submit" class="btn_search">검색</button>
+					    </form>
+					</div>
+					<div class="sys-description-box  mb20">
+						<h3>공통코드 수 : <span th:text="${codeCount}"></span></h3>
+						<div class="box-itme">
+							<button class="codewrite-button"><a href="/admin/codeWrite">코드 추가</a></button>
+						</div>
+					</div>
+					<table>
+						<caption style="display: none;">공통코드 입니다</caption>
+						<colgroup>
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+							<col width="">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>Code</th>
+								<th>Type</th>
+								<th>Value</th>
+								<th>삭제</th>
+								<th>활성여부</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="code, stat : ${codes}">
+								<td th:text="${stat.index + 1}">1</td>
+								<td>
+									<a th:text ="${code.code}">코드명</a>
+								</td>
+								<td th:text="${code.type}">타입</td>
+								<td th:text="${code.val}">Value</td>
+								<td><a class="btn_delete" onclick="'deleteCode()'">삭제</a></td>
+								<td th:text="${code.isUse}">활성여부</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="footer" th:replace="include/footer"></div>
+</body>
+
+</html>

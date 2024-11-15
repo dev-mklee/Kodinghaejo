@@ -84,8 +84,8 @@ const DeleteMember = (email) => {
 							</tr>
 						</thead>
 						<tbody>
-								<tr th:each="member : ${members}">
-									<td>1</td>
+								<tr th:each="member, stat : ${members}">
+									<td th:text="${stat.index + 1}">1</td>
 									<td th:text="${member.lvl == 'LVL-0001' ? 'MASTER' : 'USER'}">MASTER</td>
 									<td th:text="${member.email}">example1@example.com</td>
 									<td th:text="${member.nickname}">user1</td>

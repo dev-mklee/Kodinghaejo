@@ -22,7 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
-
+import com.kodinghaejo.dto.CommonCodeDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
@@ -354,6 +354,23 @@ public class AdminController {
 		} catch (Exception e) {
 			return "{\"message\": \"fail\"}";
 		}
+	}
+	
+	//공통코드 관리
+	@GetMapping("/admin/systemCommonCode")
+	public void getCommonCode(@RequestParam(required = false) String searchKeyword, Model model) {
+		List<CommonCodeDTO> codeDTOs;
+		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+			codeDTOs = service.searchCodeListByCode(searchKeyword);
+		} else {
+			codeDTOs = service.codeList();
+		}
+		
+		model.addAttribute("codes", codeDTOs);
+		
+		long codeCount = codeDTOs.size();
+		model.addAttribute("codeCount", codeCount);
 	}
 }
 
