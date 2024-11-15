@@ -51,4 +51,5 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 
 	public Page<BoardEntity> findByEmailAndIsUse(MemberEntity email, String isUse, Pageable pageable);
 
+	
 }

@@ -1,5 +1,7 @@
 package com.kodinghaejo.service;
 
+import java.util.List;
+
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.entity.TestLngEntity;
 
@@ -19,5 +21,11 @@ public interface TestService {
 
 	//코드 제출 시 검증 처리 
 	public String testCode(String language, String filePath) throws Exception;
+	
+	//문제 리스트 보여주기
+	public List<TestDTO> testAllList();
+		
+	//문제 검색
+	public List<TestDTO> searchtestListByTitle(String searchKeyword);
 	
 }

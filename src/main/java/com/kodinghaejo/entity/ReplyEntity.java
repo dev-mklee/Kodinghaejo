@@ -2,6 +2,11 @@ package com.kodinghaejo.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,8 +44,10 @@ public class ReplyEntity {
 	@Column(name = "prnt_idx", nullable = false)
 	private Long prntIdx;
 
-	@Column(name = "email", length = 50, nullable = false)
-	private String email;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "email")
+	private MemberEntity email;
 
 	@Column(name = "writer", length = 50, nullable = false)
 	private String writer;

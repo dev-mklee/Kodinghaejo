@@ -5,10 +5,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.kodinghaejo.dto.TestDTO;
+import com.kodinghaejo.dto.TestLngDTO;
 import com.kodinghaejo.entity.TestEntity;
 import com.kodinghaejo.entity.TestLngEntity;
 import com.kodinghaejo.entity.repository.TestLngRepository;
@@ -120,4 +123,54 @@ public class TestServiceImpl implements TestService {
 		}
 		return "Error:\n" + errorOutput.toString();
 	}
+	
+	//문제 보여주기
+		@Override
+		public List<TestDTO> testAllList() {
+			List<TestEntity> testEntities = testRepository.findAll(); // 문제 목록 조회
+			List<TestDTO> testDTOList = new ArrayList<>();
+			
+			for (TestEntity test : testEntities) {
+				TestDTO testDTO = new TestDTO(test);  // 기존의 TestEntity 정보를 TestDTO로 변환
+				
+				// 해당 문제에 대한 언어 정보 조회
+				List<TestLngEntity> testLangs = testLngRepository.findByTestIdx(test); // testIdx로 언어 정보 조회
+				List<TestLngDTO> testLngDTOs = new ArrayList<>();
+				
+				for (TestLngEntity lang : testLangs) {
+					TestLngDTO langDTO = new TestLngDTO();
+					langDTO.setLng(lang.getLng());  // 언어 코드만 추가
+					testLngDTOs.add(langDTO);  // 언어 DTO 목록에 추가
+				}
+				
+				testDTO.setTestLngList(testLngDTOs);  // TestDTO에 언어 정보 세팅
+				testDTOList.add(testDTO);  // 최종 리스트에 추가
+			}
+			
+			return testDTOList;
+		}
+			
+		//문제 검색
+		public List<TestDTO> searchtestListByTitle(String searchKeyword) {
+			List<TestEntity> testEntities = testRepository.findByTitleContaining(searchKeyword);
+			List<TestDTO> testDTOs = new ArrayList<>();
+			
+			for (TestEntity test : testEntities) {
+				TestDTO testDTO = new TestDTO(test);
+				
+				List<TestLngEntity> testLangs = testLngRepository.findByTestIdx(test); // testIdx로 언어 정보 조회
+				List<TestLngDTO> testLngDTOs = new ArrayList<>();
+				
+				for (TestLngEntity lang : testLangs) {
+					TestLngDTO langDTO = new TestLngDTO();
+					langDTO.setLng(lang.getLng());
+					testLngDTOs.add(langDTO);
+				}
+				
+				testDTO.setTestLngList(testLngDTOs);
+				testDTOs.add(testDTO);
+			}
+			
+			return testDTOs;
+		}
 }

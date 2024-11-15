@@ -87,6 +87,7 @@
           <caption style="display: none;">관리자 게시판 입니다</caption>
           <colgroup>
             <col width="10%">
+            <col width="10%">
             <col width="">
             <col width="10%">
             <col width="15%">
@@ -96,6 +97,7 @@
           </colgroup>
           <thead>
             <tr>
+              <th>문제번호</th>
               <th>상태</th>
               <th>제목</th>
               <th>난이도</th>
@@ -104,11 +106,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr th:each="test : ${tests}">
+              <td th:text="${test.idx}"></td>	
               <td>푼 문제</td>
-              <td>첫번째 게시글입니다.</td>
-              <td>0단계</td>
-              <td>김아무개씨</td>
+              <td><a th:href="@{/test/challenge?idx={idx}(idx=${test.idx})}"  th:text="${test.title}"></a></td>
+              <td th:text="${test.diff}"></td>
+              <td>10명</td>
               <td>100%</td>
             </tr>
           </tbody>

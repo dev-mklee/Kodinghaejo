@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
@@ -29,6 +30,7 @@ import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
+import com.kodinghaejo.service.MemberService;
 import com.nimbusds.jose.shaded.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -58,7 +60,10 @@ public class AdminController {
 		
 		long todayFreeboardCount = service.getTodayFreeBoardCount();
 		model.addAttribute("todayFreeboardCount", todayFreeboardCount);
-        
+		
+		long todayTestCount = service.getTodayTestCount();
+		model.addAttribute("todayTestCount", todayTestCount);
+		
 		Map<Integer, Long> monthlySignups = service.getMonthlySignups();
 		String monthlySignupsJson = new Gson().toJson(monthlySignups);
 		model.addAttribute("monthlySignupsJson", monthlySignupsJson);
@@ -328,5 +333,18 @@ public class AdminController {
 			return "{\"message\": \"fail\"}";
 		}
 	}
+	
+	//회원 탈퇴
+	@ResponseBody
+	@PostMapping("/admin/systemMemberDelete/{email}")
+	public String deleteMember(@PathVariable("email") String email) {
 
+		try {
+			service.deleteMember(email);
+			return "{ \"message\": \"good\" }";
+		} catch (Exception e) {
+			return "{\"message\": \"fail\"}";
+		}
+	}
 }
+

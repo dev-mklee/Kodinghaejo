@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.kodinghaejo.entity.ChatEntity;
 import com.kodinghaejo.entity.ChatMsgEntity;
+import com.kodinghaejo.entity.MemberEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

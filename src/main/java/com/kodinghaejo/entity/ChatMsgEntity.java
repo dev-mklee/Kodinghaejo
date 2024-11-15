@@ -41,7 +41,7 @@ public class ChatMsgEntity {
 	@JoinColumn(name = "chat_idx", nullable = false)
 	private ChatEntity chatIdx;
 
-	@Column(name = "email", length = 50, nullable = false)
+	@Column(name = "email", nullable = false)
 	private String email;
 
 	@Column(name = "content", length = 2000, nullable = false)

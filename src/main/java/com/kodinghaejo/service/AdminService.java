@@ -104,8 +104,14 @@ public interface AdminService {
 	//방문자 IP
 	public String getUserIp(HttpServletRequest request);
 	
+	//일별 푼 문제 수
+	public long getTodayTestCount();
+	
 	//월별 가입자수 체크
 	public Map<Integer, Long> getMonthlySignups();
+	
+	//회원탈퇴
+	public void deleteMember(String email);
 }
 
 

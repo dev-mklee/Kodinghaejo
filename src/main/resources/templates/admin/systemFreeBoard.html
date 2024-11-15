@@ -21,8 +21,8 @@ const deleteFreeBoard = (idx) => {
         })
         .then(({ status, message }) => {
             if (status === 200) {
-                alert(message); // 서버에서 전달한 성공 메시지
-                location.reload(); // 페이지 새로고침하여 목록 갱신
+                alert(message);
+                location.reload();
             } else {
                 alert(`삭제 실패: ${message}`);
             }

@@ -7,17 +7,16 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
-import com.kodinghaejo.dto.ChatMemberDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
@@ -25,7 +24,6 @@ import com.kodinghaejo.dto.TestLngDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.ChatEntity;
-import com.kodinghaejo.entity.ChatMemberEntity;
 import com.kodinghaejo.entity.MemberEntity;
 import com.kodinghaejo.entity.ReplyEntity;
 import com.kodinghaejo.entity.TestEntity;
@@ -34,7 +32,6 @@ import com.kodinghaejo.entity.TestQuestionAnswerEntity;
 import com.kodinghaejo.entity.TestQuestionEntity;
 import com.kodinghaejo.entity.repository.BoardRecommendRepository;
 import com.kodinghaejo.entity.repository.BoardRepository;
-import com.kodinghaejo.entity.repository.ChatMemberRepository;
 import com.kodinghaejo.entity.repository.ChatRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
 import com.kodinghaejo.entity.repository.ReplyRepository;
@@ -42,6 +39,7 @@ import com.kodinghaejo.entity.repository.TestLngRepository;
 import com.kodinghaejo.entity.repository.TestQuestionAnswerRepository;
 import com.kodinghaejo.entity.repository.TestQuestionRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
+import com.kodinghaejo.entity.repository.TestSubmitRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -56,10 +54,10 @@ public class AdminServiceImpl implements AdminService {
 	private final TestQuestionRepository questionRepository;
 	private final ReplyRepository replyRepository;
 	private final ChatRepository chatRepository;
-	private final ChatMemberRepository chatMemberRepository;
 	private final MemberRepository memberRepository;
 	private final BoardRecommendRepository boardRecommendRepository;
 	private final TestQuestionAnswerRepository questionAnswerRepository;
+	private final TestSubmitRepository submitRepository;
 	
 	//문제 작성
 	@Override
@@ -313,6 +311,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//문제 검색
+	@Override
 	public List<TestDTO> searchtestListByTitle(String searchKeyword) {
 		List<TestEntity> testEntities = testRepository.findByTitleContaining(searchKeyword);
 		List<TestDTO> testDTOs = new ArrayList<>();
@@ -337,6 +336,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//회원정보 검색
+	@Override
 	public List<MemberDTO> searchMembers(String searchType, String searchKeyword) {
 
 		List<MemberEntity> memberEntities;
@@ -383,6 +383,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	//자유게시판 검색
+	@Override
 	public List<BoardDTO> searchFreeboardListByTitle(String searchKeyword) {
 		List<BoardEntity> boardEntities = boardRepository.findByTitleContainingAndCatNot(searchKeyword, "공지사항");
 		List<BoardDTO> boardDTOs = new ArrayList<>();
@@ -396,6 +397,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//공지 검색
+	@Override
 	public List<BoardDTO> searchNoticeListByTitle(String searchKeyword) {
 		List<BoardEntity> boardEntities = boardRepository.findByTitleContainingAndCat(searchKeyword, "공지사항");
 		List<BoardDTO> boardDTOs = new ArrayList<>();
@@ -409,6 +411,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//질문게시판 검색
+	@Override
 	public List<TestQuestionDTO> searchQboardListByTitle(String searchKeyword) {
 		List<TestQuestionEntity> questionEntities = questionRepository.findByTitleContaining(searchKeyword);
 		List<TestQuestionDTO> questionDTOs = new ArrayList<>();
@@ -422,6 +425,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//댓글 검색
+	@Override
 	public List<ReplyDTO> searchReplyListByContent(String searchKeyword) {
 		List<ReplyEntity> replyEntities = replyRepository.findByContentContaining(searchKeyword);
 		List<ReplyDTO> replyDTOs = new ArrayList<>();
@@ -435,6 +439,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//채팅방 검색
+	@Override
 	public List<ChatDTO> searchChatListByTitle(String searchKeyword) {
 		List<ChatEntity> chatEntities = chatRepository.findByTitleContaining(searchKeyword);
 		List<ChatDTO> chatDTOs = new ArrayList<>();
@@ -448,6 +453,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//일별 가입자수 체크
+	@Override
 	public long getTodaySignups() {
 		LocalDateTime startOfday = LocalDateTime.now().with(LocalTime.MIN);
 		LocalDateTime endOfday = LocalDateTime.now().with(LocalTime.MAX);
@@ -456,9 +462,10 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//일별 자유게시판 작성수
+	@Override
 	public long getTodayFreeBoardCount() {
-		LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
-	    LocalDateTime endOfDay = LocalDate.now().atTime(23, 59, 59, 999999999);
+		LocalDateTime startOfDay = LocalDateTime.now().with(LocalTime.MIN);
+	    LocalDateTime endOfDay = LocalDateTime.now().with(LocalTime.MAX);
 
 	    return boardRepository.countByCatAndRegdateBetween("자유게시판", startOfDay, endOfDay);
 	}
@@ -483,6 +490,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	//일별 방문자 수 체크
+	@Override
 	public long getTodayVisitorCount(HttpServletRequest request) {
 		return userIps.size();
 	}
@@ -497,6 +505,16 @@ public class AdminServiceImpl implements AdminService {
 		return ipAddress;
 	}
 	
+	//일별 푼 문제 수
+	public long getTodayTestCount() {
+		LocalDateTime startOfday = LocalDateTime.now().with(LocalTime.MIN);
+		LocalDateTime endOfday = LocalDateTime.now().with(LocalTime.MAX);
+		
+		return submitRepository.countByRegdateBetween(startOfday, endOfday);
+	}
+	
+	//해당년도 월별가입자수
+	@Override
 	public Map<Integer, Long> getMonthlySignups() {
 		int currentYear = Year.now().getValue();
 		List<Object[]> results = memberRepository.findMonthlySignups(currentYear);
@@ -508,4 +526,15 @@ public class AdminServiceImpl implements AdminService {
 			}
 		return monthlySignups;
 		}
+
+	//회원 탈퇴
+	@Transactional
+	@Override
+	public void deleteMember(String email) {
+		Optional<MemberEntity> memberOpt = memberRepository.findById(email);
+
+        memberOpt.ifPresent(member -> {
+            memberRepository.delete(member);
+        });
+    }
 }	

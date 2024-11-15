@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.entity.TestLngEntity;
 import com.kodinghaejo.service.TestService;
 
@@ -28,7 +30,26 @@ public class TestController {
 	
 	//코딩테스트 문제 모아보기
 	@GetMapping("/test/problemCollect")
-	public void getProblemCollect() { }
+	public void getProblemCollect(@RequestParam(required = false) String searchKeyword, Model model) { 
+		
+		List<TestDTO> testDTOs; // service.testAllList(); // 문제 리스트
+		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+			testDTOs = service.searchtestListByTitle(searchKeyword);
+		} else {
+			testDTOs = service.testAllList();
+		}
+		
+		model.addAttribute("tests", testDTOs);
+		
+		long testCount = testDTOs.size();
+		model.addAttribute("testCount", testCount);
+		
+		
+		//회원의 문제 제출 상태, 제출 인원 필요, 정답률 필요
+		
+		
+	}
 
 	//코딩테스트 문제 상세 화면
 	@GetMapping("/test/challenge")
