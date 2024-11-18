@@ -13,5 +13,6 @@ import com.kodinghaejo.entity.TestQuestionEntity;
 public interface TestQuestionRepository extends JpaRepository<TestQuestionEntity, Long> {
 
 	List<TestQuestionEntity> findByTitleContaining(String searchKeyword);
+	public List<TestQuestionEntity> findByEmailAndIsUse(MemberEntity email, String isUse);
 	
 }

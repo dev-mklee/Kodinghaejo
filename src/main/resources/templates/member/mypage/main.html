@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="kr">
 <head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>내 정보</title>
-		<!-- Standard css -->
-		<link rel="icon" href="/img/logo/favicon.png">
-		<link rel="stylesheet" href="/css/style.css">
-		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-		<!-- pub-js link -->
-		<script src="/js/pub-ui-custom.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>내 정보&nbsp;&#124;&nbsp;코딩해조</title>
+	<!-- Standard css -->
+	<link rel="icon" href="/img/logo/favicon.png">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+	<!-- pub-js link -->
+	<script src="/js/pub-ui-custom.js"></script>
+	<!-- common-code-js link -->
+	<script src="/js/common-code.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+		var commonCode = /*[[ ${ commonCode } ]]*/'공통코드';
+	</script>
 </head>
 
 <body>
@@ -35,6 +40,7 @@
 								</th:block>
 							</div>
 							<div class="profile_name">
+								<p class="profile_email">[[ ${ member.nickname } ]]&nbsp;&#40;[[ ${ member.username } ]]&#41;</p>
 								<p class="profile_email">[[ ${ member.email } ]]</p>
 								<!-- 인증 안했을때 -->
 								<th:block th:if="${ member.emailAuth == 'N' }">
@@ -53,19 +59,33 @@
 						<div class="profile_list">
 							<h6 class="mb20">프로필</h6>
 							<ul>
-								<th:block th:if="${ member.website != null && member.website != '' }">
-								<li><b>블로그</b> : <a th:href="${ member.website }">[[ ${ member.website } ]]</a></li>
-								</th:block>
+								<li><b>블로그/웹사이트</b> : <a th:if="${ member.website != null && member.website != '' }" th:href="${ member.website }">[[ ${ member.website } ]]</a><span th:if="${ member.website == null || member.website == '' }">미입력</span></li>
 								<li><b>전화번호</b> : [[ ${ member.tel } ]]</li>
 								<li><b>가입일자</b> : <span th:text="${ #temporals.format(member.regdate, 'yyyy-MM-dd a hh:mm:ss') }"></span></li>
-								<li><b>주요기술</b> : JAVA, JAVASCRIPT, SQL</li>
-								<li><b>희망 직무</b> : 직무1, 직무2, 직무3 </li></li>
+								<li><b>주요기술</b> : <span id="myTec"></span></li>
+								<li><b>희망직무</b> : <span id="myJob"></span></li>
+								<script type="text/javascript">
+									//주요기술 세팅
+									let myTec = ('[[ ${ member.tec1 } ]]' == '') ? '' : getCodeValue(commonCode, 'tec', '[[ ${ member.tec1 } ]]');
+									myTec += ('[[ ${ member.tec2 } ]]' == '') ? '' : ', ' + getCodeValue(commonCode, 'tec', '[[ ${ member.tec2 } ]]');
+									myTec += ('[[ ${ member.tec3 } ]]' == '') ? '' : ', ' + getCodeValue(commonCode, 'tec', '[[ ${ member.tec3 } ]]');
+									myTec += (myTec == '') ? '선택 없음' : '';
+									document.querySelector('#myTec').innerHTML = myTec;
+
+									//희망직무 세팅
+									let myJob = ('[[ ${ member.job1 } ]]' == '') ? '' : getCodeValue(commonCode, 'job', '[[ ${ member.job1 } ]]');
+									myJob += ('[[ ${ member.job2 } ]]' == '') ? '' : ', ' + getCodeValue(commonCode, 'job', '[[ ${ member.job2 } ]]');
+									myJob += ('[[ ${ member.job3 } ]]' == '') ? '' : ', ' + getCodeValue(commonCode, 'job', '[[ ${ member.job3 } ]]');
+									myJob += (myJob == '') ? '선택 없음' : '';
+									document.querySelector('#myJob').innerHTML = myJob;
+								</script>
 							</ul>
 							<h6>자기소개</h6>
-							<p><th:block th:if="${ member.descr == null && member.descr == '' }"></th:block>작성된 자기소개글이 없습니다.<th:block th:if="${ member.descr != null && member.descr != '' }">[[ ${ member.descr } ]]</th:block></p>
+							<p><th:block th:if="${ member.descr == null || member.descr == '' }">작성된 자기소개글이 없습니다.</th:block><th:block th:if="${ member.descr != null && member.descr != '' }">[[ ${ member.descr } ]]</th:block></p>
 							<div class="profile_btn_grup">
-								<input type="button" value="자기소개 변경하기" onclick="">
-								<input type="button" value="내 정보 수정" onclick="">
+								<input type="button" value="주요 기술 변경" onclick="edit('Tec')">
+								<input type="button" value="희망 직무 변경" onclick="edit('Job')">
+								<input type="button" value="내 정보 수정" onclick="edit('Info')">
 							</div>
 						</div>
 					</div>
@@ -74,13 +94,13 @@
 					<div class="mypage_box">
 						<p>최근 업데이트 일 : <th:block th:if="${ member.regdate == member.pwdate }">없음</th:block><th:block th:if="${ member.regdate != member.pwdate }"><span th:text="${ #temporals.format(member.pwdate, 'yyyy-MM-dd a hh:mm:ss') }"></span></th:block></p>
 						<div class="profile_btn_grup">
-							<input type="button" value="비밀번호 수정" onclick="editPassword()">
+							<input type="button" value="비밀번호 변경" onclick="edit('Password')">
 						</div>
 					</div>
 
 					<h5>회원탈퇴</h5>
 					<div class="mypage_box">
-						<p>회원 탈퇴 시 테스트 정보가 삭제됩니다.</p>
+						<p>회원 탈퇴 시 참여 중인 모든 채팅방에서 퇴장조치되며, 응시한 테스트 정보가 삭제됩니다.</p>
 						<div class="profile_btn_grup">
 							<input type="button" id="btn_memdelete" class="btn_memdelete" value="회원탈퇴하기" onclick="deleteAccount()">
 						</div>
@@ -92,15 +112,26 @@
 	</div>
 	
 	<script type="text/javascript">
-		//비밀번호 변경
-		const editPassword = () => {
-			document.location = '/member/editPassword';
+		//자기소개 변경하기, 내 정보 수정, 비밀번호 수정
+		const edit = (type) => {
+			document.location = '/member/mypage/edit' + type;
 		}
 	
 		//회원 탈퇴
 		const deleteAccount = () => {
-			if (confirm('정말 회원 탈퇴를 하시겠습니까?'))
-				document.location = '/member/deleteAccount';
+			if (!confirm('정말 회원 탈퇴를 하시겠습니까?\n동일한 이메일로는 다시 가입할 수 없습니다.'))
+				return false;
+			
+			fetch('/member/mypage/deleteAccount', {
+				method: 'GET'
+			})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.message == 'good') {
+					alert('탈퇴 처리가 정상적으로 완료되었습니다.\n메인 화면으로 이동합니다.');
+					document.location.href = '/';
+				}
+			});
 		}
 	</script>
 

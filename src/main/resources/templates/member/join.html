@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>회원가입</title>
+	<title>회원가입&nbsp;&#124;&nbsp;코딩해조</title>
 	<!-- Standard css -->
 	<link rel="icon" href="/img/logo/favicon.png" />
 	<link rel="stylesheet" href="/css/style.css" />
@@ -40,7 +40,7 @@
 						<p id="passwordMsg2">8자 이상 32자 이하 입력 (공백 제외)</p>
 						<p id="passwordMsg3">연속 3자 이상 동일한 문자/숫자 제외</p>
 					</div>
-					<div class="join-password-form">
+					<div class="join-passwordCheck-form">
 						<label for="passwordCheck">비밀번호 확인</label>
 						<input type="password" id="passwordCheck" name="passwordCheck" placeholder="********" oninput="checkPasswordCheck()">
 						<p id="passwordCheckMsg" class="bad"></p>
@@ -127,10 +127,26 @@
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.message == 'good') {
-					alert(decodeURIComponent(data.username) + '님, 회원가입을 축하드립니다.');
-					document.location.href = '/';
+					Swal.fire({
+								icon: 'success',
+								text: decodeURIComponent(data.username) + '님, 회원가입을 축하드립니다.',
+								confirmButtonText: '확인'
+							})
+							.then(() => {
+								document.location.href = '/';
+							});
+				} else if (data.message == 'DELETE_ACCOUNT_DENY') {
+					Swal.fire({
+								icon: 'error',
+								text: '탈퇴한 계정의 이메일은 다시 사용할 수 없습니다.\n관리자에게 문의해주세요.',
+								confirmButtonText: '확인'
+							});
 				} else {
-					alert('시스템 장애로 인해 회원가입에 실패했습니다.')
+					Swal.fire({
+								icon: 'error',
+								text: '시스템 장애로 인해 회원가입에 실패했습니다.',
+								confirmButtonText: '확인'
+							});
 				}
 			});
 		}
@@ -159,16 +175,16 @@
 			})
 			.then((response) => response.text())
 			.then((data) => {
-				if (data == 0) { //0: 이메일 계정 없음, 1: 이메일 계정 존재
-					emailMsg.innerText = '사용 가능한 이메일입니다.';
-					emailOk = 'Y';
-					email.classList.add('good');
-					emailMsg.classList.add('good');
-				} else {
+				if (data == 1) { //0: 이메일 계정 없음, 1: 이메일 계정 존재, -1: 탈퇴한 계정
 					emailMsg.innerText = '해당 이메일로 가입된 계정이 존재합니다.';
 					emailOk = 'N';
 					email.classList.add('bad');
 					emailMsg.classList.add('bad');
+				} else {
+					emailMsg.innerText = '사용 가능한 이메일입니다.';
+					emailOk = 'Y';
+					email.classList.add('good');
+					emailMsg.classList.add('good');
 				}
 			});
 		}

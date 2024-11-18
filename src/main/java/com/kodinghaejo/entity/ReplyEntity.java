@@ -2,8 +2,6 @@ package com.kodinghaejo.entity;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 

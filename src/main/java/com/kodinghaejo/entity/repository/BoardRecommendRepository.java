@@ -1,5 +1,7 @@
 package com.kodinghaejo.entity.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +32,7 @@ public interface BoardRecommendRepository extends JpaRepository<BoardRecommendEn
 	@Query(value =  "SELECT COUNT(*) jpa_board_recommend  WHERE email = :email AND board_idx = :boardIdx AND bad_Chk = 'Y'", nativeQuery = true)
 	int countReportsByEmailAndBoardIdx(@Param("email") String email, @Param("boardIdx") Long boardIdx);
 	
+	//사용자 이메일과 사용여부로 조회
+	public List<BoardRecommendEntity> findByEmailAndIsUse(MemberEntity email, String isUse);
+
 }

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>코딩테스트 연습</title>
+	<title>코딩테스트 연습&nbsp;&#124;&nbsp;코딩해조</title>
 	<!-- Standard css -->
 	<link rel="icon" href="/img/logo/favicon.png">
 	<link rel="stylesheet" href="/css/style.css">
@@ -15,8 +15,7 @@
 	<div class="challenge-navbar">
 		<ol class="navbar-breadcrumb">
 			<a href="/" class="navbar-logo"><img src="/img/logo/icon_b.png" alt="logo" style="height: 30px; margin-top: 5px;"></a>
-			<li><a href="/learn/challenges/{rel}">코딩테스트 연습</a></li>
-			<li><a href="/learn/challenges/{rel}">코딩 기초 트레이닝</a></li>
+			<li><a href="/test/collect">문제 모아보기</a></li>
 			<li class="active">[[ ${ test.title } ]]</li>
 		</ol>
 	</div>
@@ -69,8 +68,11 @@
 					<a href="/learn/courses/{reqno}" class="btn-show-question">질문하기</a>
 				</div>
 				<div class="func-buttons">
+					<th:block th:if="${ session.email != null }">
 					<button class="btn_check" type="button" onclick="challenge('run')">실행</button>
 					<button class="btn_check" type="button" onclick="challenge('submit')">제출</button>
+					</th:block>
+					<button th:if="${ session.email == null }" class="btn_check" type="button" onclick="location.href='/member/login'">로그인</button>
 				</div>
 			</div>
 		</div>
@@ -233,14 +235,43 @@
 				if (data.message == "TYPE_NOT_AVAILABLE") { //type 값이 run, submit 모두 해당되지 않을 경우
 					outputArea.innerText = '유효하지 않은 요청입니다.';
 				} else if (data.message == "run") { //실행 시 결과
-					for (const i in data.subdata) {
+					for (let i = 0; i < data.subdata.length; i++) {
 						let elm = document.createElement('table');
 						elm.setAttribute('data-index', i);
+						
+						let pf, msg;
+						if (data.subdata[i].resultS == data.subdata[i].resultV) {
+							pf = 'pass';
+							msg = '테스트를 통과했습니다.';
+						} else {
+							pf = 'fail';
+							msg = '실행한 결괏값 ' + data.subdata[i].resultS;
+							switch (data.subdata[i].resultS.toString().slice(-1)) {
+								case '2': case '4': case '5': case '9':
+									msg += '가';
+									break;
+								
+								default:
+									msg += '이';
+									break;
+							}
+							msg += ' 기댓값 ' + data.subdata[i].resultV;
+							switch (data.subdata[i].resultV.toString().slice(-1)) {
+								case '2': case '4': case '5': case '9':
+									msg += '와';
+									break;
+								
+								default:
+									msg += '과';
+									break;
+							}
+							msg += ' 다릅니다.';
+						}
 
 						let result = '';
 						result += '<tbody>\n' +
 									'\t<tr>\n' +
-									'\t\t<td colspan="2">테스트 ' + (parseInt(i) + 1) + '</td>\n' +
+									'\t\t<td colspan="2">테스트 ' + (i + 1) + '</td>\n' +
 									'\t</tr>\n' +
 									'\t<tr>\n' +
 									'\t\t<td class="td-label" align="right">입력값 <span>〉</span></td>\n' +
@@ -252,11 +283,7 @@
 									'\t</tr>\n' +
 									'\t<tr>\n' +
 									'\t\t<td class="td-label" align="right" valign="top">실행 결과 <span>〉</span></td>\n' +
-									'\t\t<td class="result ' + parseInt(data.subdata[i].resultS) == parseInt(data.subdata[i].resultV) ? 'pass' : 'fail' + '">' + data.subdata[i].resultV + '</td>\n' +
-									'\t</tr>\n' +
-									'\t<tr style="display: none;">\n' +
-									'\t\t<td class="td-label" align="right" valign="top">출력 <span>〉</span></td>\n' +
-									'\t\t<td class="stdout"></td>\n' +
+									'\t\t<td class="result ' + pf + '">' + msg + '</td>\n' +
 									'\t</tr>\n' +
 									'</tbody>';
 						

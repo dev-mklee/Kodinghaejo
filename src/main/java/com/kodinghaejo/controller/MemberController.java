@@ -2,6 +2,7 @@ package com.kodinghaejo.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kodinghaejo.dto.MemberDTO;
+import com.kodinghaejo.service.BaseService;
 import com.kodinghaejo.service.MailService;
 import com.kodinghaejo.service.MemberService;
 import com.kodinghaejo.util.PasswordMaker;
@@ -33,6 +35,7 @@ public class MemberController {
 	
 	private final MemberService service;
 	private final MailService mailService;
+	private final BaseService baseService;
 	private final BCryptPasswordEncoder pwEncoder;
 	
 	//로그인
@@ -85,14 +88,15 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/join")
 	public String postJoin(MemberDTO member, @RequestParam("kind") String kind,
-			@RequestParam(name = "imgUpload", required = false) MultipartFile mpf) throws Exception {
+			@RequestParam(name = "fileUpload", required = false) MultipartFile mpf,
+			HttpSession session) throws Exception {
 		//========== 운영체제에 따라 이미지가 저장될 디렉토리 구조 설정 시작 ==========
 		String os = System.getProperty("os.name").toLowerCase();
 		String path;
 		if (os.contains("win"))
-			path = "C:\\Repository\\profile\\";
+			path = "C:\\Repository\\Kodinghaejo\\profile\\";
 		else 
-			path = "/home/user/Repository/profile/";
+			path = "/home/user/Repository/Kodinghaejo/profile/";
 		
 		//디렉토리 존재여부 확인 --> 없을 경우 생성 처리
 		File p = new File(path);
@@ -124,18 +128,25 @@ public class MemberController {
 		
 		//회원가입
 		if (kind.equals("I")) {
+			if (service.checkEmail(member.getEmail()) == -1)
+				return "{ \"message\": \"DELETE_ACCOUNT_DENY\" }";
+			
 			member.setPassword(pwEncoder.encode(member.getPassword()));
 			service.join(member);
 		}
 		
 		//기본정보 수정
 		if (kind.equals("U")) {
+			if (member.getNickname().equals("")) member.setNickname(member.getUsername());
+			
 			//프로필 이미지 변경 시 기존 이미지 파일 삭제
-			if (mpf != null && !mpf.isEmpty()) {
+			if (mpf != null && !mpf.isEmpty() ) {
 				MemberDTO before = service.memberInfo(member.getEmail());
 				File file = new File(path + before.getStoredImg());
 				file.delete();
 			}
+			
+			session.setAttribute("nickname", member.getNickname());
 			
 			//수정 내용 반영
 			service.editMemberInfo(member);
@@ -207,9 +218,9 @@ public class MemberController {
 		String os = System.getProperty("os.name").toLowerCase();
 		String path;
 		if (os.contains("win"))
-			path = "C:\\Repository\\profile\\";
+			path = "C:\\Repository\\Kodinghaejo\\profile\\";
 		else
-			path = "/home/mklee/Repository/profile/";
+			path = "/home/mklee/Repository/Kodinghaejo/profile/";
 
 		//디렉토리가 존재하는지 체크해서 없다면 생성
 		File p = new File(path);
@@ -231,11 +242,121 @@ public class MemberController {
 		rs.getOutputStream().close(); //스트림 닫기
 	}
 
-	//내 정보(마이 페이지)
+	//==================== 마이 페이지 ====================
+
+	//내 정보
 	@GetMapping("/member/mypage/main")
 	public void getMypageMain(Model model, HttpSession session) {
 		MemberDTO member = service.memberInfo((String) session.getAttribute("email"));
+		Map<String, Object> commonCode = baseService.loadUsedCommonCode();
 		model.addAttribute("member", member);
+		model.addAttribute("commonCode", commonCode);
+	}
+
+	//주요 기술 변경
+	@GetMapping("/member/mypage/editTec")
+	public void getMypageEditTec(Model model, HttpSession session) {
+		MemberDTO member = service.memberInfo((String) session.getAttribute("email"));
+		Map<String, Object> commonCode = baseService.loadUsedCommonCode();
+		model.addAttribute("member", member);
+		model.addAttribute("commonCode", commonCode);
+	}
+	
+	//주요 기술 변경 저장
+	@ResponseBody
+	@PostMapping("/member/mypage/editTec")
+	public String postMypageEditTec(@RequestParam(name = "tec1", defaultValue = "") String tec1,
+			@RequestParam(name = "tec2", defaultValue = "") String tec2,
+			@RequestParam(name = "tec3", defaultValue = "") String tec3,
+			HttpSession session) {
+		log.info("===== tec1: {}, tec2: {}, tec3: {} =====", tec1, tec2, tec3);
+		
+		String email = (String) session.getAttribute("email");
+		service.editTec(email, tec1, tec2, tec3);
+		
+		return "{ \"message\": \"good\" }";
+	}
+	
+	//희망 직무 변경
+	@GetMapping("/member/mypage/editJob")
+	public void getMypageEditJob(Model model, HttpSession session) {
+		MemberDTO member = service.memberInfo((String) session.getAttribute("email"));
+		Map<String, Object> commonCode = baseService.loadUsedCommonCode();
+		model.addAttribute("member", member);
+		model.addAttribute("commonCode", commonCode);
+	}
+	
+	//희망직무 변경 저장
+	@ResponseBody
+	@PostMapping("/member/mypage/editJob")
+	public String postMypageEditJob(@RequestParam(name = "job1", defaultValue = "") String job1,
+			@RequestParam(name = "job2", defaultValue = "") String job2,
+			@RequestParam(name = "job3", defaultValue = "") String job3,
+			HttpSession session) {
+		log.info("===== job1: {}, job2: {}, job3: {} =====", job1, job2, job3);
+		
+		String email = (String) session.getAttribute("email");
+		service.editJob(email, job1, job2, job3);
+		
+		return "{ \"message\": \"good\" }";
+	}
+
+	//내 정보 수정
+	@GetMapping("/member/mypage/editInfo")
+	public void getMypageEditInfo(Model model, HttpSession session) {
+		MemberDTO member = service.memberInfo((String) session.getAttribute("email"));
+		model.addAttribute("member", member);
+	}
+	
+	//비밀번호 변경(화면)
+	@GetMapping("/member/mypage/editPassword")
+	public void getMypageEditPassword(Model model, HttpSession session) {
+		MemberDTO member = service.memberInfo((String) session.getAttribute("email"));
+		model.addAttribute("member", member);
+	}
+	
+	//비밀번호 변경(처리)
+	@ResponseBody
+	@PostMapping("/member/mypage/editPassword")
+	public String postMypageEditPassword(@RequestParam("oldPassword") String oldPassword,
+			@RequestParam("password") String password, HttpSession session) throws Exception {
+		String email = (String) session.getAttribute("email");
+		
+		//입력받은 기존 비밀번호가 실제 비밀번호와 일치하는지 확인
+		if (!pwEncoder.matches(oldPassword, service.memberInfo(email).getPassword()))
+			return "{ \"message\": \"PASSWORD_NOT_MATCH\" }";
+		
+		//기존 비밀번호와 신규 비밀번호가 동일할 경우 거부
+		if (pwEncoder.matches(password, service.memberInfo(email).getPassword()))
+			return "{ \"message\": \"SAME_PASSWORD_DENY\" }";
+		
+		//신규 비밀번호로 변경
+		MemberDTO member = new MemberDTO();
+		member.setEmail(email);
+		member.setPassword(pwEncoder.encode(password));
+		service.editPassword(member);
+		service.lastdateUpdate(email, "password");
+		
+		return "{ \"message\": \"good\" }";
+	}
+	
+	//회원탈퇴
+	@ResponseBody
+	@GetMapping("/member/mypage/deleteAccount")
+	public String getDeleteAccount(HttpSession session) throws Exception {
+		String email = (String) session.getAttribute("email");
+		
+		//본인이 방장인 채팅방이 존재할 경우 거부
+		if (service.countChatManager(email) > 0)
+			return "{ \"message\": \"EXIST_CHAT_MANAGER\" }";
+		
+		//회원 가입정보 삭제
+		service.deleteAccount(email);
+		
+		//세션 삭제
+		session.invalidate();
+
+		return "{ \"message\": \"good\" }";
 	}
 
 	//나의 활동

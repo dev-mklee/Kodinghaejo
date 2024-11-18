@@ -48,8 +48,11 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 	//카테고리별 일별 게시글 수
 	public long countByCatAndRegdateBetween(String cat, LocalDateTime start, LocalDateTime end);
 
-
+	//본인이 작성한 게시글 확인
+	//마이페이지(페이징)
 	public Page<BoardEntity> findByEmailAndIsUse(MemberEntity email, String isUse, Pageable pageable);
+	//탈퇴 전 확인
+	public List<BoardEntity> findByEmailAndIsUse(MemberEntity email, String isUse);
 
 	
 }

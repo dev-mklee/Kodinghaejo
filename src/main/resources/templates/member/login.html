@@ -3,13 +3,15 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>로그인</title>
+	<title>로그인&nbsp;&#124;&nbsp;코딩해조</title>
 	<!-- Standard css -->
 	<link rel="icon" href="/img/logo/favicon.png" />
 	<link rel="stylesheet" href="/css/style.css" />
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css" />
 	<!-- pub-js link -->
 	<script src="/js/pub-ui-custom.js"></script>
+	<!-- SweetAlert2 link -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <!-- 게시판 복사용 게시판 -->
 <body>
@@ -33,7 +35,7 @@
 				</form>
 				
 				<div class="mt20">
-					<a href="/member/findId">아이디(이메일) 찾기</a>&nbsp;|&nbsp;<a href="/member/findPassword">비밀번호 찾기</a>&nbsp;|&nbsp;<a href="/member/join">회원가입</a>
+					<a href="/member/findId">아이디(이메일) 찾기</a>&nbsp;&#124;&nbsp;<a href="/member/findPassword">비밀번호 찾기</a>&nbsp;&#124;&nbsp;<a href="/member/join">회원가입</a>
 				</div>
 				
 				<!--div class="mt20">
@@ -52,18 +54,24 @@
 			loginForm.action = '/member/login';
 			loginForm.submit();
 		}
-	
+
 		//스프링 시큐리티에 의한 로그인 처리 전, 서버에 email과 password를 전송하여 인증 처리
 		const checkLogin = async () => {
 			//유효성 검사
 			if (email.value == '') {
-				alert('이메일을 입력해주세요.');
+				Swal.fire({
+							icon: 'warning',
+							text: '이메일을 입력해주세요.'
+						});
 				email.focus();
 				return false;
 			}
 
 			if (password.value == '') {
-				alert('비밀번호를 입력해주세요.');
+				Swal.fire({
+							icon: 'warning',
+							text: '비밀번호를 입력해주세요.'
+						});
 				password.focus();
 				return false;
 			}
@@ -80,14 +88,29 @@
 					case 'good':
 						login();
 						break;
+						
 					case 'ID_NOT_FOUND':
-						alert('해당 이메일로 가입된 계정이 존재하지 않습니다.');
+						Swal.fire({
+									icon: 'error',
+									text: '해당 이메일로 가입된 계정이 존재하지 않습니다.'
+								});
+						email.focus();
 						break;
+						
 					case 'PASSWORD_NOT_MATCH':
-						alert('비밀번호를 확인해주세요.');
+						Swal.fire({
+							icon: 'error',
+							text: '비밀번호를 확인해주세요.'
+						});
+						password.value = '';
+						password.focus();
 						break;
+						
 					default:
-						alert('시스템 장애로 인해 로그인에 실패했습니다.');
+						Swal.fire({
+							icon: 'error',
+							text: '시스템 장애로 인해 로그인에 실패했습니다.'
+						});
 						break;
 				}
 			}).catch((error) => {

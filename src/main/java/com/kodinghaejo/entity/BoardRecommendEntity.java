@@ -55,4 +55,7 @@ public class BoardRecommendEntity {
 	@Column(name = "bad_date", nullable = true)
 	private LocalDateTime badDate;
 
+	@Column(name = "is_use", length = 2, nullable = false)
+	private String isUse;
+
 }

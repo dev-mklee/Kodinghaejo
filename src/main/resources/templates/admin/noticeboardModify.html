@@ -10,49 +10,63 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 	<!-- pub-js link -->
 	<script src="/js/pub-ui-custom.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <script>
 
 const registerForm = async() => {
+	let cat = document.querySelector('select[name=category-section]').value;
+	let title = document.querySelector('#title');
+	let writer = document.querySelector('#writer');
+	let email = document.querySelector('#email');
+	let isUse = document.querySelector('#isUse');
+		
+	let content = editor.getMarkdown();
 	
-		let cat = document.querySelector('select[name=category-section]').value; // 선택된 카테고리 값 가져오기
-		let title = document.querySelector('#title');
-		let writer = document.querySelector('#writer');
-		let email = document.querySelector('#email');
-		let isUse = document.querySelector('#isUse');
+	if(title.value === ''){
+			Swal.fire({
+		    	icon:"warning",
+		    	text:"제목을 입력하세요"});
+			title.focus();
+			return false;
+	}
 		
-		let content = editor.getMarkdown();
-	
-		if(title.value === ''){
-				alert('제목을 입력하세요!!!');
-				title.focus();
-				return false;
-		}
+	if (content.trim() === '') {
+			Swal.fire({
+		    	icon:"warning",
+		   		text:"내용을 입력하세요"});
+			return false;
+	} 
 		
-		if (content.trim() === '') {
-				alert('내용을 입력하세요!!!');
-				return false;
-		} 
+	let formData = new FormData(document.getElementById('WriteForm'));
+	formData.append("cat", cat);
+	formData.append("content", content);
 		
-		
-		let formData = new FormData(document.getElementById('WriteForm'));
-		formData.append("cat", cat);
-		formData.append("content", content);
-		
-		const idx = parseInt('[[ ${board.idx} ]]');
-		formData.append("idx", idx);
+	const idx = parseInt('[[ ${board.idx} ]]');
+	formData.append("idx", idx);
  
-		await fetch('/admin/noticeboardModify', {
+	await fetch('/admin/noticeboardModify', {
+
 		method: 'POST',
 		body: formData
 	}).then((response)=> response.json())
 		.then((data)=> {
 			if(data.message === 'good'){
-				alert("게시물이 수정되었습니다.");
-				document.location.href='/admin/systemNotice';
+				Swal.fire({
+		            title: "공지사항이 수정되었습니다.",
+		            icon: "success",
+		            confirmButtonText: "확인" 
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		            	document.location.href='/admin/systemNotice';
+		            }
+		        });
 			}
 	}).catch((error)=> {
-		alert("시스템 장애로 게시물 수정이 실패했습니다.");
+		Swal.fire({
+			  icon: "error",
+			  text: "시스템 장애로 게시물 등록이 실패했습니다",
+			});
 		console.log("error" + error);
 	})
 
