@@ -10,29 +10,32 @@
 	href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <script src="/js/pub-ui-custom.js"></script>
 <script>
-const deleteCode = (idx) => {
-    if (confirm("공지사항을 삭제하시겠습니까?")) {
-        fetch(`/admin/systemBoardDelete/${idx}`, {
-            method: 'DELETE'
+const deleteCode = (code) => {
+    if (confirm('정말 삭제하시겠습니까?')) {
+        const formData = new FormData();
+        formData.append("code", code);
+
+        fetch('/admin/systemCommonCodeDelete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ 'code': code })
         })
         .then(response => {
-            console.log("Response status:", response.status);
-            return response.text().then(message => ({ status: response.status, message }));
-        })
-        .then(({ status, message }) => {
-            if (status === 200) {
-                alert(message);
+            if (response.ok) {
+                alert('삭제가 완료되었습니다.');
                 location.reload();
             } else {
-                alert(`삭제 실패: ${message}`);
+                alert('삭제에 실패했습니다.');
             }
         })
         .catch(error => {
-            console.error('삭제 중 오류 발생:', error);
-            alert("삭제 요청 중 오류가 발생했습니다.");
+            console.error('오류 발생:', error);
+            alert('삭제 중 오류가 발생했습니다.');
         });
     }
-}
+};
 </script>
 </head>
 <body>
@@ -54,7 +57,7 @@ const deleteCode = (idx) => {
 					<div class="sys-description-box  mb20">
 						<h3>공통코드 수 : <span th:text="${codeCount}"></span></h3>
 						<div class="box-itme">
-							<button class="codewrite-button"><a href="/admin/codeWrite">코드 추가</a></button>
+							<button class="codewrite-button"><a href="/admin/systemCommonCodeWrite">코드 추가</a></button>
 						</div>
 					</div>
 					<table>
@@ -69,6 +72,23 @@ const deleteCode = (idx) => {
 							<col width="">
 						</colgroup>
 						<thead>
+							<div class="code-category mb20">
+								<form method="get" action="/admin/systemCommonCode">
+							        <!-- 필터 버튼 -->
+							        <button type="submit" name="filter" value="ALL" 
+							                th:classappend="${filter == 'ALL'} ? 'active' : ''">전체</button>
+							        <button type="submit" name="filter" value="TEC" 
+							                th:classappend="${filter == 'TEC'} ? 'active' : ''">TEC</button>
+							        <button type="submit" name="filter" value="JOB" 
+							                th:classappend="${filter == 'JOB'} ? 'active' : ''">JOB</button>
+							        <button type="submit" name="filter" value="LVL" 
+							                th:classappend="${filter == 'LVL'} ? 'active' : ''">LVL</button>
+							        <button type="submit" name="filter" value="LNG" 
+							                th:classappend="${filter == 'LNG'} ? 'active' : ''">LNG</button>
+							        <button type="submit" name="filter" value="CAT" 
+							                th:classappend="${filter == 'CAT'} ? 'active' : ''">CAT</button>
+							    </form>
+							</div>
 							<tr>
 								<th>번호</th>
 								<th>Code</th>
@@ -86,7 +106,7 @@ const deleteCode = (idx) => {
 								</td>
 								<td th:text="${code.type}">타입</td>
 								<td th:text="${code.val}">Value</td>
-								<td><a class="btn_delete" onclick="'deleteCode()'">삭제</a></td>
+								<td><a class="btn_delete" th:data-name="${code.code}" onclick="deleteCode(this.dataset.name)">삭제</a></td>
 								<td th:text="${code.isUse}">활성여부</td>
 							</tr>
 						</tbody>

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,6 @@ import com.kodinghaejo.entity.TestEntity;
 import com.kodinghaejo.entity.TestLngEntity;
 import com.kodinghaejo.entity.TestQuestionAnswerEntity;
 import com.kodinghaejo.entity.TestQuestionEntity;
-import com.kodinghaejo.entity.TestSubmitEntity;
 import com.kodinghaejo.entity.repository.BoardRecommendRepository;
 import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.ChatRepository;
@@ -594,4 +594,30 @@ public class AdminServiceImpl implements AdminService {
 		}
 		return codeDTOs;
 	}
+	
+	//타입에 따른 공통코드 조회
+	public List<CommonCodeDTO> getCodeListByType(String type) {
+		return codeRepository.findByType(type)
+				.stream()
+				.map(entity -> new CommonCodeDTO(entity))
+				.collect(Collectors.toList());
+	}
+	
+	//공통코드 추가
+	@Override
+	public void codewrite(CommonCodeDTO code) {
+		codeRepository.save(code.dtoToEntity(code));	
+	}
+	
+	//공통코드 삭제
+	@Override
+	public boolean deleteCommonCode(String code) {
+		try {
+			int deletedRows = codeRepository.deleteByCode(code);
+			return deletedRows > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+    }
 }	

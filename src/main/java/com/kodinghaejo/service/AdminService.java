@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
-import com.kodinghaejo.dto.ChatMemberDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
@@ -122,6 +121,15 @@ public interface AdminService {
 	
 	//공통코드 검색
 	public List<CommonCodeDTO> searchCodeListByCode(String searchKeyword);
+	
+	//공통코드 필터 타입
+	public List<CommonCodeDTO> getCodeListByType(String type);
+	
+	//공통코드 추가
+	public void codewrite(CommonCodeDTO code);
+	
+	//공통코드 삭제
+	public boolean deleteCommonCode(String code);
 }
 
 

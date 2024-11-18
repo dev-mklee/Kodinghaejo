@@ -28,9 +28,7 @@ import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
 
-import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
-import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.service.AdminService;
 import com.nimbusds.jose.shaded.gson.Gson;
 
@@ -46,8 +44,6 @@ public class AdminController {
 	
 	private final AdminService service;
 	
-	private TestRepository testRepository;
-	private BoardRepository boardRepository;
 	private MemberRepository memberRepository;
 	
 	//시스템 관리 메인화면
@@ -358,11 +354,14 @@ public class AdminController {
 	
 	//공통코드 관리
 	@GetMapping("/admin/systemCommonCode")
-	public void getCommonCode(@RequestParam(required = false) String searchKeyword, Model model) {
+	public void getCommonCode(@RequestParam(required = false) String searchKeyword,@RequestParam(required = false, defaultValue = "ALL") String filter, Model model) {
 		List<CommonCodeDTO> codeDTOs;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
 			codeDTOs = service.searchCodeListByCode(searchKeyword);
+			filter = "";
+		} else if (!"ALL".equalsIgnoreCase(filter)) {
+			codeDTOs= service.getCodeListByType(filter);
 		} else {
 			codeDTOs = service.codeList();
 		}
@@ -371,6 +370,28 @@ public class AdminController {
 		
 		long codeCount = codeDTOs.size();
 		model.addAttribute("codeCount", codeCount);
+		model.addAttribute("filter", filter);
+	}
+	
+	//공통코드 작성 화면
+	@GetMapping("/admin/systemCommonCodeWrite")
+	public void getCommonCodeWrite() {
+		
+	}
+	
+	//공통코드 추가
+	@ResponseBody
+	@PostMapping("/admin/systemCommonCodeWrite")
+	public String CommonCodeWrite(CommonCodeDTO code) throws Exception {
+		service.codewrite(code);
+		return "{\"message\":\"good\"}";
+	}
+	
+	//공통코드 삭제
+	@ResponseBody
+	@PostMapping("/admin/systemCommonCodeDelete")
+	public void deleteCommonCode(@RequestParam("code") String code) {
+		service.deleteCommonCode(code);
 	}
 }
 
