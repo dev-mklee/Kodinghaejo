@@ -3,13 +3,17 @@ package com.kodinghaejo.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
-import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
+import com.kodinghaejo.entity.BoardEntity;
+import com.kodinghaejo.entity.ChatEntity;
+import com.kodinghaejo.entity.MemberEntity;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,9 +23,8 @@ public interface AdminService {
 	void saveTestWrite(TestDTO testDTO);
 	
 	//문제 보여주기
-	public List<TestDTO> testAllList();
+	public Page<TestDTO> testAllList(int pageNum, int postNum);
 	
-
 	//문제 수정
 	public void saveTestModify(TestDTO testDTO);
 	
@@ -29,13 +32,13 @@ public interface AdminService {
 	public TestDTO getTestById(Long id);
 	
 	//회원정보 관리화면
-	public List<MemberDTO> memberAllList();
+	public Page<MemberEntity> memberAllList(int pageNum, int postNum);
 	
 	//자유게시판 관리화면
-	public List<BoardDTO> freeboardList();
+	public Page<BoardDTO> freeboardList(int pageNum, int postNum);
 	
 	//공지사항 관리화면
-	public List<BoardDTO> noticeboardList();
+	public Page<BoardEntity> noticeboardList(int pageNum, int postNum);
 	
 	//공지사항 작성
 	public void write(BoardDTO board);
@@ -53,7 +56,7 @@ public interface AdminService {
 	public List<ReplyDTO> replyList();
 	
 	//채팅방 관리화면
-	public List<ChatDTO> chatList();
+	public Page<ChatEntity> chatList(int pageNum, int postNum);
 	
 	//참여인원 0인 채팅방 삭제
 	public void deleteEmptyChats();
@@ -68,16 +71,16 @@ public interface AdminService {
 	public void deleteReply(Long idx);
 	
 	//문제 검색
-	public List<TestDTO> searchtestListByTitle(String searchKeyword);
+	public Page<TestDTO> searchtestListByTitle(int pageNum, int postNum, String searchKeyword);
 	
 	//회원정보 검색
-	public List<MemberDTO> searchMembers(String searchType, String searchKeyword);
+	public Page<MemberEntity> searchMembers(int pageNum, int postNum, String searchType, String searchKeyword);
 	
 	//자유게시판 검색
-	public List<BoardDTO> searchFreeboardListByTitle(String searchKeyword);
+	public Page<BoardDTO> searchFreeboardListByTitle(int pageNum, int postNum, String searchKeyword);
 	
 	//공지사항 검색
-	public List<BoardDTO> searchNoticeListByTitle(String searchKeyword);
+	public Page<BoardEntity> searchNoticeListByTitle(int pageNum, int postNum, String searchKeyword);
 	
 	//질문게시판 검색
 	public List<TestQuestionDTO> searchQboardListByTitle(String searchKeyword);
@@ -86,7 +89,7 @@ public interface AdminService {
 	public List<ReplyDTO> searchReplyListByContent(String searchKeyword);
 	
 	//채팅방 검색
-	public List<ChatDTO> searchChatListByTitle(String searchKeyword);
+	public Page<ChatEntity> searchChatListByTitle(int pageNum, int postNum, String searchKeyword);
 
 	
 	//일별가입자수 체크

@@ -3,10 +3,10 @@ package com.kodinghaejo.controller;
 import java.util.List;
 import java.util.Map;
 
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,13 +23,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
-import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
-
-import com.kodinghaejo.entity.repository.MemberRepository;
+import com.kodinghaejo.entity.BoardEntity;
+import com.kodinghaejo.entity.ChatEntity;
+import com.kodinghaejo.entity.MemberEntity;
 import com.kodinghaejo.service.AdminService;
+import com.kodinghaejo.util.PageUtil;
 import com.nimbusds.jose.shaded.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +45,6 @@ public class AdminController {
 	
 	private final AdminService service;
 	
-	private MemberRepository memberRepository;
 	
 	//시스템 관리 메인화면
 	@GetMapping("/admin/systemMain")
@@ -79,58 +79,82 @@ public class AdminController {
 	//회원정보 관리
 	@GetMapping("/admin/systemMemberInfo")
 	public void getSystemMeberInfo(@RequestParam(value = "searchType", required = false) String searchType,
-			@RequestParam(value = "searchKeyword", required = false) String searchKeyword, Model model) {
-		List<MemberDTO> memberDTOs;
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<MemberEntity> members;
 
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-			memberDTOs = service.searchMembers(searchType, searchKeyword);
-
-			model.addAttribute("members", memberDTOs);
-			model.addAttribute("searchType", searchType);
-			model.addAttribute("searchKeyword", searchKeyword);
-			model.addAttribute("memberCount", memberDTOs.size());
+			members = service.searchMembers(pageNum, postNum, searchType, searchKeyword);
 		} else {
-			memberDTOs = service.memberAllList();
+			members = service.memberAllList(pageNum, postNum);
 		}
-
-		model.addAttribute("members", memberDTOs);
-
-		long memberCount = memberRepository.count();
-		model.addAttribute("memberCount", memberCount);
+	
+		PageUtil page = new PageUtil();
+		int totalCount = (int) members.getTotalElements();
+		
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("members", members);
+	    model.addAttribute("searchType", searchType);
+	    model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("pageList", page.getAdminMemberPageList(pageNum, postNum, pageListCount, totalCount, searchType, searchKeyword));
 	}
 	
 	//문제 리스트
 	@GetMapping("/admin/systemTest")
-	public void getSystemTest(@RequestParam(required = false) String searchKeyword, Model model) {
-		List<TestDTO> testDTOs;
+	public void getSystemTest(@RequestParam(required = false) String searchKeyword, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<TestDTO> tests;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-			testDTOs = service.searchtestListByTitle(searchKeyword);
+			tests = service.searchtestListByTitle(pageNum, postNum, searchKeyword);
 		} else {
-			testDTOs = service.testAllList();
+			tests = service.testAllList(pageNum, postNum);
 		}
 		
-		model.addAttribute("tests", testDTOs);
+		PageUtil page = new PageUtil();
+		int totalCount = (int) tests.getTotalElements();
 		
-		long testCount = testDTOs.size();
-		model.addAttribute("testCount", testCount);
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("tests", tests);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("pageList", page.getPageList("/admin/systemTest", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+		
 	}
 	
 	//채팅방 관리
 	@GetMapping("/admin/systemChat")
-	public void getSystemChat(@RequestParam(required = false) String searchKeyword, Model model) {
-		List<ChatDTO> chatDTOs;
+	public void getSystemChat(@RequestParam(required = false) String searchKeyword, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<ChatEntity> chats;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-			chatDTOs = service.searchChatListByTitle(searchKeyword);
+			chats = service.searchChatListByTitle(pageNum, postNum, searchKeyword);
 		} else {
-			chatDTOs = service.chatList();
+			chats = service.chatList(pageNum, postNum);
 		}
 		
-		model.addAttribute("chats",chatDTOs);
+		PageUtil page = new PageUtil();
+		int totalCount = (int) chats.getTotalElements();
 		
-		long chatCount = chatDTOs.size();
-		model.addAttribute("chatCount", chatCount);
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("chats",chats);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("pageList", page.getPageList("/admin/systemChat", pageNum, postNum, pageListCount, totalCount, searchKeyword));
 	}
 	
 	//채팅인원 0인 채팅방 삭제 
@@ -147,20 +171,28 @@ public class AdminController {
 	
 	//공지 관리
 	@GetMapping("/admin/systemNotice")
-	public void getSystemNotice(@RequestParam(required = false) String searchKeyword, Model model) {
-		List<BoardDTO> boardDTOs;
+	public void getSystemNotice(@RequestParam(required = false) String searchKeyword, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<BoardEntity> boards;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-			boardDTOs = service.searchNoticeListByTitle(searchKeyword);
+			boards = service.searchNoticeListByTitle(pageNum, postNum, searchKeyword);
 		} else {
-			boardDTOs = service.noticeboardList();
+			boards = service.noticeboardList(pageNum, postNum);
 		}
-
 		
-		model.addAttribute("boards",boardDTOs);
+		PageUtil page = new PageUtil();
+		int totalCount = (int) boards.getTotalElements();
 		
-		long boardCount = boardDTOs.size();
-		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("boards",boards);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("pageList", page.getPageList("/admin/systemNotice", pageNum, postNum, pageListCount, totalCount, searchKeyword));
 
 	}
 	
@@ -212,21 +244,29 @@ public class AdminController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
 	    }
 	}
-	
+
 	//자유게시판 관리
 	@GetMapping("/admin/systemFreeBoard")
-	public void getSystemFreeBoard(@RequestParam(required = false) String searchKeyword, Model model) {
-		List<BoardDTO> boardDTOs;
+	public void getSystemFreeBoard(@RequestParam(required = false) String searchKeyword, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<BoardDTO> boards;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-				boardDTOs = service.searchFreeboardListByTitle(searchKeyword);
+				boards = service.searchFreeboardListByTitle(pageNum, postNum, searchKeyword);
 		} else {
-				boardDTOs = service.freeboardList();
+				boards = service.freeboardList(pageNum, postNum);
 		}
-		model.addAttribute("boards", boardDTOs);
+		PageUtil page = new PageUtil();
+		int totalCount = (int) boards.getTotalElements();
 		
-		long boardCount = boardDTOs.size();
-		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("boards", boards);
+		model.addAttribute("pageList", page.getPageList("/admin/systemFreeBoard", pageNum, postNum, pageListCount, totalCount, searchKeyword));
 	}
 	
 	//질문게시판 관리

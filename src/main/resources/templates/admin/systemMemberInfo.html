@@ -77,7 +77,7 @@ const DeleteMember = (email) => {
 					    </form>
 					</div>
 					<div class="sys-description-box mb20">
-						<h3 class="mt20">회원 수 : <span th:text="${memberCount}"></span></h3>
+						<h3 class="mt20">회원 수 : <span th:text="${totalCount}"></span></h3>
 					</div>
 					<table>
 						<caption style="display: none;">관리자 게시판 입니다</caption>
@@ -107,7 +107,7 @@ const DeleteMember = (email) => {
 						</thead>
 						<tbody>
 								<tr th:each="member, stat : ${members}">
-									<td th:text="${stat.index + 1}">1</td>
+									<td th:text="${(page - 1) * postNum + stat.index + 1}">1</td>
 									<td th:text="${member.lvl == 'LVL-0001' ? 'MASTER' : 'USER'}">MASTER</td>
 									<td th:text="${member.email}">example1@example.com</td>
 									<td th:text="${member.nickname}">user1</td>
@@ -121,6 +121,9 @@ const DeleteMember = (email) => {
 
 						</tbody>
 					</table>
+					<div class="pagination">
+						[(${pageList})]
+					</div>
 				</div>
 			</div>
 		</div>

@@ -34,16 +34,16 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 	
 
 	//카테고리 제외
-	List<BoardEntity> findByCatNot(String cat);
+	Page<BoardEntity> findByCatNot(String cat, Pageable pageable);
 	
 	//카테고리
-	List<BoardEntity> findByCat(String cat);
+	Page<BoardEntity> findByCat(String cat, Pageable pageable);
 	
-	//검색
-	List<BoardEntity> findByTitleContainingAndCat(String searchKeyword, String category);
+	//특정 카테고리검색
+	Page<BoardEntity> findByTitleContainingAndCat(String searchKeyword, String category, Pageable pageable);
 		
-	//공지사항 검색
-	List<BoardEntity> findByTitleContainingAndCatNot(String searchKeyword, String category);
+	//특정 카테고리제외 검색
+	Page<BoardEntity> findByTitleContainingAndCatNot(String searchKeyword, String category, Pageable pageable);
 	
 	//카테고리별 일별 게시글 수
 	public long countByCatAndRegdateBetween(String cat, LocalDateTime start, LocalDateTime end);

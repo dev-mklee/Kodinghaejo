@@ -13,13 +13,17 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
-import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestLngDTO;
@@ -82,42 +86,31 @@ public class AdminServiceImpl implements AdminService {
 	
 	//문제 보여주기
 	@Override
-	public List<TestDTO> testAllList() {
-		List<TestEntity> testEntities = testRepository.findAll();
-		List<TestDTO> testDTOList = new ArrayList<>();
+	public Page<TestDTO> testAllList(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.ASC, "idx"));
+		Page<TestEntity> testEntities = testRepository.findAll(pageRequest);
+		List<TestDTO> testDTOs = new ArrayList<>();
 		
 		for (TestEntity test : testEntities) {
 			TestDTO testDTO = new TestDTO(test);
 			
-			List<TestLngEntity> testLangs = testLngRepository.findByTestIdx(test);
 			List<TestLngDTO> testLngDTOs = new ArrayList<>();
-			
-			for (TestLngEntity lang : testLangs) {
-				TestLngDTO langDTO = new TestLngDTO();
-				
-				langDTO.setLng(lang.getLng());
-				testLngDTOs.add(langDTO);
-			}
+			testLngRepository.findByTestIdx(test).stream().forEach((e) -> testLngDTOs.add(new TestLngDTO(e)));
 			
 			testDTO.setTestLngList(testLngDTOs);
 			
 			long submitCount = submitRepository.countByTestIdx(test.getIdx());
-	        testDTO.setSubmitCount(submitCount);
-			
+			testDTO.setSubmitCount(submitCount);
+		
 	        long correctCount = submitRepository.countByTestIdxAndSubmSts(test.getIdx(), "Y");
 	        
 	        double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
 	        testDTO.setCorrectRate(correctRate);
-	        
-			testDTOList.add(testDTO);
+			testDTOs.add(testDTO);
 		}
 		
-		return testDTOList;
+		return new PageImpl<>(testDTOs, pageRequest, testEntities.getTotalElements());
 	}
-	
-	public long getSubmissionCount(Long testIdx) {
-        return submitRepository.countByTestIdx(testIdx);
-    }
 	
 	//문제 수정
 	@Override
@@ -167,47 +160,39 @@ public class AdminServiceImpl implements AdminService {
 	
 	//회원정보 관리 화면
 	@Override
-	public List<MemberDTO> memberAllList() {
-		List<MemberEntity> memberEntities = memberRepository.findAll();
-		List<MemberDTO> memberDTOs = new ArrayList<>();
+	public Page<MemberEntity> memberAllList(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "regdate"));
 		
-		for (MemberEntity member : memberEntities) {
-			MemberDTO memberDTO = new MemberDTO(member);
-			memberDTOs.add(memberDTO);
-		}
-		return memberDTOs;
+		return memberRepository.findAll(pageRequest);
 	}
 	
 	
 	//자유게시판 관리 화면
 	@Override
-	public List<BoardDTO> freeboardList() {
-		List<BoardEntity> boardEntities = boardRepository.findByCatNot("공지사항");
+	public Page<BoardDTO> freeboardList(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
+		Page<BoardEntity> boardEntities = boardRepository.findByCatNot("공지사항", pageRequest);
 		List<BoardDTO> boardDTOs = new ArrayList<>();
 		
 		for (BoardEntity board : boardEntities) {
 			BoardDTO boardDTO = new BoardDTO(board);
+			
 			boardDTO.setGoodCnt(boardRecommendRepository.countByBoardIdxAndGoodChk(board, "Y"));
 			boardDTO.setBadCnt(boardRecommendRepository.countByBoardIdxAndBadChk(board, "Y"));
 			boardDTOs.add(boardDTO);
 		}
 		
-		return boardDTOs;
+		return new PageImpl<>(boardDTOs, pageRequest, boardEntities.getTotalElements());
 		
 	}
 	
 	//공지사항 관리 화면
 	@Override
-	public List<BoardDTO> noticeboardList() {
-		List<BoardEntity> boardEntities = boardRepository.findByCat("공지사항");
-		List<BoardDTO> boardDTOs = new ArrayList<>();
+	public Page<BoardEntity> noticeboardList(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
 		
-		for (BoardEntity board : boardEntities) {
-			BoardDTO boardDTO = new BoardDTO(board);
-			boardDTOs.add(boardDTO);
-		}
 		
-		return boardDTOs;
+		return boardRepository.findByCat("공지사항", pageRequest);
 		
 	}
 	
@@ -300,15 +285,10 @@ public class AdminServiceImpl implements AdminService {
 	
 	//채팅방 관리 화면
 	@Override
-	public List<ChatDTO> chatList() {
-		List<ChatEntity> chatEntities = chatRepository.findAll();
-		List<ChatDTO> chatDTOs = new ArrayList<>();
+	public Page<ChatEntity> chatList(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.ASC, "regdate"));
 		
-		for (ChatEntity chat : chatEntities) {
-			ChatDTO chatDTO = new ChatDTO(chat);
-			chatDTOs.add(chatDTO);
-		}
-		return chatDTOs;
+		return chatRepository.findAll(pageRequest);
 	}
 	
 	//참여인원 0인 채팅방 삭제
@@ -330,64 +310,53 @@ public class AdminServiceImpl implements AdminService {
 	
 	//문제 검색
 	@Override
-	public List<TestDTO> searchtestListByTitle(String searchKeyword) {
-		List<TestEntity> testEntities = testRepository.findByTitleContaining(searchKeyword);
+	public Page<TestDTO> searchtestListByTitle(int pageNum, int postNum,String searchKeyword) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.ASC, "regdate"));
+		
+		Page<TestEntity> testEntities = testRepository.findByTitleContaining(searchKeyword, pageRequest);
 		List<TestDTO> testDTOs = new ArrayList<>();
 		
 		for (TestEntity test : testEntities) {
 			TestDTO testDTO = new TestDTO(test);
-			
-			List<TestLngEntity> testLangs = testLngRepository.findByTestIdx(test); // testIdx로 언어 정보 조회
 			List<TestLngDTO> testLngDTOs = new ArrayList<>();
-			
-			for (TestLngEntity lang : testLangs) {
-				TestLngDTO langDTO = new TestLngDTO();
-				langDTO.setLng(lang.getLng());
-				testLngDTOs.add(langDTO);
-			}
+			testLngRepository.findByTestIdx(test).stream().forEach((e) -> testLngDTOs.add(new TestLngDTO(e)));
 			
 			testDTO.setTestLngList(testLngDTOs);
+			long submitCount = submitRepository.countByTestIdx(test.getIdx());
+			testDTO.setSubmitCount(submitCount);
+		
+	        long correctCount = submitRepository.countByTestIdxAndSubmSts(test.getIdx(), "Y");
+	        
+	        double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
+	        testDTO.setCorrectRate(correctRate);
 			testDTOs.add(testDTO);
 		}
 		
-		return testDTOs;
+		return new PageImpl<>(testDTOs, pageRequest, testEntities.getTotalElements());
 	}
 	
 	//회원정보 검색
 	@Override
-	public List<MemberDTO> searchMembers(String searchType, String searchKeyword) {
-
-		List<MemberEntity> memberEntities;
+	public Page<MemberEntity> searchMembers(int pageNum, int postNum, String searchType, String searchKeyword) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "regdate"));
 
 		// 검색어가 없을 경우 전체 회원 목록 조회
 		if (searchKeyword == null || searchKeyword.isEmpty()) {
-			memberEntities = memberRepository.findAll();
+			return memberRepository.findAll(pageRequest);
 		} else {
 			// 검색어가 있을 경우 조건에 따라 검색
 			switch (searchType) {
 				case "email":
-					memberEntities = memberRepository.findByEmailContaining(searchKeyword);
-					break;
+					return memberRepository.findByEmailContaining(searchKeyword, pageRequest);
 				case "nickname":
-					memberEntities = memberRepository.findByNicknameContaining(searchKeyword);
-					break;
+					return memberRepository.findByNicknameContaining(searchKeyword, pageRequest);
 				case "name":
-					memberEntities = memberRepository.findByUsernameContaining(searchKeyword);
-					break;
-				default:
-					memberEntities = new ArrayList<>(); // 검색 조건이 잘못된 경우 빈 리스트 반환
+					return memberRepository.findByUsernameContaining(searchKeyword, pageRequest);
 			}
 		}
-		List<MemberDTO> memberDTOs = new ArrayList<>();
-		for (MemberEntity member : memberEntities) {
-			MemberDTO memberDTO = new MemberDTO(member);
-			memberDTOs.add(memberDTO);
-		}
 		
-		return memberDTOs;
+		return null;
 	}
-	
-	
 	
 	//ID로 공지사항 데이터 조회
 	@Override
@@ -398,34 +367,28 @@ public class AdminServiceImpl implements AdminService {
 		
 		return boardDTO;
 	}
-	
-	
 	//자유게시판 검색
 	@Override
-	public List<BoardDTO> searchFreeboardListByTitle(String searchKeyword) {
-		List<BoardEntity> boardEntities = boardRepository.findByTitleContainingAndCatNot(searchKeyword, "공지사항");
+	public Page<BoardDTO> searchFreeboardListByTitle(int pageNum, int postNum, String searchKeyword) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "regdate"));
+		Page<BoardEntity> boardEntities = boardRepository.findByTitleContainingAndCatNot(searchKeyword, "공지사항", pageRequest);
 		List<BoardDTO> boardDTOs = new ArrayList<>();
 		
 		for (BoardEntity board : boardEntities) {
 			BoardDTO boardDTO = new BoardDTO(board);
+			
 			boardDTOs.add(boardDTO);
 		}
 		
-		return boardDTOs;
+		return new PageImpl<>(boardDTOs, pageRequest, boardEntities.getTotalElements());
 	}
 	
 	//공지 검색
 	@Override
-	public List<BoardDTO> searchNoticeListByTitle(String searchKeyword) {
-		List<BoardEntity> boardEntities = boardRepository.findByTitleContainingAndCat(searchKeyword, "공지사항");
-		List<BoardDTO> boardDTOs = new ArrayList<>();
-		
-		for (BoardEntity board : boardEntities) {
-			BoardDTO boardDTO = new BoardDTO(board);
-			boardDTOs.add(boardDTO);
-		}
+	public Page<BoardEntity> searchNoticeListByTitle(int pageNum, int postNum, String searchKeyword) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "regdate"));
 			
-		return boardDTOs;
+		return boardRepository.findByTitleContainingAndCat(searchKeyword, "공지사항", pageRequest);
 	}
 	
 	//질문게시판 검색
@@ -458,16 +421,11 @@ public class AdminServiceImpl implements AdminService {
 	
 	//채팅방 검색
 	@Override
-	public List<ChatDTO> searchChatListByTitle(String searchKeyword) {
-		List<ChatEntity> chatEntities = chatRepository.findByTitleContaining(searchKeyword);
-		List<ChatDTO> chatDTOs = new ArrayList<>();
+	public Page<ChatEntity> searchChatListByTitle(int pageNum, int postNum, String searchKeyword) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.ASC, "regdate"));
 		
-		for (ChatEntity chat : chatEntities) {
-			ChatDTO chatDTO = new ChatDTO(chat);
-			chatDTOs.add(chatDTO);
-		}
 		
-		return chatDTOs;
+		return chatRepository.findByTitleContaining(searchKeyword, pageRequest);
 	}
 	
 	//일별 가입자수 체크
