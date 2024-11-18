@@ -12,51 +12,70 @@
 	<script src="/js/pub-ui-custom.js"></script>
 </head>
 <script>
+const registerForm = async () => {
 
-const registerForm = async() => {
-	
-	let code = document.querySelector('#code');
-	let type = document.querySelector('#type');
-	let val = document.querySelector('#value');
-	let writer = document.querySelector('#writer');
-	let email = document.querySelector('#email');
-	let isUse = document.querySelector('#isUse');
-		
-	let note = editor.getMarkdown();
-	
-	if(code.value === ''){
-		alert('코드명을 입력하세요!!!');
-		code.focus();
-		return false;
-	}
-	if(type.value === ''){
-		alert('타입을 입력하세요!!!');
-		type.focus();
-		return false;
-	}
-	if(val.value === ''){
-		alert('value값을 입력하세요!!!');
-		value.focus();
-		return false;
-	}	
-		
-		
-	let formData = new FormData(document.getElementById('WriteForm'));
-	formData.append("note", note);
-		
-	await fetch('/admin/systemCommonCodeWrite', {
-	method: 'POST',
-	body: formData
-	}).then((response)=> response.json())
-		.then((data)=> {
-			if(data.message === 'good'){
-				alert("코드가 추가되었습니다.");
-				document.location.href='/admin/systemCommonCode';
-			}
-	}).catch((error)=> {
-		alert("시스템 장애로 코드 추가에 실패했습니다.");
-		console.log("error" + error);
-	})
+    let code = document.querySelector('#code');
+    let type = document.querySelector('#type');
+    let val = document.querySelector('#value');
+    let writer = document.querySelector('#writer');
+    let email = document.querySelector('#email');
+    let isUse = document.querySelector('#isUse');
+    
+    let note = editor.getMarkdown();
+    
+    if (code.value === '') {
+        Swal.fire({
+            icon: 'warning',
+            title: '코드명을 입력하세요!!!',
+            confirmButtonText: '확인'
+        });
+        code.focus();
+        return false;
+    }
+    if (type.value === '') {
+        Swal.fire({
+            icon: 'warning',
+            title: '타입을 입력하세요!!!',
+            confirmButtonText: '확인'
+        });
+        type.focus();
+        return false;
+    }
+    if (val.value === '') {
+        Swal.fire({
+            icon: 'warning',
+            title: 'value값을 입력하세요!!!',
+            confirmButtonText: '확인'
+        });
+        val.focus();
+        return false;
+    }
+
+    let formData = new FormData(document.getElementById('WriteForm'));
+    formData.append("note", note);
+
+    await fetch('/admin/systemCommonCodeWrite', {
+        method: 'POST',
+        body: formData
+    }).then((response) => response.json())
+    .then((data) => {
+        if (data.message === 'good') {
+            Swal.fire({
+                icon: 'success',
+                title: '코드가 추가되었습니다.',
+                confirmButtonText: '확인'
+            }).then(() => {
+                document.location.href = '/admin/systemCommonCode';
+            });
+        }
+    }).catch((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: '시스템 장애로 코드 추가에 실패했습니다.',
+            confirmButtonText: '확인'
+        });
+        console.log("error", error);
+    });
 }
 </script>
 <body>

@@ -12,28 +12,50 @@
 
 <script>
 const deleteReply = (idx) => {
-    if (confirm("해당 댓글을 삭제하시겠습니까?")) {
-        fetch(`/admin/systemReplyDelete/${idx}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            console.log("Response status:", response.status);
-            return response.text().then(message => ({ status: response.status, message }));
-        })
-        .then(({ status, message }) => {
-            if (status === 200) {
-                alert(message);
-                location.reload();
-            } else {
-                alert(`삭제 실패: ${message}`);
-            }
-        })
-        .catch(error => {
-            console.error('삭제 중 오류 발생:', error);
-            alert("삭제 요청 중 오류가 발생했습니다.");
-        });
-    }
-}
+    Swal.fire({
+        title: "댓글을 삭제하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "삭제",
+        cancelButtonText: "취소",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/admin/systemReplyDelete/${idx}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                console.log("Response status:", response.status);
+                return response.text().then(message => ({ status: response.status, message }));
+            })
+            .then(({ status, message }) => {
+                if (status === 200) {
+                    Swal.fire({
+                        title: message,
+                        icon: "success",
+                        confirmButtonText: "확인" 
+                    }).then((result) => {
+                        if(result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        text: message,
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: "error",
+                    text: "시스템 장애로 댓글 삭제에 실패했습니다",
+                });
+                console.error('삭제 중 오류 발생:', error);
+            });
+        }
+    });
+};
 </script>
 </head>
 <body>
@@ -83,7 +105,7 @@ const deleteReply = (idx) => {
 								<td th:text="${reply.content}">저도 똑같아요.</td>
 								<td th:text="${reply.writer}">한건희</td>
 								<td th:text="${reply.regdate}">2024-11-04</td>
-								<td><a href="" class="btn_delete" th:onclick="'deleteReply(' + ${reply.idx} + ')'">삭제</a></td>
+								<td><a th:href="|javascript:deleteReply(${reply.idx})|" class="btn_delete">삭제</a></td>
 								<td th:text="${reply.isUse}"></td>
 							</tr>
 						</tbody>

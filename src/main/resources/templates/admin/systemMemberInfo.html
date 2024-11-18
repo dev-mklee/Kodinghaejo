@@ -13,25 +13,47 @@
 <body>
 <script>
 const DeleteMember = (email) => {
-    if (confirm("회원 탈퇴를 진행하시겠습니까?")) {
-        fetch(`/admin/systemMemberDelete/${email}`, {
-            method: 'POST',
-            headers: {"content-type":"application/json"},
-        })
-        .then((response) => response.json())
-        .then((data) => {
-        	if (data.message == 'good') {
-                alert("정상 탈퇴되었습니다.");
-                location.reload();
-            } else {
-                alert("탈퇴 처리 도중 오류가 발생하였습니다.");
-            }
-        })
-        .catch(error => {
-            console.error('삭제 중 오류 발생:', error);
-            alert("삭제 요청 중 오류가 발생했습니다.");
-        });
-    }
+    Swal.fire({
+        title: '회원 탈퇴를 진행하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '탈퇴',
+        cancelButtonText: '취소',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/admin/systemMemberDelete/${email}`, {
+                method: 'POST',
+                headers: {"content-type": "application/json"},
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.message === 'good') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '정상 탈퇴되었습니다.',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '탈퇴 처리 도중 오류가 발생하였습니다.',
+                        confirmButtonText: '확인'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('삭제 중 오류 발생:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: '삭제 요청 중 오류가 발생했습니다.',
+                    confirmButtonText: '확인'
+                });
+            });
+        }
+    });
 }
 </script>
 <div id="header" th:replace="include/header"></div>
@@ -93,7 +115,7 @@ const DeleteMember = (email) => {
 									<td th:text="${member.tel}">010-1234-5678</td>
 									<td th:text="${member.regdate}">2024-01-01</td>
 									<td><a href="" class="btn_view">상세보기</a></td>
-									<td><a href="" class="btn_delete" th:data-name="${member.email}" onclick="DeleteMember(this.dataset.name)">탈퇴</a></td>
+									<td><a class="btn_delete" th:data-name="${member.email}" onclick="DeleteMember(this.dataset.name)">탈퇴</a></td>
 									<td th:text="${member.isUse}"></td>
 								</tr>
 

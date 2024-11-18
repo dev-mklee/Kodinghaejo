@@ -11,30 +11,50 @@
 <script src="/js/pub-ui-custom.js"></script>
 <script>
 const deleteCode = (code) => {
-    if (confirm('정말 삭제하시겠습니까?')) {
-        const formData = new FormData();
-        formData.append("code", code);
+    Swal.fire({
+        title: '정말 삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const formData = new FormData();
+            formData.append("code", code);
 
-        fetch('/admin/systemCommonCodeDelete', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({ 'code': code })
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('삭제가 완료되었습니다.');
-                location.reload();
-            } else {
-                alert('삭제에 실패했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('오류 발생:', error);
-            alert('삭제 중 오류가 발생했습니다.');
-        });
-    }
+            fetch('/admin/systemCommonCodeDelete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ 'code': code })
+            })
+            .then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        title: '삭제가 완료되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        location.reload(); // 삭제 후 페이지 새로고침
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        text: '삭제에 실패했습니다.'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('오류 발생:', error);
+                Swal.fire({
+                    icon: 'error',
+                    text: '삭제 중 오류가 발생했습니다.'
+                });
+            });
+        }
+    });
 };
 </script>
 </head>
