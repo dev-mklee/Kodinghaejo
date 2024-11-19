@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
+import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestLngDTO;
@@ -588,4 +589,58 @@ public class AdminServiceImpl implements AdminService {
 			return false;
 		}
     }
+	
+	//타입에 따른 댓글 조회
+	@Override
+	public Page<ReplyDTO> getReplyListByType(int pageNum, int postNum, String rePrnt) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "rePrnt"));
+
+	    Page<ReplyEntity> replyEntities = replyRepository.findByRePrnt(rePrnt, pageRequest);
+
+	    List<ReplyDTO> replyDTOs = new ArrayList<>();
+	    
+	    for (ReplyEntity reply : replyEntities) {
+	        ReplyDTO replyDTO = new ReplyDTO(reply);
+
+	        switch (reply.getRePrnt()) {
+	            case "FR":
+	                BoardEntity board = boardRepository.findById(reply.getPrntIdx()).orElse(null);
+	                if (board != null) {
+	                    replyDTO.setPrntTitle(board.getTitle());
+	                } else {
+	                    replyDTO.setPrntTitle("원글이 삭제됨");
+	                }
+	                break;
+	            case "Q":
+	                TestQuestionEntity question = questionRepository.findById(reply.getPrntIdx()).orElse(null);
+	                if (question != null) {
+	                    replyDTO.setPrntTitle(question.getTitle());
+	                } else {
+	                    replyDTO.setPrntTitle("원글이 삭제됨");
+	                }
+	                break;
+	            case "QA":
+	                TestQuestionAnswerEntity answer = questionAnswerRepository.findById(reply.getPrntIdx()).orElse(null);
+	                if (answer != null) {
+	                    replyDTO.setPrntTitle(answer.getContent());
+	                } else {
+	                    replyDTO.setPrntTitle("원글이 삭제됨");
+	                }
+	                break;
+	        }
+	        replyDTOs.add(replyDTO);
+	    }
+
+	    return new PageImpl<>(replyDTOs, pageRequest, replyEntities.getTotalElements());
+	}
+	
+	//회원 상세보기
+	@Override
+	public MemberDTO getMemberDetailByEmail(String email) {
+		MemberEntity memberEntity = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
+
+        return new MemberDTO(memberEntity);
+	}
+	
 }	

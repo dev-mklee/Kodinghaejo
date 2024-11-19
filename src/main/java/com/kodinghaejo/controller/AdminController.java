@@ -1,5 +1,7 @@
 package com.kodinghaejo.controller;
 
+import java.awt.print.Printable;
+import java.io.Console;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.event.PublicInvocationEvent;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
+import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
@@ -32,7 +37,10 @@ import com.kodinghaejo.entity.CommonCodeEntity;
 import com.kodinghaejo.entity.MemberEntity;
 import com.kodinghaejo.entity.TestQuestionEntity;
 import com.kodinghaejo.service.AdminService;
+import com.kodinghaejo.service.MailService;
+import com.kodinghaejo.service.MemberService;
 import com.kodinghaejo.util.PageUtil;
+import com.kodinghaejo.util.PasswordMaker;
 import com.nimbusds.jose.shaded.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,6 +54,9 @@ import lombok.extern.log4j.Log4j2;
 public class AdminController {
 	
 	private final AdminService service;
+	private final MemberService memberService;
+	private final BCryptPasswordEncoder pwEncoder;
+	private final MailService mailService;
 	
 	
 	//시스템 관리 메인화면
@@ -80,8 +91,8 @@ public class AdminController {
 	
 	//회원정보 관리
 	@GetMapping("/admin/systemMemberInfo")
-	public void getSystemMeberInfo(@RequestParam(value = "searchType", required = false) String searchType,
-			@RequestParam(value = "searchKeyword", required = false) String searchKeyword, Model model,
+	public void getSystemMeberInfo(@RequestParam(value = "searchType", defaultValue = "") String searchType,
+			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -108,7 +119,7 @@ public class AdminController {
 	
 	//문제 리스트
 	@GetMapping("/admin/systemTest")
-	public void getSystemTest(@RequestParam(required = false) String searchKeyword, Model model,
+	public void getSystemTest(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -135,7 +146,7 @@ public class AdminController {
 	
 	//채팅방 관리
 	@GetMapping("/admin/systemChat")
-	public void getSystemChat(@RequestParam(required = false) String searchKeyword, Model model,
+	public void getSystemChat(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -173,7 +184,7 @@ public class AdminController {
 	
 	//공지 관리
 	@GetMapping("/admin/systemNotice")
-	public void getSystemNotice(@RequestParam(required = false) String searchKeyword, Model model,
+	public void getSystemNotice(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -248,7 +259,7 @@ public class AdminController {
 
 	//자유게시판 관리
 	@GetMapping("/admin/systemFreeBoard")
-	public void getSystemFreeBoard(@RequestParam(required = false) String searchKeyword, Model model,
+	public void getSystemFreeBoard(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -272,7 +283,7 @@ public class AdminController {
 	
 	//질문게시판 관리
 	@GetMapping("/admin/systemQBoard")
-	public void getSystemQBoard(@RequestParam(required = false) String searchKeyword, Model model,
+	public void getSystemQBoard(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -306,10 +317,10 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
 		}
 	}
-		
+	
 	//댓글 관리
 	@GetMapping("/admin/systemReply")
-	public void getSystemReply(@RequestParam(required = false) String searchKeyword, Model model,
+	public void getSystemReply(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model, @RequestParam(required = false, defaultValue = "ALL") String filter,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -318,6 +329,8 @@ public class AdminController {
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
 			replys = service.searchReplyListByContent(pageNum, postNum, searchKeyword);
+		} else if (!"ALL".equalsIgnoreCase(filter)) {
+			replys = service.getReplyListByType(pageNum, postNum, filter);
 		} else {
 			replys = service.replyList(pageNum, postNum);
 		}
@@ -330,7 +343,8 @@ public class AdminController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("replys", replys);
 		model.addAttribute("searchKeyword", searchKeyword);
-		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemReply", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+		model.addAttribute("filter", filter);
+		model.addAttribute("pageList", page.getPageListFilter("/admin/systemReply", pageNum, postNum, pageListCount, totalCount, filter, searchKeyword));
 
 	}
 	
@@ -410,35 +424,10 @@ public class AdminController {
 			return "{\"message\": \"fail\"}";
 		}
 	}
-	/*
-	 //질문게시판 관리
-	@GetMapping("/admin/systemQBoard")
-	public void getSystemQBoard(@RequestParam(required = false) String searchKeyword, Model model,
-			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
-		int postNum = 5;
-		int pageListCount = 5;
-		
-		Page<TestQuestionEntity> questions;
-		
-		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-			questions = service.searchQboardListByTitle(pageNum, postNum, searchKeyword);
-		} else {
-			questions = service.questionList(pageNum, postNum);
-		}
-		
-		PageUtil page = new PageUtil();
-		int totalCount = (int) questions.getTotalElements();
-		
-		model.addAttribute("page", pageNum);
-		model.addAttribute("postNum", postNum);
-		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("questions", questions);
-		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemQBoard", pageNum, postNum, pageListCount, totalCount, searchKeyword));
-	}
-	 */
+
 	//공통코드 관리
 	@GetMapping("/admin/systemCommonCode")
-	public void getCommonCode(@RequestParam(required = false) String searchKeyword,@RequestParam(required = false, defaultValue = "ALL") String filter, Model model,
+	public void getCommonCode(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword,@RequestParam(required = false, defaultValue = "ALL") String filter, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -462,7 +451,7 @@ public class AdminController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("codes", codes);
 		model.addAttribute("filter", filter);
-		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemCommonCode", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+		model.addAttribute("pageList", page.getPageListFilter("/admin/systemCommonCode", pageNum, postNum, pageListCount, totalCount, filter, searchKeyword));
 
 	}
 	
@@ -485,6 +474,31 @@ public class AdminController {
 	@PostMapping("/admin/systemCommonCodeDelete")
 	public void deleteCommonCode(@RequestParam("code") String code) {
 		service.deleteCommonCode(code);
+	}
+	
+	//회원관리 상세보기
+	@GetMapping("/admin/MemberDetail/{email}")
+	public ResponseEntity<MemberDTO> getMemberDetails(@PathVariable String email) {
+        MemberDTO memberDTO = service.getMemberDetailByEmail(email);
+        return ResponseEntity.ok(memberDTO);
+    }
+	
+	//관리자페이지 임시 비밀번호 발급
+	@ResponseBody
+	@PostMapping("/admin/tempPassword")
+	public String TempPassword(@RequestBody MemberDTO findData) {
+		log.info("===================",findData.getEmail());
+		if(memberService.checkEmail(findData.getEmail()) == 0)
+			return "{ \"message\": \"ID_NOT_FOUND\" }";
+		
+		String password = new PasswordMaker().tempPasswordMaker(8);		
+		findData.setPassword(pwEncoder.encode(password));
+		memberService.editPassword(findData);
+		memberService.lastdateUpdate(findData.getEmail(), "password");
+		
+		mailService.sendSimpleMailMessage(findData.getEmail(), password);
+		
+		return "{ \"message\": \"good\" }";
 	}
 }
 

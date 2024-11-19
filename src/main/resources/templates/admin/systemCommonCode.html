@@ -120,7 +120,7 @@ const deleteCode = (code) => {
 						</thead>
 						<tbody>
 							<tr th:each="code, stat : ${codes}">
-								<td th:text="${stat.index + 1}">1</td>
+								<td th:text="${(page - 1) * postNum + stat.index + 1}">1</td>
 								<td>
 									<a th:text ="${code.code}">코드명</a>
 								</td>

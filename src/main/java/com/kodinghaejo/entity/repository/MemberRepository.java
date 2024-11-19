@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.entity.MemberEntity;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
@@ -29,5 +30,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     //월별 가입자 수(매년)
     @Query("SELECT MONTH(m.regdate) AS month, COUNT(m) AS count FROM member m WHERE YEAR(m.regdate) = :currentYear GROUP BY MONTH(m.regdate)")
     List<Object[]> findMonthlySignups(@Param("currentYear") int currentYear);
+    
+    public Optional<MemberEntity> findByEmail(String email);
     
 }

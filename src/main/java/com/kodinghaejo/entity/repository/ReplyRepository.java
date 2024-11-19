@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.ReplyInterface;
 
 import com.kodinghaejo.entity.MemberEntity;
@@ -24,6 +25,8 @@ public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
 	int countRepliesByPostId(@Param("prntIdx") Long prntIdx);
 	
 	public Page<ReplyEntity> findByContentContaining(String searchKeyword, Pageable pageable);
+	
+	public Page<ReplyEntity> findByRePrnt(String rePrnt, Pageable pageable);
 
 	//내가 작성한 댓글 확인
 	//마이페이지(페이징)

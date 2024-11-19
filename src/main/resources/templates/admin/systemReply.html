@@ -88,6 +88,17 @@ const deleteReply = (idx) => {
 							<col width="">
 						</colgroup>
 						<thead>
+							<div class="reply-category mb20">
+								<form method="get" action="/admin/systemReply">
+							        <!-- 필터 버튼 -->
+							        <button type="submit" name="filter" value="ALL" 
+							                th:classappend="${filter == 'ALL'} ? 'active' : ''">전체</button>
+							        <button type="submit" name="filter" value="FR" 
+							                th:classappend="${filter == 'FR'} ? 'active' : ''">자유게시판</button>
+							        <button type="submit" name="filter" value="Q" 
+							                th:classappend="${filter == 'Q'} ? 'active' : ''">질문게시판</button>
+							    </form>
+							</div>
 							<tr>
 								<th>번호</th>
 								<th>원글</th>

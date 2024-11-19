@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
+import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
@@ -135,6 +136,12 @@ public interface AdminService {
 	
 	//공통코드 삭제
 	public boolean deleteCommonCode(String code);
+	
+	//회원 상세보기
+	public MemberDTO getMemberDetailByEmail(String email);
+	
+	//댓글관리 필터 타입
+	public Page<ReplyDTO> getReplyListByType(int pageNum, int postNum, String rePrnt);
 }
 
 
