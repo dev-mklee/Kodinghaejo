@@ -500,5 +500,11 @@ public class AdminController {
 		
 		return "{ \"message\": \"good\" }";
 	}
+	
+	//광고 배너 관리
+	@GetMapping("/admin/systemBanner")
+	public void getSystemBanner() {
+		
+	}
 }
 
