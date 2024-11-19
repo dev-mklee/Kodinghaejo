@@ -13,7 +13,9 @@ import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.ChatEntity;
+import com.kodinghaejo.entity.CommonCodeEntity;
 import com.kodinghaejo.entity.MemberEntity;
+import com.kodinghaejo.entity.TestQuestionEntity;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,10 +52,10 @@ public interface AdminService {
 	public void savenoticeModify(BoardDTO boardDTO);
 	
 	//질문게시판 관리화면
-	public List<TestQuestionDTO> questionList();
+	public Page<TestQuestionEntity> questionList(int pageNum, int postNum);
 	
 	//댓글 관리화면
-	public List<ReplyDTO> replyList();
+	public Page<ReplyDTO> replyList(int pageNum, int postNum);
 	
 	//채팅방 관리화면
 	public Page<ChatEntity> chatList(int pageNum, int postNum);
@@ -83,10 +85,10 @@ public interface AdminService {
 	public Page<BoardEntity> searchNoticeListByTitle(int pageNum, int postNum, String searchKeyword);
 	
 	//질문게시판 검색
-	public List<TestQuestionDTO> searchQboardListByTitle(String searchKeyword);
+	public Page<TestQuestionEntity> searchQboardListByTitle(int pageNum, int postNum, String searchKeyword);
 	
 	//댓글 검색
-	public List<ReplyDTO> searchReplyListByContent(String searchKeyword);
+	public Page<ReplyDTO> searchReplyListByContent(int pageNum, int postNum, String searchKeyword);
 	
 	//채팅방 검색
 	public Page<ChatEntity> searchChatListByTitle(int pageNum, int postNum, String searchKeyword);
@@ -120,13 +122,13 @@ public interface AdminService {
 	public void deleteMember(String email);
 	
 	//공통코드 관리화면
-	public List<CommonCodeDTO> codeList();
+	public Page<CommonCodeEntity> codeList(int pageNum, int postNum);
 	
 	//공통코드 검색
-	public List<CommonCodeDTO> searchCodeListByCode(String searchKeyword);
+	public Page<CommonCodeEntity> searchCodeListByCode(int pageNum, int postNum, String searchKeyword);
 	
 	//공통코드 필터 타입
-	public List<CommonCodeDTO> getCodeListByType(String type);
+	public Page<CommonCodeEntity> getCodeListByType(int pageNum, int postNum, String type);
 	
 	//공통코드 추가
 	public void codewrite(CommonCodeDTO code);

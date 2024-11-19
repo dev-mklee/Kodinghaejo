@@ -2,6 +2,8 @@ package com.kodinghaejo.entity.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,9 +17,9 @@ public interface CommonCodeRepository extends JpaRepository<CommonCodeEntity, St
 
 	public List<CommonCodeEntity> findByIsUse(String isUse);
 	
-	public List<CommonCodeEntity> findByCodeContaining(String SearchKeyword);
+	public Page<CommonCodeEntity> findByCodeContaining(String SearchKeyword, Pageable pageable);
 	
-	List<CommonCodeEntity> findByType(String type);
+	public Page<CommonCodeEntity> findByType(String type, Pageable pageable);
 	
 	
 	@Modifying

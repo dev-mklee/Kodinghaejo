@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -87,7 +88,7 @@ public class AdminServiceImpl implements AdminService {
 	//문제 보여주기
 	@Override
 	public Page<TestDTO> testAllList(int pageNum, int postNum) {
-		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.ASC, "idx"));
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
 		Page<TestEntity> testEntities = testRepository.findAll(pageRequest);
 		List<TestDTO> testDTOs = new ArrayList<>();
 		
@@ -226,15 +227,11 @@ public class AdminServiceImpl implements AdminService {
 	
 	//질문게시판 관리 화면
 	@Override
-	public List<TestQuestionDTO> questionList() {
-		List<TestQuestionEntity> questionEntities = questionRepository.findAll();
-		List<TestQuestionDTO> questionDTOs = new ArrayList<>();
+	public Page<TestQuestionEntity> questionList(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
 		
-		for (TestQuestionEntity question : questionEntities) {
-			TestQuestionDTO questionDTO = new TestQuestionDTO(question);
-			questionDTOs.add(questionDTO);
-		}
-		return questionDTOs;
+		return questionRepository.findAll(pageRequest);
+		
 	}
 	//질문 삭제
 	@Override
@@ -242,12 +239,12 @@ public class AdminServiceImpl implements AdminService {
 		TestQuestionEntity questionEntity = questionRepository.findById(idx).get();
 		questionRepository.delete(questionEntity);
 	}
-	
-	
+
 	//댓글 관리 화면
 	@Override
-	public List<ReplyDTO> replyList() {
-		List<ReplyEntity> replyEntities = replyRepository.findAll();
+	public Page<ReplyDTO> replyList(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
+		Page<ReplyEntity> replyEntities = replyRepository.findAll(pageRequest);
 		List<ReplyDTO> replyDTOs = new ArrayList<>();
 		
 		for (ReplyEntity reply : replyEntities) {
@@ -280,13 +277,13 @@ public class AdminServiceImpl implements AdminService {
 			}
 			replyDTOs.add(replyDTO);
 		}
-		return replyDTOs;
+		return new PageImpl<>(replyDTOs, pageRequest, replyEntities.getTotalElements());
 	}
 	
 	//채팅방 관리 화면
 	@Override
 	public Page<ChatEntity> chatList(int pageNum, int postNum) {
-		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.ASC, "regdate"));
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "regdate"));
 		
 		return chatRepository.findAll(pageRequest);
 	}
@@ -311,7 +308,7 @@ public class AdminServiceImpl implements AdminService {
 	//문제 검색
 	@Override
 	public Page<TestDTO> searchtestListByTitle(int pageNum, int postNum,String searchKeyword) {
-		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.ASC, "regdate"));
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "regdate"));
 		
 		Page<TestEntity> testEntities = testRepository.findByTitleContaining(searchKeyword, pageRequest);
 		List<TestDTO> testDTOs = new ArrayList<>();
@@ -393,36 +390,59 @@ public class AdminServiceImpl implements AdminService {
 	
 	//질문게시판 검색
 	@Override
-	public List<TestQuestionDTO> searchQboardListByTitle(String searchKeyword) {
-		List<TestQuestionEntity> questionEntities = questionRepository.findByTitleContaining(searchKeyword);
-		List<TestQuestionDTO> questionDTOs = new ArrayList<>();
+	public Page<TestQuestionEntity> searchQboardListByTitle(int pageNum, int postNum, String searchKeyword) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
 		
-		for (TestQuestionEntity question : questionEntities) {
-			TestQuestionDTO questionDTO = new TestQuestionDTO(question);
-			questionDTOs.add(questionDTO);
-		}
+		return questionRepository.findByTitleContaining(searchKeyword, pageRequest);
 		
-		return questionDTOs;
 	}
 	
 	//댓글 검색
 	@Override
-	public List<ReplyDTO> searchReplyListByContent(String searchKeyword) {
-		List<ReplyEntity> replyEntities = replyRepository.findByContentContaining(searchKeyword);
+	public Page<ReplyDTO> searchReplyListByContent(int pageNum, int postNum, String searchKeyword) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
+		
+		Page<ReplyEntity> replyEntities = replyRepository.findByContentContaining(searchKeyword, pageRequest);
 		List<ReplyDTO> replyDTOs = new ArrayList<>();
 		
 		for (ReplyEntity reply : replyEntities) {
 			ReplyDTO replyDTO = new ReplyDTO(reply);
+			switch (reply.getRePrnt()) {
+				case "FR":
+					BoardEntity board = boardRepository.findById(reply.getPrntIdx()).orElse(null);
+					if(board != null) {
+						replyDTO.setPrntTitle(boardRepository.findById(reply.getPrntIdx()).get().getTitle());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+				case "Q":
+					TestQuestionEntity question = questionRepository.findById(reply.getPrntIdx()).orElse(null);
+					if(question != null) {
+						replyDTO.setPrntTitle(questionRepository.findById(reply.getPrntIdx()).get().getTitle());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+				case "QA":
+					TestQuestionAnswerEntity answer = questionAnswerRepository.findById(reply.getPrntIdx()).orElse(null);
+					if(answer != null) {
+						replyDTO.setPrntTitle(questionAnswerRepository.findById(reply.getPrntIdx()).get().getContent());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+			}
 			replyDTOs.add(replyDTO);
 		}
 		
-		return replyDTOs;
+		return new PageImpl<>(replyDTOs, pageRequest, replyEntities.getTotalElements());
 	}
 	
 	//채팅방 검색
 	@Override
 	public Page<ChatEntity> searchChatListByTitle(int pageNum, int postNum, String searchKeyword) {
-		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.ASC, "regdate"));
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "regdate"));
 		
 		
 		return chatRepository.findByTitleContaining(searchKeyword, pageRequest);
@@ -529,36 +549,26 @@ public class AdminServiceImpl implements AdminService {
 	
 	//공통코드 관리화면
 	@Override
-	public List<CommonCodeDTO> codeList() {
-		List<CommonCodeEntity> codeEntities = codeRepository.findAll();
-		List<CommonCodeDTO> codeDTOs = new ArrayList<>();
+	public Page<CommonCodeEntity> codeList(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "code"));
 		
-		for (CommonCodeEntity code : codeEntities) {
-			CommonCodeDTO codeDTO = new CommonCodeDTO(code);
-			codeDTOs.add(codeDTO);
-		}
-		return codeDTOs;
+		return codeRepository.findAll(pageRequest);
 	}
 	
 	//공통코드 검색
 	@Override
-	public List<CommonCodeDTO> searchCodeListByCode(String searchKeyword) {
-		List<CommonCodeEntity> codeEntities = codeRepository.findByCodeContaining(searchKeyword);
-		List<CommonCodeDTO> codeDTOs = new ArrayList<>();
+	public Page<CommonCodeEntity> searchCodeListByCode(int pageNum, int postNum, String searchKeyword) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "code"));
 		
-		for (CommonCodeEntity code : codeEntities) {
-			CommonCodeDTO codeDTO = new CommonCodeDTO(code);
-			codeDTOs.add(codeDTO);
-		}
-		return codeDTOs;
+		return codeRepository.findByCodeContaining(searchKeyword, pageRequest);
 	}
 	
 	//타입에 따른 공통코드 조회
-	public List<CommonCodeDTO> getCodeListByType(String type) {
-		return codeRepository.findByType(type)
-				.stream()
-				.map(entity -> new CommonCodeDTO(entity))
-				.collect(Collectors.toList());
+	public Page<CommonCodeEntity> getCodeListByType(int pageNum, int postNum, String type) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "code"));
+		
+		return codeRepository.findByType(type, pageRequest);
+				
 	}
 	
 	//공통코드 추가
