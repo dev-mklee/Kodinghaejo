@@ -34,7 +34,7 @@ public class TestController {
 	private final TestService service;
 	
 	//코딩테스트 문제 모아보기
-
+/*
 	@GetMapping("/test/problemCollect")
 	public void getProblemCollect(@RequestParam(required = false) String searchKeyword, Model model) { 
 		
@@ -56,7 +56,7 @@ public class TestController {
 		
 		
 	}
-
+*/
 	//코딩테스트 문제 상세 화면
 	@GetMapping("/test/challenge")
 	public void getChallenge(Model model, @RequestParam("idx") Long idx) throws Exception {

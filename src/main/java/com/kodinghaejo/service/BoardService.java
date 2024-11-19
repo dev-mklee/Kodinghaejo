@@ -68,7 +68,7 @@ public Map<Long, Long> getAllBoardLikeCounts(List<Long> prntIdx);
 	public String reportPost(String email, Long boardIdx);
 
 	//공지사항 화면
-	public List<BoardDTO> getAllNotices();
+	public Page<BoardEntity> getAllNotices(int pageNum, int postNum);
 
 	//내가 작성한 게시글(마이 페이지)
 	public Page<BoardDTO> mypageBoardList(String email, int pageNum, int postNum);

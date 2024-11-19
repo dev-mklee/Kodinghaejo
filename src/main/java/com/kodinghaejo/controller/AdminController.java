@@ -28,7 +28,9 @@ import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestQuestionDTO;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.ChatEntity;
+import com.kodinghaejo.entity.CommonCodeEntity;
 import com.kodinghaejo.entity.MemberEntity;
+import com.kodinghaejo.entity.TestQuestionEntity;
 import com.kodinghaejo.service.AdminService;
 import com.kodinghaejo.util.PageUtil;
 import com.nimbusds.jose.shaded.gson.Gson;
@@ -127,7 +129,7 @@ public class AdminController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("tests", tests);
 		model.addAttribute("searchKeyword", searchKeyword);
-		model.addAttribute("pageList", page.getPageList("/admin/systemTest", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemTest", pageNum, postNum, pageListCount, totalCount, searchKeyword));
 		
 	}
 	
@@ -154,7 +156,7 @@ public class AdminController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("chats",chats);
 		model.addAttribute("searchKeyword", searchKeyword);
-		model.addAttribute("pageList", page.getPageList("/admin/systemChat", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemChat", pageNum, postNum, pageListCount, totalCount, searchKeyword));
 	}
 	
 	//채팅인원 0인 채팅방 삭제 
@@ -191,8 +193,7 @@ public class AdminController {
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("boards",boards);
-		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("pageList", page.getPageList("/admin/systemNotice", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemNotice", pageNum, postNum, pageListCount, totalCount, searchKeyword));
 
 	}
 	
@@ -266,24 +267,32 @@ public class AdminController {
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("boards", boards);
-		model.addAttribute("pageList", page.getPageList("/admin/systemFreeBoard", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemFreeBoard", pageNum, postNum, pageListCount, totalCount, searchKeyword));
 	}
 	
 	//질문게시판 관리
 	@GetMapping("/admin/systemQBoard")
-	public void getSystemQBoard(@RequestParam(required = false) String searchKeyword, Model model) {
-		List<TestQuestionDTO> questionDTOs;
+	public void getSystemQBoard(@RequestParam(required = false) String searchKeyword, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<TestQuestionEntity> questions;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-			questionDTOs = service.searchQboardListByTitle(searchKeyword);
+			questions = service.searchQboardListByTitle(pageNum, postNum, searchKeyword);
 		} else {
-			questionDTOs = service.questionList();
+			questions = service.questionList(pageNum, postNum);
 		}
 		
-		model.addAttribute("questions", questionDTOs);
+		PageUtil page = new PageUtil();
+		int totalCount = (int) questions.getTotalElements();
 		
-		long questionCount = questionDTOs.size();
-		model.addAttribute("questionCount", questionCount);
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("questions", questions);
+		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemQBoard", pageNum, postNum, pageListCount, totalCount, searchKeyword));
 	}
 	
 	//질문게시판 글 삭제
@@ -297,22 +306,32 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시글 삭제에 실패했습니다.");
 		}
 	}
-	
+		
 	//댓글 관리
 	@GetMapping("/admin/systemReply")
-	public void getSystemReply(@RequestParam(required = false) String searchKeyword, Model model) {
-		List<ReplyDTO> replyDTOs;
+	public void getSystemReply(@RequestParam(required = false) String searchKeyword, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<ReplyDTO> replys;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-			replyDTOs = service.searchReplyListByContent(searchKeyword);
+			replys = service.searchReplyListByContent(pageNum, postNum, searchKeyword);
 		} else {
-			replyDTOs = service.replyList();
+			replys = service.replyList(pageNum, postNum);
 		}
 		
-		model.addAttribute("replys", replyDTOs);
+		PageUtil page = new PageUtil();
+		int totalCount = (int) replys.getTotalElements();
 		
-		long replyCount = replyDTOs.size();
-		model.addAttribute("replyCount", replyCount);
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("replys", replys);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemReply", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+
 	}
 	
 	//댓글 삭제
@@ -391,26 +410,60 @@ public class AdminController {
 			return "{\"message\": \"fail\"}";
 		}
 	}
-	
-	//공통코드 관리
-	@GetMapping("/admin/systemCommonCode")
-	public void getCommonCode(@RequestParam(required = false) String searchKeyword,@RequestParam(required = false, defaultValue = "ALL") String filter, Model model) {
-		List<CommonCodeDTO> codeDTOs;
+	/*
+	 //질문게시판 관리
+	@GetMapping("/admin/systemQBoard")
+	public void getSystemQBoard(@RequestParam(required = false) String searchKeyword, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<TestQuestionEntity> questions;
 		
 		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-			codeDTOs = service.searchCodeListByCode(searchKeyword);
-			filter = "";
-		} else if (!"ALL".equalsIgnoreCase(filter)) {
-			codeDTOs= service.getCodeListByType(filter);
+			questions = service.searchQboardListByTitle(pageNum, postNum, searchKeyword);
 		} else {
-			codeDTOs = service.codeList();
+			questions = service.questionList(pageNum, postNum);
 		}
 		
-		model.addAttribute("codes", codeDTOs);
+		PageUtil page = new PageUtil();
+		int totalCount = (int) questions.getTotalElements();
 		
-		long codeCount = codeDTOs.size();
-		model.addAttribute("codeCount", codeCount);
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("questions", questions);
+		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemQBoard", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+	}
+	 */
+	//공통코드 관리
+	@GetMapping("/admin/systemCommonCode")
+	public void getCommonCode(@RequestParam(required = false) String searchKeyword,@RequestParam(required = false, defaultValue = "ALL") String filter, Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<CommonCodeEntity> codes;
+		
+		if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+			codes = service.searchCodeListByCode(pageNum, postNum, searchKeyword);
+			filter = "";
+		} else if (!"ALL".equalsIgnoreCase(filter)) {
+			codes= service.getCodeListByType(pageNum, postNum,filter);
+		} else {
+			codes = service.codeList(pageNum, postNum);
+		}
+		
+		PageUtil page = new PageUtil();
+		int totalCount = (int) codes.getTotalElements();
+		
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("codes", codes);
 		model.addAttribute("filter", filter);
+		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemCommonCode", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+
 	}
 	
 	//공통코드 작성 화면

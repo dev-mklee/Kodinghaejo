@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.ReplyDTO;
@@ -229,17 +230,11 @@ public class BoardServiceImpl implements BoardService {
 	
 	//공지사항 화면
 	@Override
-	public List<BoardDTO> getAllNotices() {
-		List<BoardEntity> boardEntities = boardRepository.findByCat("공지사항");
-		List<BoardDTO> boardDTOs = new ArrayList<>();
+	public Page<BoardEntity> getAllNotices(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
 		
-		for (BoardEntity board : boardEntities) {
-
-			BoardDTO boardDTO = new BoardDTO(board);
-			boardDTOs.add(boardDTO);
-		}
 		
-		return boardDTOs;
+		return boardRepository.findByCat("공지사항", pageRequest);
 	}
 	
 	//내가 작성한 게시글(마이 페이지)

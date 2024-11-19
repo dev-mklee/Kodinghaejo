@@ -201,9 +201,22 @@ public class BoardController {
 	
 	//공지사항 리스트
 	@GetMapping("/board/noticeboard")
-	public String getNoticeboard(Model model) {
-		List<BoardDTO> boardDTOs = service.getAllNotices();
-		model.addAttribute("notices", boardDTOs);
+	public String getNoticeboard(Model model, @RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
+		
+		Page<BoardEntity> boards;
+		boards = service.getAllNotices(pageNum, postNum);
+		
+		PageUtil page = new PageUtil();
+		int totalCount = (int) boards.getTotalElements();
+		
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("notices", boards);
+		
+		model.addAttribute("pageList", page.getPageList("/board/noticeboard", pageNum, postNum, pageListCount, totalCount));
 		
 		return "/board/noticeboard";
 	}
