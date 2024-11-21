@@ -25,7 +25,7 @@ public class ChatMemberDTO {
 	private String manager;
 	private LocalDateTime regdate;
 	private String isUse;
-	
+
 	//Entity --> DTO 이동
 	public ChatMemberDTO(ChatMemberEntity entity) {
 		this.chatIdx = entity.getChatIdx().getIdx();
@@ -34,7 +34,7 @@ public class ChatMemberDTO {
 		this.manager = entity.getManager();
 		this.regdate = entity.getRegdate();
 	}
-	
+
 	//DTO --> Entity 이동
 	public ChatMemberEntity dtoToEntity(ChatMemberDTO dto, ChatEntity chatEntity) {
 		ChatMemberEntity entity = ChatMemberEntity
@@ -45,8 +45,8 @@ public class ChatMemberDTO {
 									.manager(dto.getManager())
 									.regdate(dto.getRegdate())
 									.build();
-		
+
 		return entity;
 	}
-	
+
 }

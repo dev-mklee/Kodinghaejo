@@ -24,21 +24,21 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 
 	//사용가능(isUse -> Y) 상태인 게시물 전체
 	public List<BoardEntity> findByIsUseOrderByRegdateDesc(String isUse);
-	
 
-	//게시물 조회수 증가 --> Native SQL 
+	public Page<BoardEntity> findByCatNotAndIsUseOrderByRegdateDesc(String cat, String isUse, Pageable pageable);
+
+	//게시물 조회수 증가 --> Native SQL
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE jpa_board SET hit_cnt = COALESCE(hit_cnt, 0) + 1 WHERE idx = :idx", nativeQuery = true)
 	public void hitno(@Param("idx") Long idx);
-	
 
 	//카테고리 제외
 	Page<BoardEntity> findByCatNot(String cat, Pageable pageable);
 	
 	//카테고리
 	Page<BoardEntity> findByCat(String cat, Pageable pageable);
-	
+
 	//특정 카테고리검색
 	Page<BoardEntity> findByTitleContainingAndCat(String searchKeyword, String category, Pageable pageable);
 		

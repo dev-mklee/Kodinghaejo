@@ -1,5 +1,6 @@
 package com.kodinghaejo.service;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -166,6 +167,5 @@ public interface AdminService {
 	
 	//ID로 배너 데이터 조회
 	public BannerEntity getBannerById(Long id);
+	
 }
-
-

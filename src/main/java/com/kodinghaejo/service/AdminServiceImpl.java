@@ -69,7 +69,7 @@ public class AdminServiceImpl implements AdminService {
 	private final TestSubmitRepository submitRepository;
 	private final CommonCodeRepository codeRepository;
 	private final BannerRepository bannerRepository;
-	
+
 	//문제 작성
 	@Override
 	public void saveTestWrite(TestDTO testDTO) {
@@ -104,10 +104,11 @@ public class AdminServiceImpl implements AdminService {
 			long submitCount = submitRepository.countByTestIdx(test.getIdx());
 			testDTO.setSubmitCount(submitCount);
 		
-	        long correctCount = submitRepository.countByTestIdxAndSubmSts(test.getIdx(), "Y");
-	        
-	        double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
-	        testDTO.setCorrectRate(correctRate);
+			long correctCount = submitRepository.countByTestIdxAndSubmSts(test.getIdx(), "Y");
+			testDTO.setCorrectCount(correctCount);
+			
+			double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
+			testDTO.setCorrectRate(correctRate);
 			testDTOs.add(testDTO);
 		}
 		
@@ -323,10 +324,10 @@ public class AdminServiceImpl implements AdminService {
 			long submitCount = submitRepository.countByTestIdx(test.getIdx());
 			testDTO.setSubmitCount(submitCount);
 		
-	        long correctCount = submitRepository.countByTestIdxAndSubmSts(test.getIdx(), "Y");
-	        
-	        double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
-	        testDTO.setCorrectRate(correctRate);
+			long correctCount = submitRepository.countByTestIdxAndSubmSts(test.getIdx(), "Y");
+			
+			double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
+			testDTO.setCorrectRate(correctRate);
 			testDTOs.add(testDTO);
 		}
 		
@@ -462,9 +463,9 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public long getTodayFreeBoardCount() {
 		LocalDateTime startOfDay = LocalDateTime.now().with(LocalTime.MIN);
-	    LocalDateTime endOfDay = LocalDateTime.now().with(LocalTime.MAX);
+		LocalDateTime endOfDay = LocalDateTime.now().with(LocalTime.MAX);
 
-	    return boardRepository.countByCatAndRegdateBetween("자유게시판", startOfDay, endOfDay);
+		return boardRepository.countByCatAndRegdateBetween("자유게시판", startOfDay, endOfDay);
 	}
 	
 	private Set<String> userIps = new HashSet<>();
@@ -477,13 +478,14 @@ public class AdminServiceImpl implements AdminService {
 		String ip = getUserIp(request);
 		
 		if (!today.equals(LocalDate.now())) {
-            userIps.clear();
-            today = LocalDate.now();
-        }
 
-        if (!userIps.contains(ip)) {
-            userIps.add(ip);
-        }
+			userIps.clear();
+			today = LocalDate.now();
+		}
+
+		if (!userIps.contains(ip)) {
+			userIps.add(ip);
+		}
 	}
 	
 	//일별 방문자 수 체크
@@ -522,7 +524,7 @@ public class AdminServiceImpl implements AdminService {
 			monthlySignups.put(month, count);
 			}
 		return monthlySignups;
-		}
+	}
 	
 	//문제풀이에 사용된 언어
 	public Map<String, Integer> getLngSubmitCount() {
@@ -543,10 +545,10 @@ public class AdminServiceImpl implements AdminService {
 	public void deleteMember(String email) {
 		Optional<MemberEntity> memberOpt = memberRepository.findById(email);
 
-        memberOpt.ifPresent(member -> {
-            memberRepository.delete(member);
-        });
-    }
+		memberOpt.ifPresent(member -> {
+			memberRepository.delete(member);
+		});
+	}
 	
 	//공통코드 관리화면
 	@Override
@@ -588,50 +590,50 @@ public class AdminServiceImpl implements AdminService {
 			e.printStackTrace();
 			return false;
 		}
-    }
+	}
 	
 	//타입에 따른 댓글 조회
 	@Override
 	public Page<ReplyDTO> getReplyListByType(int pageNum, int postNum, String rePrnt) {
 		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "rePrnt"));
 
-	    Page<ReplyEntity> replyEntities = replyRepository.findByRePrnt(rePrnt, pageRequest);
+		Page<ReplyEntity> replyEntities = replyRepository.findByRePrnt(rePrnt, pageRequest);
 
-	    List<ReplyDTO> replyDTOs = new ArrayList<>();
-	    
-	    for (ReplyEntity reply : replyEntities) {
-	        ReplyDTO replyDTO = new ReplyDTO(reply);
+		List<ReplyDTO> replyDTOs = new ArrayList<>();
+		
+		for (ReplyEntity reply : replyEntities) {
+			ReplyDTO replyDTO = new ReplyDTO(reply);
 
-	        switch (reply.getRePrnt()) {
-	            case "FR":
-	                BoardEntity board = boardRepository.findById(reply.getPrntIdx()).orElse(null);
-	                if (board != null) {
-	                    replyDTO.setPrntTitle(board.getTitle());
-	                } else {
-	                    replyDTO.setPrntTitle("원글이 삭제됨");
-	                }
-	                break;
-	            case "Q":
-	                TestQuestionEntity question = questionRepository.findById(reply.getPrntIdx()).orElse(null);
-	                if (question != null) {
-	                    replyDTO.setPrntTitle(question.getTitle());
-	                } else {
-	                    replyDTO.setPrntTitle("원글이 삭제됨");
-	                }
-	                break;
-	            case "QA":
-	                TestQuestionAnswerEntity answer = questionAnswerRepository.findById(reply.getPrntIdx()).orElse(null);
-	                if (answer != null) {
-	                    replyDTO.setPrntTitle(answer.getContent());
-	                } else {
-	                    replyDTO.setPrntTitle("원글이 삭제됨");
-	                }
-	                break;
-	        }
-	        replyDTOs.add(replyDTO);
-	    }
+			switch (reply.getRePrnt()) {
+				case "FR":
+					BoardEntity board = boardRepository.findById(reply.getPrntIdx()).orElse(null);
+					if (board != null) {
+						replyDTO.setPrntTitle(board.getTitle());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+				case "Q":
+					TestQuestionEntity question = questionRepository.findById(reply.getPrntIdx()).orElse(null);
+					if (question != null) {
+						replyDTO.setPrntTitle(question.getTitle());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+				case "QA":
+					TestQuestionAnswerEntity answer = questionAnswerRepository.findById(reply.getPrntIdx()).orElse(null);
+					if (answer != null) {
+						replyDTO.setPrntTitle(answer.getContent());
+					} else {
+						replyDTO.setPrntTitle("원글이 삭제됨");
+					}
+					break;
+			}
+			replyDTOs.add(replyDTO);
+		}
 
-	    return new PageImpl<>(replyDTOs, pageRequest, replyEntities.getTotalElements());
+		return new PageImpl<>(replyDTOs, pageRequest, replyEntities.getTotalElements());
 	}
 	
 	//회원 상세보기
@@ -711,11 +713,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	//ID로 배너 데이터 조회
-	@Override
-	public BannerEntity getBannerById(Long id) {
-		BannerEntity bannerEntity = bannerRepository.findById(id).get();
-		
-		return bannerEntity;
-		
-	}
+		@Override
+		public BannerEntity getBannerById(Long id) {
+			BannerEntity bannerEntity = bannerRepository.findById(id).get();
+			
+			return bannerEntity;
+			
+		}
 }	

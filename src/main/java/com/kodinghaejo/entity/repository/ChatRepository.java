@@ -9,11 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.kodinghaejo.entity.ChatEntity;
 
 public interface ChatRepository extends JpaRepository<ChatEntity, Long> {
-	
+
+
 	Page<ChatEntity> findByTitleContaining(String searchKeyword, Pageable pageable);
-	
+
 	List<ChatEntity> findChatsByLimit(int limit);
-	
+
+	@Override
 	void deleteById(Long idx);
 
 }

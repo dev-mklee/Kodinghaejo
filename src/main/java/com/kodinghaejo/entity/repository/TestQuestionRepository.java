@@ -13,7 +13,7 @@ import com.kodinghaejo.entity.TestQuestionEntity;
 public interface TestQuestionRepository extends JpaRepository<TestQuestionEntity, Long> {
 
 	Page<TestQuestionEntity> findByTitleContaining(String searchKeyword, Pageable pageable);
-	
+
 	public List<TestQuestionEntity> findByEmailAndIsUse(MemberEntity email, String isUse);
-	
+
 }

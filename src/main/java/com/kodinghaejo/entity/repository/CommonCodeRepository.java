@@ -21,9 +21,10 @@ public interface CommonCodeRepository extends JpaRepository<CommonCodeEntity, St
 	
 	public Page<CommonCodeEntity> findByType(String type, Pageable pageable);
 	
-	
+
 	@Modifying
 	@Transactional
 	@Query("DELETE FROM commonCode c WHERE c.code = :code")
 	public int deleteByCode(@Param("code") String code);
+
 }

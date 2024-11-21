@@ -92,8 +92,8 @@ public class AdminController {
 	
 	//회원정보 관리
 	@GetMapping("/admin/systemMemberInfo")
-	public void getSystemMeberInfo(@RequestParam(value = "searchType", defaultValue = "") String searchType,
-			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
+	public void getSystemMeberInfo(@RequestParam(name = "searchType", defaultValue = "") String searchType,
+			@RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -109,18 +109,23 @@ public class AdminController {
 		PageUtil page = new PageUtil();
 		int totalCount = (int) members.getTotalElements();
 		
+		String params = "";
+		params += (searchType.equals("")) ? "" : ("&searchType=" + searchType);
+		params += (searchKeyword.equals("")) ? "" : ("&searchKeyword=" + searchKeyword);
+		
 		model.addAttribute("page", pageNum);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("members", members);
-	    model.addAttribute("searchType", searchType);
-	    model.addAttribute("searchKeyword", searchKeyword);
-		model.addAttribute("pageList", page.getAdminMemberPageList(pageNum, postNum, pageListCount, totalCount, searchType, searchKeyword));
+
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("pageList", page.getPageList("/admin/systemMemberInfo", "page", pageNum, postNum, pageListCount, totalCount, params));
 	}
 	
 	//문제 리스트
 	@GetMapping("/admin/systemTest")
-	public void getSystemTest(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
+	public void getSystemTest(@RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -136,18 +141,21 @@ public class AdminController {
 		PageUtil page = new PageUtil();
 		int totalCount = (int) tests.getTotalElements();
 		
+		String params = "";
+		params += (searchKeyword.equals("")) ? "" : ("&searchKeyword=" + searchKeyword);
+		
 		model.addAttribute("page", pageNum);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("tests", tests);
 		model.addAttribute("searchKeyword", searchKeyword);
-		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemTest", pageNum, postNum, pageListCount, totalCount, searchKeyword));
-		
+
+		model.addAttribute("pageList", page.getPageList("/admin/systemTest", "page", pageNum, postNum, pageListCount, totalCount, params));
 	}
 	
 	//채팅방 관리
 	@GetMapping("/admin/systemChat")
-	public void getSystemChat(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
+	public void getSystemChat(@RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -163,12 +171,16 @@ public class AdminController {
 		PageUtil page = new PageUtil();
 		int totalCount = (int) chats.getTotalElements();
 		
+		String params = "";
+		params += (searchKeyword.equals("")) ? "" : ("&searchKeyword=" + searchKeyword);
+
 		model.addAttribute("page", pageNum);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("chats",chats);
 		model.addAttribute("searchKeyword", searchKeyword);
-		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemChat", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+		
+		model.addAttribute("pageList", page.getPageList("/admin/systemChat", "page", pageNum, postNum, pageListCount, totalCount, params));
 	}
 	
 	//채팅인원 0인 채팅방 삭제 
@@ -185,7 +197,7 @@ public class AdminController {
 	
 	//공지 관리
 	@GetMapping("/admin/systemNotice")
-	public void getSystemNotice(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
+	public void getSystemNotice(@RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -205,8 +217,8 @@ public class AdminController {
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("boards",boards);
-		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemNotice", pageNum, postNum, pageListCount, totalCount, searchKeyword));
-
+		
+		model.addAttribute("pageList", page.getPageList("/admin/systemNotice", "page", pageNum, postNum, pageListCount, totalCount, ((searchKeyword.equals("") ? "" : ("&searchKeyword=" + searchKeyword)))));
 	}
 	
 	//공지사항 수정화면
@@ -260,7 +272,7 @@ public class AdminController {
 
 	//자유게시판 관리
 	@GetMapping("/admin/systemFreeBoard")
-	public void getSystemFreeBoard(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
+	public void getSystemFreeBoard(@RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -274,17 +286,21 @@ public class AdminController {
 		}
 		PageUtil page = new PageUtil();
 		int totalCount = (int) boards.getTotalElements();
-		
+
+		String params = "";
+		params += (searchKeyword.equals("")) ? "" : ("&searchKeyword=" + searchKeyword);
+
 		model.addAttribute("page", pageNum);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("boards", boards);
-		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemFreeBoard", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+
+		model.addAttribute("pageList", page.getPageList("/admin/systemFreeBoard", "page", pageNum, postNum, pageListCount, totalCount, params));
 	}
 	
 	//질문게시판 관리
 	@GetMapping("/admin/systemQBoard")
-	public void getSystemQBoard(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
+	public void getSystemQBoard(@RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -300,11 +316,15 @@ public class AdminController {
 		PageUtil page = new PageUtil();
 		int totalCount = (int) questions.getTotalElements();
 		
+		String params = "";
+		params += (searchKeyword.equals("")) ? "" : ("&searchKeyword=" + searchKeyword);
+		
 		model.addAttribute("page", pageNum);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("questions", questions);
-		model.addAttribute("pageList", page.getPageListKeyword("/admin/systemQBoard", pageNum, postNum, pageListCount, totalCount, searchKeyword));
+
+		model.addAttribute("pageList", page.getPageList("/admin/systemQBoard", "page", pageNum, postNum, pageListCount, totalCount, params));
 	}
 	
 	//질문게시판 글 삭제
@@ -321,7 +341,7 @@ public class AdminController {
 	
 	//댓글 관리
 	@GetMapping("/admin/systemReply")
-	public void getSystemReply(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, Model model, @RequestParam(required = false, defaultValue = "ALL") String filter,
+	public void getSystemReply(@RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword, Model model, @RequestParam(name = "filter", required = false, defaultValue = "ALL") String filter,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -339,14 +359,18 @@ public class AdminController {
 		PageUtil page = new PageUtil();
 		int totalCount = (int) replys.getTotalElements();
 		
+		String params = "";
+		params += (searchKeyword.equals("")) ? "" : ("&searchKeyword=" + searchKeyword);
+		params += (filter.equals("")) ? "" : ("&filter=" + filter);
+		
 		model.addAttribute("page", pageNum);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("replys", replys);
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("filter", filter);
-		model.addAttribute("pageList", page.getPageListFilter("/admin/systemReply", pageNum, postNum, pageListCount, totalCount, filter, searchKeyword));
 
+		model.addAttribute("pageList", page.getPageList("/admin/systemReply", "page", pageNum, postNum, pageListCount, totalCount, params));
 	}
 	
 	//댓글 삭제
@@ -429,7 +453,7 @@ public class AdminController {
 
 	//공통코드 관리
 	@GetMapping("/admin/systemCommonCode")
-	public void getCommonCode(@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword,@RequestParam(required = false, defaultValue = "ALL") String filter, Model model,
+	public void getCommonCode(@RequestParam(name = "searchKeyword", defaultValue = "") String searchKeyword, @RequestParam(name = "filter", required = false, defaultValue = "ALL") String filter, Model model,
 			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
 		int postNum = 5;
 		int pageListCount = 5;
@@ -448,13 +472,17 @@ public class AdminController {
 		PageUtil page = new PageUtil();
 		int totalCount = (int) codes.getTotalElements();
 		
+		String params = "";
+		params += (searchKeyword.equals("")) ? "" : ("&searchKeyword=" + searchKeyword);
+		params += (filter.equals("")) ? "" : ("&filter=" + filter);
+
 		model.addAttribute("page", pageNum);
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("codes", codes);
 		model.addAttribute("filter", filter);
-		model.addAttribute("pageList", page.getPageListFilter("/admin/systemCommonCode", pageNum, postNum, pageListCount, totalCount, filter, searchKeyword));
 
+		model.addAttribute("pageList", page.getPageList("/admin/systemCommonCode", "page", pageNum, postNum, pageListCount, totalCount, params));
 	}
 	
 	//공통코드 작성 화면
@@ -482,9 +510,11 @@ public class AdminController {
 	//회원관리 상세보기
 	@GetMapping("/admin/MemberDetail/{email}")
 	public ResponseEntity<MemberDTO> getMemberDetails(@PathVariable String email) {
-        MemberDTO memberDTO = service.getMemberDetailByEmail(email);
-        return ResponseEntity.ok(memberDTO);
-    }
+
+		MemberDTO memberDTO = service.getMemberDetailByEmail(email);
+		return ResponseEntity.ok(memberDTO);
+	}
+
 	
 	//관리자페이지 임시 비밀번호 발급
 	@ResponseBody
@@ -503,6 +533,7 @@ public class AdminController {
 		
 		return "{ \"message\": \"good\" }";
 	}
+
 	//광고 배너 관리화면
 	@GetMapping("/admin/systemBanner")
 	public void getSystemBanner(Model model,
@@ -522,7 +553,7 @@ public class AdminController {
 		model.addAttribute("postNum", postNum);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("banners", banners);
-		model.addAttribute("pageList", page.getPageList("/admin/systemBanner", pageNum, postNum, pageListCount, totalCount));
+		model.addAttribute("pageList", page.getPageList("/admin/systemBanner", "page",pageNum, postNum, pageListCount, totalCount, ""));
 	}
 	
 	//광고 배너 추가화면
