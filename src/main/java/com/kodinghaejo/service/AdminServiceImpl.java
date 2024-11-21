@@ -11,25 +11,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kodinghaejo.dto.BannerDTO;
 import com.kodinghaejo.dto.BoardDTO;
-import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestLngDTO;
-import com.kodinghaejo.dto.TestQuestionDTO;
+import com.kodinghaejo.entity.BannerEntity;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.ChatEntity;
 import com.kodinghaejo.entity.CommonCodeEntity;
@@ -39,6 +37,7 @@ import com.kodinghaejo.entity.TestEntity;
 import com.kodinghaejo.entity.TestLngEntity;
 import com.kodinghaejo.entity.TestQuestionAnswerEntity;
 import com.kodinghaejo.entity.TestQuestionEntity;
+import com.kodinghaejo.entity.repository.BannerRepository;
 import com.kodinghaejo.entity.repository.BoardRecommendRepository;
 import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.ChatRepository;
@@ -50,7 +49,7 @@ import com.kodinghaejo.entity.repository.TestQuestionAnswerRepository;
 import com.kodinghaejo.entity.repository.TestQuestionRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.entity.repository.TestSubmitRepository;
-
+import org.springframework.scheduling.annotation.Scheduled;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
@@ -69,6 +68,7 @@ public class AdminServiceImpl implements AdminService {
 	private final TestQuestionAnswerRepository questionAnswerRepository;
 	private final TestSubmitRepository submitRepository;
 	private final CommonCodeRepository codeRepository;
+	private final BannerRepository bannerRepository;
 	
 	//문제 작성
 	@Override
@@ -643,4 +643,79 @@ public class AdminServiceImpl implements AdminService {
         return new MemberDTO(memberEntity);
 	}
 	
+	//배너 저장
+	@Override
+	public void saveBanner(BannerEntity banner) {
+		banner.setRegdate(LocalDateTime.now());
+		bannerRepository.save(banner);
+	}
+	
+	//배너 목록 조회
+	@Override
+	public Page<BannerEntity> getAllBanners(int pageNum, int postNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
+		
+		return bannerRepository.findAll(pageRequest);
+	}
+	
+	//메인페이지 배너
+	@Override
+	public List<BannerEntity> getBanner() {
+		return bannerRepository.findByIsUse("Y");
+	}
+	
+	//배너 isUse 상태 변경
+	@Override
+	public void updateBannerIsUse(Long idx, String isUse) {
+		BannerEntity banner = bannerRepository.findById(idx)
+				.orElseThrow(() -> new RuntimeException("배너를 찾을 수 없습니다."));
+		
+		banner.setIsUse(isUse);
+		bannerRepository.save(banner);
+	}
+
+	//배너 삭제
+	@Override
+	public void deleteBanner(Long idx) {
+		BannerEntity bannerEntity = bannerRepository.findById(idx).get();
+		bannerRepository.delete(bannerEntity);
+	}
+	
+	//배너 종료일자에 따른 isUse 업데이트
+	@Scheduled(cron = "0/30 * * * * *") // 매일 자정 실행
+	@Override
+	public void updateBannerEndDate() {
+		LocalDateTime now = LocalDateTime.now();
+		List<BannerEntity> banners = bannerRepository.findByEndDateBeforeAndIsUse(now, "Y");
+		
+		for (BannerEntity banner : banners) {
+            banner.setIsUse("N");
+            bannerRepository.save(banner);
+        }
+	}
+	
+	//배너 수정
+	@Override
+	public void saveBannerModify(BannerDTO bannerDTO) {
+		BannerEntity bannerEntity = bannerRepository.findById(bannerDTO.getIdx()).get();
+		
+		bannerEntity.setName(bannerDTO.getName());
+		bannerEntity.setUrl(bannerDTO.getUrl());
+		bannerEntity.setImg(bannerDTO.getImg());
+		bannerEntity.setStartDate(bannerDTO.getStartdate());
+		bannerEntity.setEndDate(bannerDTO.getEnddate());
+		bannerEntity.setRegdate(LocalDateTime.now());
+		bannerEntity.setDesc(bannerDTO.getDescription());
+		
+		bannerRepository.save(bannerEntity);
+	}
+
+	//ID로 배너 데이터 조회
+	@Override
+	public BannerEntity getBannerById(Long id) {
+		BannerEntity bannerEntity = bannerRepository.findById(id).get();
+		
+		return bannerEntity;
+		
+	}
 }	

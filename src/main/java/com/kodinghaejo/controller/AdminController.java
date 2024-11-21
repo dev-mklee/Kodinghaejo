@@ -1,15 +1,15 @@
 package com.kodinghaejo.controller;
 
-import java.awt.print.Printable;
-import java.io.Console;
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,19 +18,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kodinghaejo.dto.BoardDTO;
-import com.kodinghaejo.dto.ChatDTO;
 import com.kodinghaejo.dto.CommonCodeDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.dto.TestDTO;
-import com.kodinghaejo.dto.TestQuestionDTO;
+import com.kodinghaejo.entity.BannerEntity;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.ChatEntity;
 import com.kodinghaejo.entity.CommonCodeEntity;
@@ -349,6 +350,7 @@ public class AdminController {
 	}
 	
 	//댓글 삭제
+	@Transactional
 	@DeleteMapping("/admin/systemReplyDelete/{idx}") 
 	public ResponseEntity<String> getReplyDelete(@PathVariable("idx") Long idx) {
 		try {
@@ -471,6 +473,7 @@ public class AdminController {
 	
 	//공통코드 삭제
 	@ResponseBody
+	@Transactional
 	@PostMapping("/admin/systemCommonCodeDelete")
 	public void deleteCommonCode(@RequestParam("code") String code) {
 		service.deleteCommonCode(code);
@@ -500,11 +503,199 @@ public class AdminController {
 		
 		return "{ \"message\": \"good\" }";
 	}
-	
-	//광고 배너 관리
+	//광고 배너 관리화면
 	@GetMapping("/admin/systemBanner")
-	public void getSystemBanner() {
+	public void getSystemBanner(Model model,
+			@RequestParam(name = "page", defaultValue = "1") int pageNum) {
+		int postNum = 5;
+		int pageListCount = 5;
 		
+		Page<BannerEntity> banners;
+		banners = service.getAllBanners(pageNum, postNum);
+		
+		PageUtil page = new PageUtil();
+		int totalCount = (int) banners.getTotalElements();
+		
+		
+		
+		model.addAttribute("page", pageNum);
+		model.addAttribute("postNum", postNum);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("banners", banners);
+		model.addAttribute("pageList", page.getPageList("/admin/systemBanner", pageNum, postNum, pageListCount, totalCount));
+	}
+	
+	//광고 배너 추가화면
+	@GetMapping("/admin/systemBannerWrite")
+	public void getSystemBannerWrite() {
+		
+	}
+	
+	//광고 배너 추가
+	@ResponseBody
+	@PostMapping("/admin/systemBannerWrite")
+	public Map<String, Object> postSystemBannerWrite(@RequestParam("name") String name,
+	        @RequestParam("url") String url,
+            @RequestParam("startDate") LocalDateTime startDate,
+            @RequestParam("endDate") LocalDateTime endDate,
+	        @RequestParam("img") MultipartFile imageFile,
+	        @RequestParam("isUse") String isUse,
+	        @RequestParam("desc") String desc) {
+		
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			//운영체제에 따라 이미지가 저장될 디렉토리 구조 설정 시작
+			String os = System.getProperty("os.name").toLowerCase();
+			String path;
+			if(os.contains("win"))
+				path = "c:\\Repository\\banner\\";
+			else 
+				path = "/home/hee/Repository/banner";
+			
+			//디렉토리가 존재하는지 체크해서 없다면 생성
+			File p = new File(path);
+			if(!p.exists()) p.mkdir();
+			//운영체제에 따라 이미지가 저장될 디렉토리 구조 설정 종료
+			
+			String originalFilename = imageFile.getOriginalFilename();
+			String savedFilename = System.currentTimeMillis() + "_" + originalFilename;
+			
+			File savedFile = new File(path + savedFilename);
+			imageFile.transferTo(savedFile);
+			
+			BannerEntity banner = new BannerEntity();
+			banner.setName(name);
+			banner.setUrl(url);
+			banner.setDesc(desc);
+			banner.setStartDate(startDate);
+			banner.setEndDate(endDate);
+			banner.setIsUse(isUse);
+			banner.setImg(savedFilename);
+			
+			service.saveBanner(banner);
+			
+			response.put("message", "good");
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.put("message", "error");
+		}
+		
+		return response;
+	}
+	
+	//배너 isUse 상태 업데이트
+	@PutMapping("/admin/updateBannerIsUse/{idx}")
+	public ResponseEntity<Void> updateBannerIsUse(@PathVariable Long idx, @RequestBody Map<String, String> request) {
+		String isUse = request.get("isUse");
+		
+		service.updateBannerIsUse(idx, isUse);
+		
+		return ResponseEntity.ok().build();
+		
+	}
+	
+	//배너 삭제
+	@ResponseBody
+	@Transactional
+	@PostMapping("/admin/systemBannerDelete")
+	public void deleteBanner(@RequestParam("idx") Long idx) {
+		service.deleteBanner(idx);
+	}
+	
+	//배너 수정화면
+	@GetMapping("/admin/systemBannerModify")
+	public String getBannerModify(@RequestParam("idx") Long idx, Model model) {
+		try {
+			BannerEntity bannerEntity = service.getBannerById(idx);
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		    String startDate = bannerEntity.getStartDate().format(formatter);
+		    String endDate = bannerEntity.getEndDate().format(formatter);
+			
+			
+			model.addAttribute("banner", bannerEntity);
+	        model.addAttribute("startDate", startDate);
+	        model.addAttribute("endDate", endDate);
+			
+			return "/admin/systemBannerModify";
+		} catch (Exception e) {
+	        log.error("Error during BannerModify", e);
+	        return "{\"message\": \"fail\"}";
+	    }
+	}
+	
+	//배너 수정
+	@ResponseBody
+	@PostMapping("/admin/systemBannerModify")
+	public Map<String, Object> postSystemBannerModify(
+	        @RequestParam("idx") Long idx,
+	        @RequestParam("name") String name,
+	        @RequestParam("url") String url,
+	        @RequestParam("startDate") LocalDateTime startDate,
+	        @RequestParam("endDate") LocalDateTime endDate,
+	        @RequestParam(value = "img", required = false) MultipartFile imageFile, // 이미지 파일 선택 여부
+	        @RequestParam("existingImg") String existingImg, // 기존 이미지 경로
+	        @RequestParam("isUse") String isUse,
+	        @RequestParam("desc") String desc) {
+
+	    Map<String, Object> response = new HashMap<>();
+
+	    try {
+	        // 운영체제에 따라 이미지 저장 디렉토리 설정
+	        String os = System.getProperty("os.name").toLowerCase();
+	        String path;
+	        if (os.contains("win")) {
+	            path = "c:\\Repository\\banner\\";
+	        } else {
+	            path = "/home/hee/Repository/banner";
+	        }
+
+	        // 디렉토리가 존재하지 않으면 생성
+	        File p = new File(path);
+	        if (!p.exists()) p.mkdir();
+
+	        BannerEntity banner = service.getBannerById(idx);
+	        if (banner == null) {
+	            response.put("message", "not_found");
+	            return response;
+	        }
+
+	        // 새로운 이미지 파일 처리
+	        if (imageFile != null && !imageFile.isEmpty()) {
+	            String originalFilename = imageFile.getOriginalFilename();
+	            String savedFilename = System.currentTimeMillis() + "_" + originalFilename;
+
+	            File savedFile = new File(path + savedFilename);
+	            imageFile.transferTo(savedFile);
+
+	            //기존 이미지 삭제
+	            if (existingImg != null && !existingImg.isEmpty()) {
+	                File oldFile = new File(path + existingImg);
+	                if (oldFile.exists()) oldFile.delete();
+	            }
+
+	            banner.setImg(savedFilename);
+	        } else {
+	            banner.setImg(existingImg);
+	        }
+
+	        banner.setName(name);
+	        banner.setUrl(url);
+	        banner.setDesc(desc);
+	        banner.setStartDate(startDate);
+	        banner.setEndDate(endDate);
+	        banner.setIsUse(isUse);
+
+	        service.saveBanner(banner);
+
+	        response.put("message", "good");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.put("message", "error");
+	    }
+
+	    return response;
 	}
 }
 
