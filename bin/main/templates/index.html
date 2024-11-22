@@ -37,15 +37,15 @@
 					<div class="item-quick">
 						<h3>Quick menu</h3>
 						<div class="quick-box">
-							<a href="/" class="quick-box-list">
+							<a href="/popularProblem" class="quick-box-list">
 								<i class="xi-trophy"></i>
 								<p>인기 문제</p>
 							</a>
-							<a href="/" class="quick-box-list">
+							<a href="/newProblem" class="quick-box-list">
 								<i class="xi-emoticon-cool-o"></i>
 								<p>신규 문제</p>
 							</a>
-							<a href="/" class="quick-box-list">
+							<a href="/randomProblem" class="quick-box-list">
 								<i class="xi-line-style"></i>
 								<p>랜덤 문제</p>
 							</a>
@@ -57,21 +57,18 @@
 			<div class="content-box">
 				<div class="box-item">
 					<div class="item-card">
-						<h3>분야별 문제 보기</h3>
+						<h3>난이도별 문제 보기</h3>
 						<div class="card-ui-box">
-							<div class="card-ui-list" onclick="location.href='/'">
+							<div th:each="diffProblem : ${diffProblems}" class="card-ui-list" th:onclick="'location.href=\'/test/challenge?idx=' + ${diffProblem.idx} + '\''">
 								<img src="/img/card-test.jpg" alt="">
-								<p class="card-ui-box-title">작은문제 하나둘셋</p>
+								<p class="card-ui-box-title" th:text="${diffProblem.title}">작은문제 하나둘셋</p>
 								<div class="bage-group">
 									<!-- 샘플 tag -->
-									<span class="card-small-red-tag">태그릿</span>
-									<span class="card-small-yellow-tag">태그릿</span>
-									<span class="card-small-green-tag">태그릿</span>
-									<span class="card-small-blue-tag">태그릿</span>
+									<span class="card-small-red-tag" th:each="lang : ${diffProblem.testLngList}" th:text="${lang.lng == 'LNG-0001' ? 'JAVA' : (lang.lng == 'LNG-0002' ? 'javascript' : 'Unknown')}">태그릿</span>
 								</div>
 								<hr>
 								<p class="card-ui-box-rank">
-									난이도 <b>{1레벨}</b>
+									난이도 <b th:text="'Lv. ' + ${diffProblem.diff}">{1레벨}</b>
 								</p>
 							</div>
 							<!-- 카드 UI 총 수량 3개 까지만 허용 -->

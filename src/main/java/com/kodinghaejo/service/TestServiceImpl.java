@@ -10,15 +10,18 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.kodinghaejo.dto.TestDTO;
+import com.kodinghaejo.dto.TestLngDTO;
 import com.kodinghaejo.entity.MemberEntity;
 
 import com.kodinghaejo.entity.TestEntity;
@@ -252,5 +255,76 @@ public class TestServiceImpl implements TestService {
 
 		testSubmitRepository.save(testSubmitEntity);
 	}
-
+	
+	//가장 많이 풀어본 문제 idx값 가져오기
+	public Long getMostPopularTest() {
+		 // 가장 인기 있는 tl_idx 값을 찾아서
+		Long mostPopularTlIdx = testSubmitRepository.findMostPopularTlIdx();
+		
+		return testLngRepository.findTestIdxByTlIdx(mostPopularTlIdx);
+    }
+	
+	//등록일 기준 신규 문제 idx값 가져오기
+	public Long getNewTest(int count) {
+        Pageable pageable = PageRequest.of(0, count);
+        
+        List<TestEntity> newProblem = testRepository.findNewTest(pageable);
+        
+        Random random = new Random();
+        int randomIdx = random.nextInt(newProblem.size());
+        
+        return newProblem.get(randomIdx).getIdx();
+    }
+	
+	//난이도가 0인 문제 idx값 가져오기
+	public Long getRandomTest() {
+		List<TestEntity> diffZero = testRepository.findByDiff(0);
+		
+		Random random = new Random();
+        int randomTest = random.nextInt(diffZero.size());
+        
+        return diffZero.get(randomTest).getIdx();
+	}
+	
+	//난이도별 문제 보기
+	public List<TestDTO> getDiffTest() {
+		List<TestEntity> diffTest = new ArrayList<>();
+		
+		List<TestEntity> diffZero = testRepository.findByDiff(0);
+		List<TestEntity> diffOne = testRepository.findByDiff(1);
+		List<TestEntity> diffTwo = testRepository.findByDiff(2);
+		
+		if (!diffZero.isEmpty()) {
+			diffTest.add(getRandomList(diffZero));
+        }
+        if (!diffOne.isEmpty()) {
+        	diffTest.add(getRandomList(diffOne));
+        }
+        if (!diffTwo.isEmpty()) {
+        	diffTest.add(getRandomList(diffTwo));
+        }
+        
+        List<TestDTO> testDTOs = new ArrayList<>();
+        
+        for (TestEntity test : diffTest) {
+        	TestDTO testDTO = new TestDTO(test);
+        	
+        	List<TestLngDTO> testLngDTOs = new ArrayList<>();
+        	testLngRepository.findByTestIdx(test).stream().forEach((e) -> testLngDTOs.add(new TestLngDTO(e)));
+        	
+        	testDTO.setTestLngList(testLngDTOs);
+        	
+        	testDTOs.add(testDTO);
+        }
+		
+		return testDTOs;
+	}
+	
+	//문제 리스트 중 랜덤으로 하나 선택
+	public TestEntity getRandomList(List<TestEntity> problem) {
+		Random random = new Random();
+		int randomTest = random.nextInt(problem.size());
+		
+		return problem.get(randomTest);
+	}
 }
