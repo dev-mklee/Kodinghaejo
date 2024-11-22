@@ -66,7 +66,7 @@
 		</div>
 	</div>
   <!-- notice-pop menu (js처리) -->
-    <div class="notice-pop-menu" style="display: none;">
+    <div class="notice-pop-menu">
       <h4>알림</h4>
       <ol>
       </ol>
@@ -129,7 +129,6 @@
 		                p.textContent = '공지 사항이 없습니다';
 		                noticeList.appendChild(p);
 		            }
-		            noticeMenu.style.display = 'block';
 		        })
 		        .catch(error => console.error('Error loading notices:', error));
 		});

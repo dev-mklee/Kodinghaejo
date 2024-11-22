@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
     	noticePop.addEventListener("click", function () {
       		if (document.querySelector(".notice-pop-menu").style.display === "none" || document.querySelector(".notice-pop-menu").style.display === "") {
        	 	document.querySelector(".notice-pop-menu").style.display = "block";
-      	} else {
+      	} else if(document.querySelector(".notice-pop-menu").style.display === "block") {
       	  	document.querySelector(".notice-pop-menu").style.display = "none";
       	}
 	});
