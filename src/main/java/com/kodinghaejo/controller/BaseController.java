@@ -6,10 +6,13 @@ import java.util.Random;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.entity.BannerEntity;
+import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.service.AdminService;
+import com.kodinghaejo.service.BaseService;
 import com.kodinghaejo.service.TestService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +26,7 @@ public class BaseController {
 
 	private final AdminService adminservice;
 	private final TestService testService;
+	private final BaseService baseService;
 	
 	@GetMapping({"/", "/index"})
 	public String getIndex(Model model, HttpServletRequest request) {
@@ -70,4 +74,14 @@ public class BaseController {
 		return "redirect:/test/challenge?idx=" + randomIdx;
 	}
 	
+	//등록일 기준 신규 공지
+	@ResponseBody
+	@GetMapping("/noticeBell")
+	public List<BoardEntity> getNewNotice(Model model) {
+		
+		List<BoardEntity> boardEntities = baseService.getNewNotice(3);
+		model.addAttribute("notice" , boardEntities);
+		
+		return boardEntities;
+	}
 }

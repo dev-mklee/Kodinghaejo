@@ -53,6 +53,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 	public Page<BoardEntity> findByEmailAndIsUse(MemberEntity email, String isUse, Pageable pageable);
 	//탈퇴 전 확인
 	public List<BoardEntity> findByEmailAndIsUse(MemberEntity email, String isUse);
+	
+	//등록일 기준으로 공지사항 출력
+	@Query("SELECT b FROM board b WHERE b.cat = '공지사항' ORDER BY b.regdate DESC")
+	public List<BoardEntity> findByCatAndRegdate(Pageable pageable);
 
 	
 }

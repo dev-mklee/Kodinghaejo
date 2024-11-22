@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.CommonCodeEntity;
+import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.CommonCodeRepository;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +20,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BaseServiceImpl implements BaseService {
 	private final CommonCodeRepository commonCodeRepository;
-
+	private final BoardRepository boardRepository;
+	
 	//공통코드 가져오기
 	@Override
 	public Map<String, Object> loadUsedCommonCode() {
@@ -64,5 +69,13 @@ public class BaseServiceImpl implements BaseService {
 
 		return data;
 	}
-
+	
+	//등록일 기준 신규 공지
+	public List<BoardEntity> getNewNotice(int count) {
+		Pageable pageable = PageRequest.of(0, count);
+			
+		List<BoardEntity> newNotice = boardRepository.findByCatAndRegdate(pageable);
+		
+		return newNotice;
+	}
 }
