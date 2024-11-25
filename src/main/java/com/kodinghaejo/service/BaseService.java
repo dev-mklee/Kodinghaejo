@@ -3,7 +3,9 @@ package com.kodinghaejo.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.entity.BoardEntity;
+import com.kodinghaejo.entity.MemberEntity;
 
 
 public interface BaseService {
@@ -14,5 +16,10 @@ public interface BaseService {
 	//등록일 기준 신규 공지
 	public List<BoardEntity> getNewNotice(int count);
 
+	//랭킹 리스트
+	public List<MemberDTO> memberRank(String kind);
+	
+	//랭킹 등급
+	public String calGrade(Long score);
 }
 

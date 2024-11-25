@@ -43,6 +43,12 @@ public class MemberDTO {
 	private String joinRoute;
 	private String accToken;
 	private String isUse;
+	private Long score;
+	private LocalDateTime scoredate;
+	
+	private Long correctCount;
+	private double correctRate;
+	private String grade;
 
 	//Entity --> DTO 이동
 	public MemberDTO(MemberEntity entity) {
@@ -72,6 +78,8 @@ public class MemberDTO {
 		this.joinRoute = entity.getJoinRoute();
 		this.accToken = entity.getAccToken();
 		this.isUse = entity.getIsUse();
+		this.score = entity.getScore();
+		this.scoredate = entity.getScoredate();
 	}
 
 	//DTO --> Entity 이동
@@ -102,7 +110,8 @@ public class MemberDTO {
 														.notifdate(dto.getNotifdate())
 														.joinRoute(dto.getJoinRoute())
 														.accToken(dto.getAccToken())
-														.accToken(dto.getAccToken())
+														.score(dto.getScore())
+														.scoredate(dto.getScoredate())
 														.build();
 
 		return entity;

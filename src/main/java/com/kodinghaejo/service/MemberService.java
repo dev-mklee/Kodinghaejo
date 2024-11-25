@@ -8,6 +8,7 @@ import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
 import com.kodinghaejo.entity.FileEntity;
+import com.kodinghaejo.entity.MemberEntity;
 
 public interface MemberService {
 

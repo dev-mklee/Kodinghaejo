@@ -2469,3 +2469,10 @@ button.active {
     color: #fff;
     font-weight: bold;
 }
+.more-link {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 10px;
+    vertical-align: middle;
+}

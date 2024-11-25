@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,5 +32,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 	List<Object[]> findMonthlySignups(@Param("currentYear") int currentYear);
 	
 	public Optional<MemberEntity> findByEmail(String email);
+	
+	public List<MemberEntity> findAll(Sort sort);
 
 }

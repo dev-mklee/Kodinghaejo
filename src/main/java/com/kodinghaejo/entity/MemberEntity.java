@@ -7,6 +7,7 @@ import com.kodinghaejo.dto.MemberDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -101,7 +102,13 @@ public class MemberEntity {
 
 	@Column(name = "is_use", length = 2, nullable = false)
 	private String isUse;
-
+	
+	@Column(name = "score", nullable = true)
+	private Long score;
+	
+	@Column(name = "scoredate", nullable = true)
+	private LocalDateTime scoredate;
+	
 	public void modifyInfo(MemberDTO member) {
 		this.nickname = member.getNickname();
 		this.tel = member.getTel();

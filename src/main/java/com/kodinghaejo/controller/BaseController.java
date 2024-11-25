@@ -6,18 +6,23 @@ import java.util.Random;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.entity.BannerEntity;
 import com.kodinghaejo.entity.BoardEntity;
+import com.kodinghaejo.entity.MemberEntity;
 import com.kodinghaejo.service.AdminService;
 import com.kodinghaejo.service.BaseService;
+import com.kodinghaejo.service.MemberService;
 import com.kodinghaejo.service.TestService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import oracle.net.aso.m;
 
 @Controller
 @AllArgsConstructor
@@ -42,12 +47,29 @@ public class BaseController {
 		//난이도별 문제
 		List<TestDTO> diffProblem = testService.getDiffTest();
 		model.addAttribute("diffProblems", diffProblem);
-
+		
+		//랭킹
+		List<MemberDTO> members = baseService.memberRank("");
+		for (MemberDTO member : members) {
+			String grade = baseService.calGrade(member.getScore());
+			member.setGrade(grade);
+		}
+		model.addAttribute("members", members);
+		
 		return "index";
 	}
 	
 	@GetMapping("/rank/rank")
-	public void getRank() { }
+	public void getRank(Model model, @RequestParam(name = "kind", defaultValue = "") String kind) { 
+		List<MemberDTO> members = baseService.memberRank(kind);
+		
+		for (MemberDTO member : members) {
+			String grade = baseService.calGrade(member.getScore());
+			member.setGrade(grade);
+		}
+		
+		model.addAttribute("members", members);
+	}
 	
 	//가장 많이 풀어본 문제
 	@GetMapping("/popularTest")
