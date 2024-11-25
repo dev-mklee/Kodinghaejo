@@ -19,13 +19,14 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class BaseServiceImpl implements BaseService {
+	
 	private final CommonCodeRepository commonCodeRepository;
 	private final BoardRepository boardRepository;
 	
 	//공통코드 가져오기
 	@Override
 	public Map<String, Object> loadUsedCommonCode() {
-		List<CommonCodeEntity> entities = commonCodeRepository.findByIsUse("Y");
+		List<CommonCodeEntity> entities = commonCodeRepository.findByIsUseOrderByCodeAsc("Y");
 
 		Map<String, Object> data = new HashMap<>();
 		List<Map<String, Object>> lvlList = new ArrayList<>();
@@ -78,4 +79,5 @@ public class BaseServiceImpl implements BaseService {
 		
 		return newNotice;
 	}
+
 }

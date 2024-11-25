@@ -25,7 +25,7 @@ public class BannerDTO {
 	private LocalDateTime enddate;
 	private LocalDateTime regdate;
 	private String isUse;
-	
+
 	//Entity --> DTO 이동
 	public BannerDTO(BannerEntity entity) {
 		this.idx = entity.getIdx();
@@ -38,22 +38,22 @@ public class BannerDTO {
 		this.regdate = entity.getRegdate();
 		this.isUse = entity.getIsUse();
 	}
-	
+
 	//DTO --> Entity 이동
 	public BannerEntity dtoToEntity(BannerDTO dto) {
 		BannerEntity entity = BannerEntity
-								.builder()
-								.idx(dto.getIdx())
-								.name(dto.getName())
-								.img(dto.getImg())
-								.url(dto.getUrl())
-								.desc(dto.getDescription())
-								.startDate(dto.getStartdate())
-								.endDate(dto.getEnddate())
-								.regdate(dto.getRegdate())
-								.isUse(dto.getIsUse())
-								.build();
+														.builder()
+														.idx(dto.getIdx())
+														.name(dto.getName())
+														.img(dto.getImg())
+														.url(dto.getUrl())
+														.desc(dto.getDescription())
+														.startDate(dto.getStartdate())
+														.endDate(dto.getEnddate())
+														.regdate(dto.getRegdate())
+														.isUse(dto.getIsUse())
+														.build();
 		return entity;
-								
+
 	}
 }

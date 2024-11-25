@@ -15,12 +15,14 @@
   <!-- pub-js link -->
   <script src="/js/pub-ui-custom.js"></script>
 </head>
-  <div id="header" th:replace="include/header"></div>
+<header>
+    <div id="header" th:replace="~{ /include/header }"></div>
+</header>
 <body>
     <div class="container column" style="background: #E1EDF9;">
         <div class="column-row" style="padding-top: 50px;">
 			<div class="c-column-2">
-				<div id="system_menu" th:replace="include/system" style="width: 240px;"></div> 
+				<div id="system_menu" th:replace="~{ /include/system }"></div> 
 			</div>
 			<div class="c-column-8">
 				<div class="sys-system_menu">
@@ -87,8 +89,7 @@
 			</div>
 		</div>
 	</div>
-    <div id="footer" th:replace="include/footer"></div>	
-
+    <div id="footer" th:replace="~{ include/footer }"></div>	
 <script th:inline="javascript">
 	
 	const lngCount = /*[[${lngCount}]]*/ '{}';

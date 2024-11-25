@@ -54,5 +54,4 @@ public class BannerEntity {
 	@Column(name = "is_use", length = 2, nullable = false)
 	private String isUse;
 	
-
 }

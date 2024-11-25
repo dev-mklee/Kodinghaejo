@@ -19,7 +19,7 @@ import lombok.Setter;
 @Builder
 public class ChatMemberDTO {
 
-	private Long chatIdx;
+	private ChatEntity chatIdx;
 	private MemberEntity email;
 	private String nickname;
 	private String manager;
@@ -28,7 +28,7 @@ public class ChatMemberDTO {
 
 	//Entity --> DTO 이동
 	public ChatMemberDTO(ChatMemberEntity entity) {
-		this.chatIdx = entity.getChatIdx().getIdx();
+		this.chatIdx = entity.getChatIdx();
 		this.email = entity.getEmail();
 		this.nickname = entity.getNickname();
 		this.manager = entity.getManager();
@@ -38,13 +38,13 @@ public class ChatMemberDTO {
 	//DTO --> Entity 이동
 	public ChatMemberEntity dtoToEntity(ChatMemberDTO dto, ChatEntity chatEntity) {
 		ChatMemberEntity entity = ChatMemberEntity
-									.builder()
-									.chatIdx(chatEntity)
-									.email(dto.getEmail())
-									.nickname(dto.getNickname())
-									.manager(dto.getManager())
-									.regdate(dto.getRegdate())
-									.build();
+																.builder()
+																.chatIdx(dto.getChatIdx())
+																.email(dto.getEmail())
+																.nickname(dto.getNickname())
+																.manager(dto.getManager())
+																.regdate(dto.getRegdate())
+																.build();
 
 		return entity;
 	}

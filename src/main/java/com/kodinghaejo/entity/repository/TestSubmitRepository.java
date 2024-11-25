@@ -46,10 +46,11 @@ public interface TestSubmitRepository extends JpaRepository<TestSubmitEntity, Lo
 	
 	//가장 많이 풀어본 tl_idx값 출력
 	@Query(value = "SELECT ts.tl_idx " +
-            "FROM jpa_test_submit ts " +
-            "GROUP BY ts.tl_idx " +
-            "ORDER BY COUNT(ts.tl_idx) DESC " +
-            "FETCH FIRST 1 ROWS ONLY",
-    nativeQuery = true)
+									"FROM jpa_test_submit ts " +
+									"GROUP BY ts.tl_idx " +
+									"ORDER BY COUNT(ts.tl_idx) DESC " +
+									"FETCH FIRST 1 ROWS ONLY",
+									nativeQuery = true)
 	public Long findMostPopularTlIdx();
+
 }

@@ -27,23 +27,23 @@ public class BaseController {
 	private final AdminService adminservice;
 	private final TestService testService;
 	private final BaseService baseService;
-	
-	@GetMapping({"/", "/index"})
+
+	@GetMapping("/index")
 	public String getIndex(Model model, HttpServletRequest request) {
 		adminservice.upTodayVisitorCount(request);
-		
+
 		List<BannerEntity> banners;
 		banners = adminservice.getBanner();
-		
+
 		Random random = new Random();
 		BannerEntity randomBanner = banners.get(random.nextInt(banners.size()));
-		
+
 		model.addAttribute("banners", randomBanner);
-		
+
 		//난이도별 문제
 		List<TestDTO> diffProblem = testService.getDiffTest();
 		model.addAttribute("diffProblems", diffProblem);
-		
+
 		return "index";
 	}
 	
@@ -51,29 +51,29 @@ public class BaseController {
 	public void getRank() { }
 	
 	//가장 많이 풀어본 문제
-	@GetMapping("/popularProblem")
-    public String getPopularProblem() {
-        Long idx = testService.getMostPopularTest();
+	@GetMapping("/popularTest")
+	public String getPopularTest() {
+		Long idx = testService.getMostPopularTest();
 
-        return "redirect:/test/challenge?idx=" + idx;
-    }
-	
+		return "redirect:/test/challenge?idx=" + idx;
+	}
+
 	//등록일 기준 신규 문제
-	@GetMapping("/newProblem")
-	public String getNewProblem() {
+	@GetMapping("/newTest")
+	public String getNewTest() {
 		Long randomIdx = testService.getNewTest(5);
-		
+
 		return "redirect:/test/challenge?idx=" + randomIdx;
 	}
-	
+
 	//난이도 0 기준 랜덤 문제
-	@GetMapping("/randomProblem")
-	public String getRandomProblem() {
+	@GetMapping("/randomTest")
+	public String getRandomTest() {
 		Long randomIdx = testService.getRandomTest();
-		
+
 		return "redirect:/test/challenge?idx=" + randomIdx;
 	}
-	
+
 	//등록일 기준 신규 공지
 	@ResponseBody
 	@GetMapping("/noticeBell")
@@ -84,4 +84,5 @@ public class BaseController {
 		
 		return boardEntities;
 	}
+
 }

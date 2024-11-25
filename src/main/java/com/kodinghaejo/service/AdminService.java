@@ -1,6 +1,5 @@
 package com.kodinghaejo.service;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -95,7 +94,6 @@ public interface AdminService {
 	//채팅방 검색
 	public Page<ChatEntity> searchChatListByTitle(int pageNum, int postNum, String searchKeyword);
 
-	
 	//일별가입자수 체크
 	public long getTodaySignups();
 	

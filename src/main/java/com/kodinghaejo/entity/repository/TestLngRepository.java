@@ -23,11 +23,12 @@ public interface TestLngRepository extends JpaRepository<TestLngEntity, Long> {
 	
 	//문제 목록에서 언어 필터 적용
 	public List<TestLngEntity> findByLng(String lng);
-	
+
 	//가장 많이 풀어본 test_idx값 출력
 	@Query(value = "SELECT ts.test_idx " +
-            "FROM jpa_test_lng ts " +
-            "WHERE ts.idx = :tlIdx", 
-    nativeQuery = true)
+									"FROM jpa_test_lng ts " +
+									"WHERE ts.idx = :tlIdx", 
+			nativeQuery = true)
 	public Long findTestIdxByTlIdx(@Param("tlIdx") Long tlIdx);
+
 }

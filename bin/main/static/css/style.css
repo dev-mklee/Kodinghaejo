@@ -337,7 +337,93 @@ details summary::marker{font-size:0;}
   place-items: center;  /* 세로 및 가로 중앙 정렬 */
   height: inherit;
 }
-/********** 모달 : modal **********/
+/********** 로그인 회원가입 : login join **********/
+.container.login {
+  background: linear-gradient(180deg, rgba(95,127,255,1) 0%, rgba(46,76,200,1) 100%);
+  /* background: #2D4689; */
+}
+.container.login .intro-aset {
+  color: #fff;
+}
+.container.login .intro-aset img {
+  width : 500px;
+  margin-top: 120px;
+}
+.container.login .main-content {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 100px;
+}
+.container.login .content-login {
+  background: #fff;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: rgb(73, 73, 134) 0px 7px 29px 0px;
+}
+.container.login .content-login h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.container.login .content-login label {
+  font-weight: 400;
+}
+.login-email-form 
+, .login-password-form
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content-login .login_btn {
+  width: 100%;
+  font-weight: 400;
+  padding: 12px 0;
+  font-size: 16px;
+  margin-top: 12px;
+}
+.content-login .login_btn:hover {
+  background: #fafcff;
+}
+.content-login .info-login {
+  margin: 20px 0;
+}
+.content-login .info-login a:hover {
+  text-decoration: underline;
+}
+.content-login .info-login a::after {
+  content: ' | ';
+}
+.content-login .info-login a:last-child::after {
+  content: none;
+}
+.content-login .sns-login h4 {
+  border-top: 1px dashed #AAC5F9;
+  padding: 15px 0;
+  text-align: center;
+}
+.content-login .sns-login .sns-btn-group {
+  /* border: 1px solid tomato; */
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.content-login .sns-login .sns-btn-group button {
+  font-size: 18px;
+  min-width: 55px;
+}
+.content-login .sns-login .sns-btn-group .sns-btn-google {
+  font-size: 25px;
+}
+.content-login .sns-login .sns-btn-group button:hover {
+  filter: brightness(0.99);
+}
+.content-login .sns-login .sns-btn-group .sns-btn-google:hover {
+  color: #4285F4;
+}
+.content-login .sns-login .sns-btn-group .sns-btn-naver:hover {
+  color: #03C75A;
+}
+/********** 모달 : modal  -- 현재 사용 x **********/
 /* 모달 부분 분석 */
 .modal-background {
   display: none;
