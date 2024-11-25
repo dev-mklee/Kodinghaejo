@@ -28,7 +28,7 @@ import lombok.Setter;
 @Builder
 @Entity(name = "chatMember")
 @Table(name = "jpa_chat_member")
-@IdClass(ChatMemberEntityId.class)
+@IdClass(ChatMemberEntityID.class)
 public class ChatMemberEntity {
 
 	@Id
