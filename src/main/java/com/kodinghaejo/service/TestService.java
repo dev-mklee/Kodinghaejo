@@ -51,5 +51,8 @@ public interface TestService {
 
 	//문제 검색
 	public List<TestDTO> searchtestListByTitle(String searchKeyword);
+	
+	//마크다운 -> html 변환
+	public String convertCode(String markdown);
 
 }

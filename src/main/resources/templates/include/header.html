@@ -15,6 +15,7 @@
 				<!-- 추후 모달 처리 -->
 				<th:block th:if="${ session.email == null }">
 				<!-- <li><a href="#" class="btn_login" onclick="loginView('open')">로그인</a></li> -->
+				<li><a href="javascript:noticeBell();" class="notice-pop on" id="noticeBellLink"><i class="xi-bell-o"></i></a></li>
 				<li><a href="/member/login" class="btn_login">로그인</a></li>
 				<li><a href="/member/join" class="btn_sign">회원가입</a></li>
 				</th:block>
@@ -119,7 +120,7 @@
 						notices.forEach(notice => {
 							const li = document.createElement("li");
 							const a = document.createElement("a");
-							a.href = '/board/noticeboardview?idx=' + notice.idx;
+							a.href = '/board/noticeboardView?idx=' + notice.idx;
 							a.textContent = notice.title;
 							li.appendChild(a);
 							noticeList.appendChild(li);

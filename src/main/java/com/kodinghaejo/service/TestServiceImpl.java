@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.commonmark.node.*;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -380,5 +383,14 @@ public class TestServiceImpl implements TestService {
 
 		return testDTOs;
 	}
+	
+	//마크다운 -> html 변환
+	public String convertCode(String markdown) {
+		Parser parser = Parser.builder().build();
+        Node document = parser.parse(markdown);
 
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);
+	}
+	
 }

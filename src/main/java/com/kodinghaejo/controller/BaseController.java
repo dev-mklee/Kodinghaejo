@@ -28,7 +28,7 @@ public class BaseController {
 	private final TestService testService;
 	private final BaseService baseService;
 
-	@GetMapping("/index")
+	@GetMapping({"/index", "/"})
 	public String getIndex(Model model, HttpServletRequest request) {
 		adminservice.upTodayVisitorCount(request);
 
@@ -37,7 +37,6 @@ public class BaseController {
 
 		Random random = new Random();
 		BannerEntity randomBanner = banners.get(random.nextInt(banners.size()));
-
 		model.addAttribute("banners", randomBanner);
 
 		//난이도별 문제
