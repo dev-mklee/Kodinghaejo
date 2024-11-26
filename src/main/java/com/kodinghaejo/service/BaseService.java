@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.entity.BoardEntity;
-import com.kodinghaejo.entity.MemberEntity;
 
 
 public interface BaseService {
@@ -21,5 +20,6 @@ public interface BaseService {
 	
 	//랭킹 등급
 	public String calGrade(Long score);
+
 }
 

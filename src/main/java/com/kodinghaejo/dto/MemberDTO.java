@@ -47,6 +47,7 @@ public class MemberDTO {
 	private LocalDateTime scoredate;
 	
 	private Long correctCount;
+	private Long submitCount;
 	private double correctRate;
 	private String grade;
 

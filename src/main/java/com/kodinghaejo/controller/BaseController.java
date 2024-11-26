@@ -13,16 +13,13 @@ import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.entity.BannerEntity;
 import com.kodinghaejo.entity.BoardEntity;
-import com.kodinghaejo.entity.MemberEntity;
 import com.kodinghaejo.service.AdminService;
 import com.kodinghaejo.service.BaseService;
-import com.kodinghaejo.service.MemberService;
 import com.kodinghaejo.service.TestService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import oracle.net.aso.m;
 
 @Controller
 @AllArgsConstructor
@@ -58,7 +55,7 @@ public class BaseController {
 		
 		return "index";
 	}
-	
+	//랭킹
 	@GetMapping("/rank/rank")
 	public void getRank(Model model, @RequestParam(name = "kind", defaultValue = "") String kind) { 
 		List<MemberDTO> members = baseService.memberRank(kind);

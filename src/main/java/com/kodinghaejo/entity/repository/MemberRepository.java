@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.entity.MemberEntity;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
@@ -33,6 +32,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 	
 	public Optional<MemberEntity> findByEmail(String email);
 	
+	//sort 기준으로 회원찾기
 	public List<MemberEntity> findAll(Sort sort);
 
 }

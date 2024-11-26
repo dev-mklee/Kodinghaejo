@@ -7,12 +7,9 @@ import java.util.Map;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.kodinghaejo.dto.MemberDTO;
-import com.kodinghaejo.dto.TestSubmitDTO;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.CommonCodeEntity;
 import com.kodinghaejo.entity.MemberEntity;
@@ -103,6 +100,7 @@ public class BaseServiceImpl implements BaseService {
             memberDTO.setCorrectCount(correctCount != null ? correctCount : 0);
             
             Long submitCount = submitRepository.countByEmail(member.getEmail());
+            memberDTO.setSubmitCount(submitCount);
             
             double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
             memberDTO.setCorrectRate(correctRate);

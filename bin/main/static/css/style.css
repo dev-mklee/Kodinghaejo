@@ -18,7 +18,7 @@ body {
   clear: both;
 }
 .hidden {
-  display: none;
+  display: none !important;
 }
 .flowhock {
   overflow: hidden;
