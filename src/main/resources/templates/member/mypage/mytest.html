@@ -27,10 +27,10 @@
 
                     <h5>나의 랭킹</h5>
                     <div class="mypage_box">
-                        <p>LV.5 랭킹 999위</p>
-                        <p>풀어본문제 : 9999</p>
-                        <p>맞춘문제 : 9999</p>
-                        <p>정답률 : 9999</p>
+                        <p>레벨 : <b th:text="${member.grade}"></b>  | 랭킹 <b th:text="${userRank + '위'}">999위</b></p>
+                        <p>제출 문제 : <b th:text="${member.submitCount}">9999</b></p>
+                        <p>맞은 문제 : <b th:text="${member.correctCount}">9999</b></p>
+                        <p>정답률 : <b th:text="${#numbers.formatDecimal(member.correctRate,1,1)} + ' ' + '%' ">9999</b></p>
                     </div>
 
                     <h5>풀어본 문제</h5>

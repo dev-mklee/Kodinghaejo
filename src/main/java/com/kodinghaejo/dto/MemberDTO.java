@@ -50,6 +50,7 @@ public class MemberDTO {
 	private Long submitCount;
 	private double correctRate;
 	private String grade;
+	private int rank;
 
 	//Entity --> DTO 이동
 	public MemberDTO(MemberEntity entity) {

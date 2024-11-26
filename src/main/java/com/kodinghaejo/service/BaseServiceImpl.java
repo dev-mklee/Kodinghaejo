@@ -114,8 +114,17 @@ public class BaseServiceImpl implements BaseService {
 	        memberDTOs.sort((a, b) -> {
 	            int scoreComparison = Long.compare(b.getScore(), a.getScore());
 	            if (scoreComparison == 0) {
-	                return a.getScoredate().compareTo(b.getScoredate());
+	                if (a.getScoredate() == null && b.getScoredate() == null) {
+	                    return 0;
+	                } else if (a.getScoredate() == null) {
+	                    return 1;
+	                } else if (b.getScoredate() == null) {
+	                    return -1;
+	                } else {
+	                    return b.getScoredate().compareTo(a.getScoredate()); // 내림차순으로 비교
+	                }
 	            }
+	            
 	            return scoreComparison;
 	        });
 	    }

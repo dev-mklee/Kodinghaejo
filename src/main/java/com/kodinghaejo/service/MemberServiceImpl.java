@@ -317,4 +317,37 @@ public class MemberServiceImpl implements MemberService {
 		return new PageImpl<>(replyDTOs, pageRequest, replyEntities.getTotalElements());
 	}
 
+	//마이페이지 나의 랭킹
+	public MemberDTO memberTest(String email) {
+		MemberEntity memberEntity = memberRepository.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("email not found"));
+		
+		MemberDTO memberDTO = new MemberDTO(memberEntity);
+		
+	    Long correctCount = testSubmitRepository.countSubmitByEmail(email);
+	    memberDTO.setCorrectCount(correctCount != null ? correctCount : 0);
+
+	    Long submitCount = testSubmitRepository.countByEmail(email);
+	    memberDTO.setSubmitCount(submitCount);
+
+	    double correctRate = (submitCount > 0) ? (correctCount * 100.0) / submitCount : 0;
+	    memberDTO.setCorrectRate(correctRate);
+	    
+	    return memberDTO;
+		
+	}
+	
+	//모든회원
+	public List<MemberDTO> getAllMember() {
+		List<MemberEntity> memberEntities = memberRepository.findAll();
+		
+		List<MemberDTO> memberDTOs = new ArrayList<>();
+		
+		for (MemberEntity member : memberEntities) {
+			MemberDTO memberDTO = memberTest(member.getEmail());
+	        memberDTOs.add(memberDTO);
+		}
+		
+		return memberDTOs;
+	}
 }

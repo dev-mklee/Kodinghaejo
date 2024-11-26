@@ -2,6 +2,8 @@ package com.kodinghaejo.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -378,8 +380,31 @@ public class MemberController {
 
 	//내 문제집
 	@GetMapping("/member/mypage/mytest")
-	public void getMypageMytest() {
+	public void getMypageMytest(Model model, HttpSession session) {
+		MemberDTO member = service.memberTest((String) session.getAttribute("email"));
+		
+		String grade = baseService.calGrade(member.getScore());
+		member.setGrade(grade);
+		
+		List<MemberDTO> allMembers = service.getAllMember();
+		allMembers.sort(Comparator.comparingLong(MemberDTO::getScore).reversed()
+								  .thenComparing(Comparator.comparing(MemberDTO::getScoredate).reversed()));
+		
+		for (int i = 0; i < allMembers.size(); i++) {
+	        allMembers.get(i).setRank(i + 1);
+	    }
 
+	    // 현재 사용자의 rank 찾기
+	    int userRank = 0;
+	    for (int i = 0; i < allMembers.size(); i++) {
+	        if (allMembers.get(i).getEmail().equals(member.getEmail())) {
+	            userRank = allMembers.get(i).getRank();
+	            break;
+	        }
+	    }
+		
+	    model.addAttribute("userRank", userRank);
+		model.addAttribute("member", member);
 	}
 
 	//내 게시판

@@ -60,5 +60,11 @@ public interface MemberService {
 
 	//내가 작성한 댓글
 	Page<ReplyDTO> mypageReplyList(String email, int pageNum, int postNum);
+	
+	//마이페이지 나의 랭킹
+	public MemberDTO memberTest(String email);
+	
+	//모든회원
+	public List<MemberDTO> getAllMember();
 
 }
