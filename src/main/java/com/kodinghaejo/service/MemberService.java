@@ -7,8 +7,9 @@ import org.springframework.data.domain.Page;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
+import com.kodinghaejo.dto.TestBookmarkDTO;
+import com.kodinghaejo.dto.TestSubmitDTO;
 import com.kodinghaejo.entity.FileEntity;
-import com.kodinghaejo.entity.MemberEntity;
 
 public interface MemberService {
 
@@ -66,5 +67,11 @@ public interface MemberService {
 	
 	//모든회원
 	public List<MemberDTO> getAllMember();
+	
+	//회원의 풀어본 문제
+	public Page<TestSubmitDTO> myTest(int pageNum, int postNum, String email);
+	
+	//회원의 북마크 문제
+	public Page<TestBookmarkDTO> myBookmark(int pageNum, int postNum, String email);
 
 }

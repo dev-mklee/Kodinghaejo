@@ -64,4 +64,5 @@ public interface TestSubmitRepository extends JpaRepository<TestSubmitEntity, Lo
             "FROM testSubmit ts " +
             "WHERE ts.email.email = :email")
     public Long countByEmail(@Param("email") String email);
+    
 }

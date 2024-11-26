@@ -12,6 +12,33 @@
 <!-- pub-js link -->
 <script src="/js/pub-ui-custom.js"></script>
 </head>
+<script>
+async function bookmark(testIdx, action) {
+	try {
+		const response = await fetch('/test/bookmark', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ testIdx, action })
+		});
+		const data = await response.json();
+		const bookmarkaddBtn = document.getElementById(`bookmark-add-${testIdx}`);
+		const bookremoveBtn = document.getElementById(`bookmark-remove-${testtIdx}`);
+		if (data.isbookmarked) {
+			bookmarkaddBtn.style.display = 'none';
+			bookremoveBtn.style.display = 'inline';
+		} else {
+			bookmarkaddBtn.style.display = 'inline';
+			bookremoveBtn.style.display = 'none';
+		}
+	} catch (error) {
+		console.error("좋아요 상태를 변경할 수 없습니다:", error);
+	} finally {
+		location.reload(true);
+	}
+}
+</script>
 <body>
 	<div id="load" class="delay-filed" style="display: none;">
 		<div class="delay-icon"><i class="xi-spinner-5"></i></div>
@@ -30,7 +57,9 @@
 			<!-- 제목 & 북마커 -->
 			<div class="challenge-nav">
 				<div class="nav-item">
-					<i class="xi-bookmark-o"></i> <span class="challenge-title">[[ ${ test.title } ]]</span>
+					<i th:if="${isbookmarked == 'no'}" th:onclick="|bookmark('${test.idx}', 'add')|" th:id="@{'bookmark-add-' + ${test.idx}}" class="xi-bookmark-o"></i>
+					<i th:if="${isbookmarked == 'yes'}" th:onclick="|bookmark('${test.idx}', 'remove')|" th:id="@{'bookmark-remove-' + ${test.idx}}" class="xi-bookmark"></i>
+					<span class="challenge-title">[[ ${ test.title } ]]</span>
 				</div>
 				<div class="nav-item">
 					<div class="dropdown-language">

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
+import com.kodinghaejo.dto.TestBookmarkDTO;
+import com.kodinghaejo.dto.TestSubmitDTO;
 import com.kodinghaejo.entity.BoardEntity;
 import com.kodinghaejo.entity.BoardRecommendEntity;
 import com.kodinghaejo.entity.ChatMemberEntity;
@@ -349,5 +351,49 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		return memberDTOs;
+	}
+	
+	//회원의 풀어본 문제
+	public Page<TestSubmitDTO> myTest(int pageNum, int postNum, String email) {
+		MemberEntity memberEntity = memberRepository.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("email not found"));
+		
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
+		
+		List<TestSubmitEntity> submitEntities = testSubmitRepository.findByEmail(memberEntity);
+		 
+		List<TestSubmitDTO> testSubmitDTOs = new ArrayList<>();
+		
+		for (TestSubmitEntity submit : submitEntities) {
+			TestSubmitDTO testSubmitDTO = new TestSubmitDTO(submit);
+			testSubmitDTOs.add(testSubmitDTO);
+		}
+		
+		int startPoint = (int) pageRequest.getOffset();
+		int endPoint = (startPoint + pageRequest.getPageSize()) > testSubmitDTOs.size() ? testSubmitDTOs.size() : (startPoint + pageRequest.getPageSize());
+		
+		return new PageImpl<>(testSubmitDTOs.subList(startPoint, endPoint), pageRequest, testSubmitDTOs.size());
+	}
+	
+	//회원의 북마크 문제
+	public Page<TestBookmarkDTO> myBookmark(int pageNum, int postNum, String email) {
+		MemberEntity memberEntity = memberRepository.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("email not found"));
+		
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, postNum, Sort.by(Direction.DESC, "idx"));
+		
+		List<TestBookmarkEntity> bookmarkEntities = testBookmarkRepository.findByEmailAndIsUse(memberEntity, "Y");
+		
+		List<TestBookmarkDTO> testBookmarkDTOs = new ArrayList<>();
+		
+		for (TestBookmarkEntity bookmarkEntity : bookmarkEntities) {
+			TestBookmarkDTO testBookmarkDTO = new TestBookmarkDTO(bookmarkEntity);
+			testBookmarkDTOs.add(testBookmarkDTO);
+		}
+		
+		int startPoint = (int) pageRequest.getOffset();
+		int endPoint = (startPoint + pageRequest.getPageSize()) > testBookmarkDTOs.size() ? testBookmarkDTOs.size() : (startPoint + pageRequest.getPageSize());
+		
+		return new PageImpl<>(testBookmarkDTOs.subList(startPoint, endPoint), pageRequest, testBookmarkDTOs.size());
 	}
 }

@@ -26,11 +26,13 @@ import org.springframework.stereotype.Service;
 import com.kodinghaejo.dto.TestDTO;
 import com.kodinghaejo.dto.TestLngDTO;
 import com.kodinghaejo.entity.MemberEntity;
-
+import com.kodinghaejo.entity.TestBookmarkEntity;
+import com.kodinghaejo.entity.TestBookmarkEntityID;
 import com.kodinghaejo.entity.TestEntity;
 import com.kodinghaejo.entity.TestLngEntity;
 import com.kodinghaejo.entity.TestSubmitEntity;
 import com.kodinghaejo.entity.repository.MemberRepository;
+import com.kodinghaejo.entity.repository.TestBookmarkRepository;
 import com.kodinghaejo.entity.repository.TestLngRepository;
 import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.entity.repository.TestSubmitRepository;
@@ -45,6 +47,7 @@ public class TestServiceImpl implements TestService {
 	private final TestRepository testRepository;
 	private final TestLngRepository testLngRepository;
 	private final TestSubmitRepository testSubmitRepository;
+	private final TestBookmarkRepository bookmarkRepository;
 
 	//코딩테스트 문제 목록
 	@Override
@@ -393,4 +396,40 @@ public class TestServiceImpl implements TestService {
         return renderer.render(document);
 	}
 	
+	//좋아요 상태 확인
+	@Override
+	public String isBookmarked(String email, Long testIdx) {
+		int count = bookmarkRepository.countByEmailAndTestIdx(email, testIdx);
+		return count > 0 ? "yes" : "no";
+	}
+	//북마크
+	public boolean addBookmark(String email, Long testIdx) {
+		TestBookmarkEntityID id = new TestBookmarkEntityID(email, testIdx);
+		
+		MemberEntity member = memberRepository.findById(email)
+														.orElseThrow(() -> new IllegalArgumentException("해당 이메일을 가진 사용자가 없습니다: " + email));
+		TestEntity test = testRepository.findById(testIdx)
+													.orElseThrow(() -> new IllegalArgumentException("해당 문제 ID가 없습니다: " + testIdx));
+		
+		if (bookmarkRepository.existsById(id)) {
+			return false;
+		}
+		TestBookmarkEntity bookmark = new TestBookmarkEntity();
+		bookmark.setEmail(member);
+		bookmark.setTestIdx(test);
+		bookmark.setAddChk("Y");
+		bookmark.setAddDate(LocalDateTime.now());
+		bookmark.setIsUse("Y");
+		bookmarkRepository.save(bookmark);
+		return true;
+	}
+	//북마크 제거
+	public boolean removeBookemark(String email, Long testIdx) {
+		TestBookmarkEntityID id = new TestBookmarkEntityID(email, testIdx);
+		if (!bookmarkRepository.existsById(id)) {
+			return false;
+		}
+		bookmarkRepository.deleteById(id);
+		return false;
+	}
 }

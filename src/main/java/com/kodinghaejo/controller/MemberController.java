@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kodinghaejo.dto.BoardDTO;
 import com.kodinghaejo.dto.MemberDTO;
 import com.kodinghaejo.dto.ReplyDTO;
+import com.kodinghaejo.dto.TestBookmarkDTO;
+import com.kodinghaejo.dto.TestSubmitDTO;
 import com.kodinghaejo.service.BaseService;
 import com.kodinghaejo.service.MailService;
 import com.kodinghaejo.service.MemberService;
@@ -381,7 +383,11 @@ public class MemberController {
 	//내 문제집
 	@GetMapping("/member/mypage/mytest")
 	public void getMypageMytest(Model model, HttpSession session) {
-		MemberDTO member = service.memberTest((String) session.getAttribute("email"));
+		int postNum = 2;
+		
+		String email = (String) session.getAttribute("email");
+		
+		MemberDTO member = service.memberTest(email);
 		
 		String grade = baseService.calGrade(member.getScore());
 		member.setGrade(grade);
@@ -402,9 +408,36 @@ public class MemberController {
 	            break;
 	        }
 	    }
+	    
+	    //풀어본 문제
+	    Page<TestSubmitDTO> myTest = service.myTest(1, postNum, email);
+	    
+	    long testCount = (myTest != null) ? myTest.getTotalElements() : 0;
 		
+	    
+	    //북마크
+		Page<TestBookmarkDTO> myBookmarks = service.myBookmark(1, postNum, email);
+		
+		long bookmarkCount = (myBookmarks != null) ? myBookmarks.getTotalElements() : 0;
+		
+		model.addAttribute("bookmarkCount", bookmarkCount);
+		model.addAttribute("myBookmarks",myBookmarks);
+		model.addAttribute("totalbookPage", myBookmarks.getTotalPages());
+	    
+	    model.addAttribute("testCount", testCount);
+	    model.addAttribute("myTest", myTest);
 	    model.addAttribute("userRank", userRank);
 		model.addAttribute("member", member);
+		model.addAttribute("totalPage", myTest.getTotalPages());
+	}
+	
+	@ResponseBody
+	@PostMapping("/member/mypage/mytest")
+	public Page<TestSubmitDTO> postmytest(@RequestParam("page") int page, HttpSession session) {
+		int postNum = 2;
+		String email = (String) session.getAttribute("email");
+		
+		return service.myTest(page, postNum, email);
 	}
 
 	//내 게시판
@@ -430,5 +463,54 @@ public class MemberController {
 		model.addAttribute("boardPageList", page.getPageList("/member/mypage/myboard", "boardPage", boardPageNum, postNum, pageListCount, boardTotalCount, ("&replyPage=" + replyPageNum)));
 		model.addAttribute("replyPageList", page.getPageList("/member/mypage/myboard", "replyPage", replyPageNum, postNum, pageListCount, replyTotalCount, ("&boardPage=" + boardPageNum)));
 	}
-
+	
+	//마이페이지 풀어본 문제 화면
+	@GetMapping("/member/mypage/mytestlist")
+	public void getMypageMytestList(Model model, HttpSession session) {
+		int postNum = 2;
+		
+		String email = (String) session.getAttribute("email");
+		
+		Page<TestSubmitDTO> myTest = service.myTest(1, postNum, email);
+		
+	    long testCount = (myTest != null) ? myTest.getTotalElements() : 0;
+		
+	    model.addAttribute("testCount", testCount);
+	    model.addAttribute("myTest", myTest);
+		model.addAttribute("totalPage", myTest.getTotalPages());
+	}
+	
+	@ResponseBody
+	@PostMapping("/member/mypage/mytestlist")
+	public Page<TestSubmitDTO> postmytestList(@RequestParam("page") int page, HttpSession session) {
+		int postNum = 2;
+		String email = (String) session.getAttribute("email");
+		
+		return service.myTest(page, postNum, email);
+	}
+	
+	//마이페이지 문제 북마크 페이지
+	@GetMapping("/member/mypage/mytestBookmark")
+	public void getMypageMytestBookmark(Model model, HttpSession session) {
+		int postNum = 2;
+		
+		String email = (String) session.getAttribute("email");
+		
+		Page<TestBookmarkDTO> myBookmarks = service.myBookmark(1, postNum, email);
+		
+		long bookmarkCount = (myBookmarks != null) ? myBookmarks.getTotalElements() : 0;
+		
+		model.addAttribute("bookmarkCount", bookmarkCount);
+		model.addAttribute("myBookmarks",myBookmarks);
+		model.addAttribute("totalbookPage", myBookmarks.getTotalPages());
+	}
+	
+	@ResponseBody
+	@PostMapping("/member/mypage/mytestBookmark")
+	public Page<TestBookmarkDTO> postmytestBookmark(@RequestParam("page") int page, HttpSession session) {
+		int postNum = 2;
+		String email = (String) session.getAttribute("email");
+		
+		return service.myBookmark(page, postNum, email);
+	}
 }

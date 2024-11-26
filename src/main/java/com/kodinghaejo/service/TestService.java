@@ -54,5 +54,12 @@ public interface TestService {
 	
 	//마크다운 -> html 변환
 	public String convertCode(String markdown);
+	
+	//북마크 추가
+	public boolean addBookmark(String email, Long testIdx);
+	//북마크 제거
+	public boolean removeBookemark(String email, Long testIdx);
+	//북마크 상태 확인
+	public String isBookmarked(String email, Long testIdx);
 
 }
