@@ -65,4 +65,11 @@ public interface TestSubmitRepository extends JpaRepository<TestSubmitEntity, Lo
             "WHERE ts.email.email = :email")
     public Long countByEmail(@Param("email") String email);
     
+    //문제의 난이도 출력
+    @Query("SELECT t.diff " +
+    	       "FROM testSubmit ts " +
+    	       "JOIN ts.tlIdx tl " +
+    	       "JOIN tl.testIdx t " +
+    	       "WHERE tl.idx = :tlIdx")
+    public int findDiffByTlIdx(@Param("tlIdx") Long tlIdx);
 }

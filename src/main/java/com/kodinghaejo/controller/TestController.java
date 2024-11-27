@@ -155,6 +155,20 @@ public class TestController {
 			String submSts = ((passCnt * 5) >= 70) ? "Y" : "N";
 
 			service.submitTest(tlIdx, email, submSts, code);
+			
+			int diff = service.getTestDiff(tlIdx);
+			
+			long scoreToAdd = switch (diff) {
+			case 0 -> 1L;
+			case 1 -> 4L;
+			case 2 -> 8L;
+			case 3 -> 10L;
+			default -> 0L;
+			};
+			
+			if (scoreToAdd > 0 && submSts.equals("Y")) {
+				service.updateMemberScore(email, scoreToAdd);
+			}
 		}
 
 		return result;

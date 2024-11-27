@@ -61,5 +61,11 @@ public interface TestService {
 	public boolean removeBookemark(String email, Long testIdx);
 	//북마크 상태 확인
 	public String isBookmarked(String email, Long testIdx);
+	
+	//문제의 난이도 출력
+	public int getTestDiff(Long tlIdx);
+	
+	//회원의 점수 업데이트
+	public void updateMemberScore(String email, long socreToAdd);
 
 }

@@ -432,4 +432,19 @@ public class TestServiceImpl implements TestService {
 		bookmarkRepository.deleteById(id);
 		return false;
 	}
+	
+	//문제의 난이도 출력
+	public int getTestDiff(Long tlIdx) {
+		return testSubmitRepository.findDiffByTlIdx(tlIdx);
+	}
+	
+	//회원의 점수 업데이트
+	public void updateMemberScore(String email, long scoreToAdd) {
+		MemberEntity memberEntity = memberRepository.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("email not found"));
+	    if (memberEntity != null) {
+	        memberEntity.setScore(memberEntity.getScore() + scoreToAdd);
+	        memberRepository.save(memberEntity);
+	    }
+	}
 }
