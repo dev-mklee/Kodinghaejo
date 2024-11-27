@@ -7,7 +7,7 @@
   	<div class="banner-img" th:each="banner : ${banners}">
     <!-- 1번 배너 -->
     	<a th:href="@{${banner.url}}">
-      		<img th:src="@{'/banner/' + ${banner.img}}" th:alt="${banner.name}">
+      		<img th:src="@{'/banner/img/' + ${banner.img}}" th:alt="${banner.name}">
     	</a>
   	</div>
   	<div class="top-overview" onclick="scrollToTop()">위로 가기</div>

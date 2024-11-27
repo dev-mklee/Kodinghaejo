@@ -112,8 +112,7 @@ const deleteReply = (idx) => {
 						<tbody>
 							<tr th:each="reply : ${replys}">
 								<td th:text="${reply.idx}">1</td>
-								<td th:text="${reply.prntTitle}">이 문제 버그났어요.</td>
-								<td th:text="${reply.content}">저도 똑같아요.</td>
+								<td th:text="${reply.prntTitle}">이 문제 버그났어요.</td><td><a th:href="@{ '/test/questionBoardView?idx=' + ${ reply.prntIdx } }" th:text="${reply.content}" target="_blank">이 문제 버그났어요.</a></td>
 								<td th:text="${reply.writer}">한건희</td>
 								<td th:text="${reply.regdate}">2024-11-04</td>
 								<td><a th:href="|javascript:deleteReply(${reply.idx})|" class="btn_delete">삭제</a></td>
