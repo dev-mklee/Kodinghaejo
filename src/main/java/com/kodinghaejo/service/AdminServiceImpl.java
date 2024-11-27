@@ -19,7 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.kodinghaejo.dto.BannerDTO;
 import com.kodinghaejo.dto.BoardDTO;
@@ -52,6 +51,7 @@ import com.kodinghaejo.entity.repository.TestRepository;
 import com.kodinghaejo.entity.repository.TestSubmitRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service

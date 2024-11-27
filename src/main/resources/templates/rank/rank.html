@@ -15,27 +15,27 @@ let currentIndex = 0;
 const itemsPerPage = 10;
 
 function showMoreRank() {
-    const rankList = document.getElementById("rankList");
-    const allItems = rankList.querySelectorAll(".content-rank-item-list");
+	const rankList = document.getElementById("rankList");
+	const allItems = rankList.querySelectorAll(".content-rank-item-list");
 
-    for (let i = currentIndex; i < currentIndex + itemsPerPage && i < allItems.length; i++) {
-        allItems[i].classList.remove("hidden");
-    }
+	for (let i = currentIndex; i < currentIndex + itemsPerPage && i < allItems.length; i++) {
+		allItems[i].classList.remove("hidden");
+	}
 
-    currentIndex += itemsPerPage;
+	currentIndex += itemsPerPage;
 
-    if (currentIndex >= allItems.length) {
-        document.querySelector(".content-rank-item-pluse-view").style.display = "none";
-    }
+	if (currentIndex >= allItems.length) {
+		document.querySelector(".content-rank-item-pluse-view").style.display = "none";
+	}
 }
 
 window.onload = function () {
-    const rankList = document.getElementById("rankList");
-    const allItems = rankList.querySelectorAll(".content-rank-item-list");
+	const rankList = document.getElementById("rankList");
+	const allItems = rankList.querySelectorAll(".content-rank-item-list");
 
-    allItems.forEach(item => item.classList.add("hidden"));
+	allItems.forEach(item => item.classList.add("hidden"));
 
-    showMoreRank();
+	showMoreRank();
 };
 </script>
 </head>

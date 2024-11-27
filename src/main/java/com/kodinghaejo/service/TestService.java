@@ -29,7 +29,10 @@ public interface TestService {
 	public String testCode(String language, String filePath) throws Exception;
 
 	//코드 제출 처리
-	public void submitTest(Long tlIdx, String email, String submSts, String code);
+	public boolean submitTest(Long tlIdx, String email, String submSts, String code);
+
+	//언어별 문제 인덱스로 가져오기
+	public TestLngEntity loadTestLngByIdx(Long idx) throws Exception;
 
 	//가장 많이 풀어본 문제 가져오기
 	public Long getMostPopularTest();

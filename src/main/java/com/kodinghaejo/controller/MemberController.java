@@ -63,6 +63,9 @@ public class MemberController {
 		//이메일(아이디) 가입여부 확인
 		if (service.checkEmail(loginData.getEmail()) == 0) //해당 이메일 회원이 존재하지 않음
 			return "{ \"message\": \"ID_NOT_FOUND\" }";
+		
+		if (service.checkEmail(loginData.getEmail()) == -1) //탈퇴 상태의 회원
+			return "{ \"message\": \"DELETE_ACCOUNT_DENY\" }";
 
 		//비밀번호 일치여부 확인
 		if (!pwEncoder.matches(loginData.getPassword(), service.memberInfo(loginData.getEmail()).getPassword())) //비밀번호가 일치하지 않을 경우
@@ -104,9 +107,9 @@ public class MemberController {
 		String os = System.getProperty("os.name").toLowerCase();
 		String path;
 		if (os.contains("win"))
-			path = "C:\\Repository\\Kodinghaejo\\profile\\";
+			path = "Z:\\임시저장소\\프로젝트관리\\1회차\\2조\\Repository\\profile\\";//"C:\\Repository\\Kodinghaejo\\profile\\";
 		else
-			path = "/home/user/Repository/Kodinghaejo/profile/";
+			path = "/home/user/Repository/profile/";
 
 		//디렉토리 존재여부 확인 --> 없을 경우 생성 처리
 		File p = new File(path);
@@ -135,6 +138,7 @@ public class MemberController {
 			member.setOrgImg(orgImg);
 			member.setStoredImg(storedImg);
 			member.setImgSize(imgSize);
+			session.setAttribute("storedImg", storedImg);
 		}
 
 		//회원가입
@@ -184,14 +188,21 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/member/findId")
 	public String postFindId(MemberDTO findData) {
-		String email = service.findId(findData);
+		List<String> emailList = service.findId(findData);
 
-		if (email == "") {
+		if (emailList.isEmpty()) {
 			return "{ \"message\": \"ID_NOT_FOUND\" }";
 		} else {
-			log.info("==================== 아이디(이메일) 찾기 JSON: { \"message\": \"good\", \"id\": \"{}\" } ====================",
-					email);
-			return "{ \"message\": \"good\", \"id\": \"" + email + "\" }";
+			String emailStr = "[ ";
+			for (String email : emailList) {
+				if (!emailStr.equals("[ ")) emailStr += ", ";
+				emailStr += "\"" + email + "\"";
+			}
+			emailStr += " ]";
+			
+			log.info("==================== 아이디(이메일) 찾기 JSON: { \"message\": \"good\", \"id\": {} } ====================",
+					emailStr);
+			return "{ \"message\": \"good\", \"id\": " + emailStr + " }";
 		}
 	}
 
@@ -221,6 +232,8 @@ public class MemberController {
 			service.lastdateUpdate(findData.getEmail(), "password");
 
 			mailService.sendSimpleMailMessage(findData.getEmail(), password);
+			
+			log.info("========== password: {} ==========", password);
 
 			return "{ \"message\": \"good\" }";
 		}
@@ -233,7 +246,7 @@ public class MemberController {
 		String os = System.getProperty("os.name").toLowerCase();
 		String path;
 		if (os.contains("win"))
-			path = "C:\\Repository\\Kodinghaejo\\profile\\";
+			path = "Z:\\임시저장소\\프로젝트관리\\1회차\\2조\\Repository\\profile\\";//"C:\\Repository\\Kodinghaejo\\profile\\";
 		else
 			path = "/home/mklee/Repository/Kodinghaejo/profile/";
 
@@ -388,49 +401,48 @@ public class MemberController {
 		String email = (String) session.getAttribute("email");
 		
 		MemberDTO member = service.memberTest(email);
-		
+
 		String grade = baseService.calGrade(member.getScore());
 		member.setGrade(grade);
-		
+
 		List<MemberDTO> allMembers = service.getAllMember();
 		allMembers.sort(Comparator.comparingLong(MemberDTO::getScore).reversed()
-								  .thenComparing(Comparator.comparing(MemberDTO::getScoredate).reversed()));
-		
-		for (int i = 0; i < allMembers.size(); i++) {
-	        allMembers.get(i).setRank(i + 1);
-	    }
+							.thenComparing(Comparator.comparing(MemberDTO::getScoredate).reversed()));
 
-	    // 현재 사용자의 rank 찾기
-	    int userRank = 0;
-	    for (int i = 0; i < allMembers.size(); i++) {
-	        if (allMembers.get(i).getEmail().equals(member.getEmail())) {
-	            userRank = allMembers.get(i).getRank();
-	            break;
-	        }
-	    }
-	    
-	    //풀어본 문제
-	    Page<TestSubmitDTO> myTest = service.myTest(1, postNum, email);
-	    
-	    long testCount = (myTest != null) ? myTest.getTotalElements() : 0;
+		for (int i = 0; i < allMembers.size(); i++) {
+			allMembers.get(i).setRank(i + 1);
+		}
+		// 현재 사용자의 rank 찾기
+		int userRank = 0;
+		for (int i = 0; i < allMembers.size(); i++) {
+			if (allMembers.get(i).getEmail().equals(member.getEmail())) {
+				userRank = allMembers.get(i).getRank();
+				break;
+			}
+		}
 		
-	    
-	    //북마크
+		//풀어본 문제
+		Page<TestSubmitDTO> myTest = service.myTest(1, postNum, email);
+		
+		long testCount = (myTest != null) ? myTest.getTotalElements() : 0;
+		
+		
+		//북마크
 		Page<TestBookmarkDTO> myBookmarks = service.myBookmark(1, postNum, email);
-		
+	
 		long bookmarkCount = (myBookmarks != null) ? myBookmarks.getTotalElements() : 0;
 		
 		model.addAttribute("bookmarkCount", bookmarkCount);
 		model.addAttribute("myBookmarks",myBookmarks);
 		model.addAttribute("totalbookPage", myBookmarks.getTotalPages());
-	    
-	    model.addAttribute("testCount", testCount);
-	    model.addAttribute("myTest", myTest);
-	    model.addAttribute("userRank", userRank);
+		
+		model.addAttribute("testCount", testCount);
+		model.addAttribute("myTest", myTest);
+		model.addAttribute("userRank", userRank);
 		model.addAttribute("member", member);
 		model.addAttribute("totalPage", myTest.getTotalPages());
 	}
-	
+
 	@ResponseBody
 	@PostMapping("/member/mypage/mytest")
 	public Page<TestSubmitDTO> postmytest(@RequestParam("page") int page, HttpSession session) {
@@ -473,10 +485,10 @@ public class MemberController {
 		
 		Page<TestSubmitDTO> myTest = service.myTest(1, postNum, email);
 		
-	    long testCount = (myTest != null) ? myTest.getTotalElements() : 0;
+		long testCount = (myTest != null) ? myTest.getTotalElements() : 0;
 		
-	    model.addAttribute("testCount", testCount);
-	    model.addAttribute("myTest", myTest);
+		model.addAttribute("testCount", testCount);
+		model.addAttribute("myTest", myTest);
 		model.addAttribute("totalPage", myTest.getTotalPages());
 	}
 	
@@ -513,4 +525,5 @@ public class MemberController {
 		
 		return service.myBookmark(page, postNum, email);
 	}
+
 }

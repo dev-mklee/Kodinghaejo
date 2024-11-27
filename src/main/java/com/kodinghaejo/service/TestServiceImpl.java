@@ -15,6 +15,9 @@ import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -136,7 +139,7 @@ public class TestServiceImpl implements TestService {
 			}
 			test.setCorrectCount(correctCount);
 			test.setSubmitCount(submitCount);
-			test.setCorrectRate((correctCount == 0) ? 0 : (correctCount / submitCount * 100));
+			test.setCorrectRate((correctCount == 0) ? 0 : ((double) correctCount / (double) submitCount * 100));
 
 			testDTOs.add(test);
 		}
@@ -249,20 +252,37 @@ public class TestServiceImpl implements TestService {
 
 	//코드 제출 처리
 	@Override
-	public void submitTest(Long tlIdx, String email, String submSts, String code) {
+	public boolean submitTest(Long tlIdx, String email, String submSts, String code) {
 		TestLngEntity testLngEntity = testLngRepository.findById(tlIdx).get();
 		MemberEntity memberEntity = memberRepository.findById(email).get();
+		
+		TestSubmitEntity testSubmitEntity;
+		boolean isAdd = (testSubmitRepository.countByTlIdxAndEmailAndSubmSts(testLngEntity, memberEntity, submSts) == 0);
 
-		TestSubmitEntity testSubmitEntity = TestSubmitEntity
-																					.builder()
-																					.tlIdx(testLngEntity)
-																					.email(memberEntity)
-																					.submSts(submSts)
-																					.content(code)
-																					.regdate(LocalDateTime.now())
-																					.build();
+		if (isAdd) {
+			testSubmitEntity = TestSubmitEntity
+													.builder()
+													.tlIdx(testLngEntity)
+													.email(memberEntity)
+													.submSts(submSts)
+													.content(code)
+													.regdate(LocalDateTime.now())
+													.build();
+		} else {
+			testSubmitEntity = testSubmitRepository.findByTlIdxAndEmailAndSubmSts(testLngEntity, memberEntity, submSts).get();
+			testSubmitEntity.setContent(code);
+			testSubmitEntity.setRegdate(LocalDateTime.now());
+		}
 
 		testSubmitRepository.save(testSubmitEntity);
+		
+		return isAdd;
+	}
+	
+	//언어별 문제 인덱스로 불러오기
+	@Override
+	public TestLngEntity loadTestLngByIdx(Long idx) throws Exception {
+		return testLngRepository.findById(idx).get();
 	}
 
 	//가장 많이 풀어본 문제 idx값 가져오기
@@ -390,10 +410,9 @@ public class TestServiceImpl implements TestService {
 	//마크다운 -> html 변환
 	public String convertCode(String markdown) {
 		Parser parser = Parser.builder().build();
-        Node document = parser.parse(markdown);
-
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        return renderer.render(document);
+		Node document = parser.parse(markdown);
+		HtmlRenderer renderer = HtmlRenderer.builder().build();
+		return renderer.render(document);
 	}
 	
 	//좋아요 상태 확인
@@ -402,6 +421,7 @@ public class TestServiceImpl implements TestService {
 		int count = bookmarkRepository.countByEmailAndTestIdx(email, testIdx);
 		return count > 0 ? "yes" : "no";
 	}
+
 	//북마크
 	public boolean addBookmark(String email, Long testIdx) {
 		TestBookmarkEntityID id = new TestBookmarkEntityID(email, testIdx);
@@ -423,6 +443,7 @@ public class TestServiceImpl implements TestService {
 		bookmarkRepository.save(bookmark);
 		return true;
 	}
+
 	//북마크 제거
 	public boolean removeBookemark(String email, Long testIdx) {
 		TestBookmarkEntityID id = new TestBookmarkEntityID(email, testIdx);
@@ -442,9 +463,11 @@ public class TestServiceImpl implements TestService {
 	public void updateMemberScore(String email, long scoreToAdd) {
 		MemberEntity memberEntity = memberRepository.findByEmail(email)
 				.orElseThrow(() -> new RuntimeException("email not found"));
-	    if (memberEntity != null) {
-	        memberEntity.setScore(memberEntity.getScore() + scoreToAdd);
-	        memberRepository.save(memberEntity);
-	    }
+
+		if (memberEntity != null) {
+			memberEntity.setScore(memberEntity.getScore() + scoreToAdd);
+			memberRepository.save(memberEntity);
+		}
 	}
+	
 }

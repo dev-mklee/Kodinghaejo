@@ -32,6 +32,7 @@ import com.kodinghaejo.entity.TestSubmitEntity;
 import com.kodinghaejo.entity.repository.BoardRecommendRepository;
 import com.kodinghaejo.entity.repository.BoardRepository;
 import com.kodinghaejo.entity.repository.ChatMemberRepository;
+import com.kodinghaejo.entity.repository.CommonCodeRepository;
 import com.kodinghaejo.entity.repository.FileRepository;
 import com.kodinghaejo.entity.repository.MemberLogRepository;
 import com.kodinghaejo.entity.repository.MemberRepository;
@@ -60,26 +61,29 @@ public class MemberServiceImpl implements MemberService {
 	private final TestQuestionAnswerRepository testQuestionAnswerRepository;
 	private final TestQuestionRepository testQuestionRepository;
 	private final TestSubmitRepository testSubmitRepository;
+	private final CommonCodeRepository commonCodeRepository;
 
 	//회원가입
 	@Override
 	public void join(MemberDTO member) {
 		MemberEntity memberEntity = MemberEntity
-										.builder()
-										.email(member.getEmail())
-										.emailAuth("N")
-										.username(member.getUsername())
-										.nickname(member.getUsername())
-										.password(member.getPassword())
-										.tel(member.getTel())
-										.lvl("LVL-0002")
-										.imgSize(0L)
-										.regdate(LocalDateTime.now())
-										.pwdate(LocalDateTime.now())
-										.notifdate(LocalDateTime.now().plusDays(30))
-										.joinRoute("email")
-										.isUse("Y")
-										.build();
+																.builder()
+																.email(member.getEmail())
+																.emailAuth("N")
+																.username(member.getUsername())
+																.nickname(member.getUsername())
+																.password(member.getPassword())
+																.tel(member.getTel())
+																.lvl("LVL-0002")
+																.score(0L)
+																.imgSize(0L)
+																.regdate(LocalDateTime.now())
+																.pwdate(LocalDateTime.now())
+																.notifdate(LocalDateTime.now().plusDays(30))
+																.scoredate(LocalDateTime.now())
+																.joinRoute("email")
+																.isUse("Y")
+																.build();
 
 		memberRepository.save(memberEntity);
 	}
@@ -137,6 +141,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findById(email).map((member) -> new MemberDTO(member)).get();
 	}
 
+	//회원 기본정보
+	@Override
+	public MemberDTO memberInfoByIsUse(String email) {
+		return memberRepository.findByEmailAndIsUse(email, "Y").map((member) -> new MemberDTO(member)).get();
+	}
+
 	//회원 로그인, 로그아웃, 패스워드변경 일자 등록(Update)
 	@Override
 	public void lastdateUpdate(String email, String status) {
@@ -174,11 +184,12 @@ public class MemberServiceImpl implements MemberService {
 
 	//회원 아이디(이메일) 찾기
 	@Override
-	public String findId(MemberDTO member) {
-		return memberRepository
-				.findByUsernameAndTelAndIsUse(member.getUsername(), member.getTel(), "Y")
-				.map((m) -> m.getEmail())
-				.orElse("");
+	public List<String> findId(MemberDTO member) {
+		List<String> emailList = new ArrayList<>();
+		memberRepository.findByUsernameAndTelAndIsUse(member.getUsername(), member.getTel(), "Y")
+										.stream().forEach((m) -> emailList.add(m.getEmail()));
+		
+		return emailList;
 	}
 
 	//비밀번호 변경 알림 연기(30일)
@@ -207,6 +218,8 @@ public class MemberServiceImpl implements MemberService {
 	public void deleteAccount(String email) {
 		//회원정보
 		MemberEntity memberEntity = memberRepository.findById(email).get();
+		memberEntity.setScore(0L);
+		memberEntity.setScoredate(LocalDateTime.now());
 		memberEntity.setIsUse("N");
 		memberRepository.save(memberEntity);
 
@@ -292,6 +305,7 @@ public class MemberServiceImpl implements MemberService {
 		for (BoardEntity boardEntity : boardEntities) {
 			BoardDTO board = new BoardDTO(boardEntity);
 			board.setGoodCnt(boardRecommendRepository.countByBoardIdxAndGoodChk(boardEntity, "Y"));
+			board.setCatName(commonCodeRepository.findById(boardEntity.getCat()).get().getVal());
 			boardDTOs.add(board);
 		}
 
@@ -308,6 +322,7 @@ public class MemberServiceImpl implements MemberService {
 		List<ReplyDTO> replyDTOs = new ArrayList<>();
 
 		for (ReplyEntity replyEntity : replyEntities) {
+			System.out.println("rePrnt: " + replyEntity.getRePrnt() + " / prntIdx: " + replyEntity.getPrntIdx());
 			ReplyDTO reply = new ReplyDTO(replyEntity);
 			String prntTitle = (replyEntity.getRePrnt().equals("QA")) ? testQuestionAnswerRepository.findById(replyEntity.getPrntIdx()).get().getContent() :
 													(replyEntity.getRePrnt().equals("Q")) ? testQuestionRepository.findById(replyEntity.getPrntIdx()).get().getTitle() :

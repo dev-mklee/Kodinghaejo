@@ -52,6 +52,9 @@ public class MemberEntity {
 	@Column(name = "lvl", length = 20, nullable = false)
 	private String lvl;
 
+	@Column(name = "score", nullable = true)
+	private Long score;
+	
 	@Column(name = "tec_1", length = 20, nullable = true)
 	private String tec1;
 
@@ -93,6 +96,9 @@ public class MemberEntity {
 
 	@Column(name = "notifdate", nullable = true)
 	private LocalDateTime notifdate;
+	
+	@Column(name = "scoredate", nullable = true)
+	private LocalDateTime scoredate;
 
 	@Column(name = "join_route", length = 10, nullable = false)
 	private String joinRoute;
@@ -102,12 +108,6 @@ public class MemberEntity {
 
 	@Column(name = "is_use", length = 2, nullable = false)
 	private String isUse;
-	
-	@Column(name = "score", nullable = true)
-	private Long score;
-	
-	@Column(name = "scoredate", nullable = true)
-	private LocalDateTime scoredate;
 	
 	public void modifyInfo(MemberDTO member) {
 		this.nickname = member.getNickname();

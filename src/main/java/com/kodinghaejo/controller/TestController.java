@@ -74,7 +74,8 @@ public class TestController {
 
 	//코딩테스트 문제 상세 화면
 	@GetMapping("/test/challenge")
-	public void getChallenge(Model model, @RequestParam("test_idx") Long idx, HttpSession session) throws Exception {
+	public void getChallenge(Model model, @RequestParam("idx") Long idx,
+			@SessionAttribute(name = "email", required = false) String email) throws Exception {
 		TestDTO test = service.loadTest(idx);
 		String descHtml = service.convertCode(test.getDescr());
 		model.addAttribute("descHtml", descHtml);
@@ -83,10 +84,10 @@ public class TestController {
 		model.addAttribute("java", service.lngAvlChk(idx, "LNG-0001"));
 		model.addAttribute("js", service.lngAvlChk(idx, "LNG-0002"));
 		model.addAttribute("oracle", service.lngAvlChk(idx, "LNG-0003"));
-		
-		String email = (String)session.getAttribute("email");
+
 		String isbookmarked = service.isBookmarked(email, idx);
 		model.addAttribute("isbookmarked", isbookmarked);
+
 	}
 
 	//코딩테스트 언어별 문제 가져오기
@@ -154,19 +155,19 @@ public class TestController {
 			int passCnt = (int) data.get("passcnt");
 			String submSts = ((passCnt * 5) >= 70) ? "Y" : "N";
 
-			service.submitTest(tlIdx, email, submSts, code);
-			
+			boolean isAdd = service.submitTest(tlIdx, email, submSts, code);
+
 			int diff = service.getTestDiff(tlIdx);
 			
 			long scoreToAdd = switch (diff) {
-			case 0 -> 1L;
-			case 1 -> 4L;
-			case 2 -> 8L;
-			case 3 -> 10L;
-			default -> 0L;
+				case 0 -> 1L;
+				case 1 -> 4L;
+				case 2 -> 8L;
+				case 3 -> 10L;
+				default -> 0L;
 			};
 			
-			if (scoreToAdd > 0 && submSts.equals("Y")) {
+			if (isAdd && scoreToAdd > 0 && submSts.equals("Y")) {
 				service.updateMemberScore(email, scoreToAdd);
 			}
 		}
