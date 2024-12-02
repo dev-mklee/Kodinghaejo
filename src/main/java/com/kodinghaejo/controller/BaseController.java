@@ -44,9 +44,13 @@ public class BaseController {
 		List<BannerEntity> banners;
 		banners = adminservice.getBanner();
 
-		Random random = new Random();
-		BannerEntity randomBanner = banners.get(random.nextInt(banners.size()));
-		model.addAttribute("banners", randomBanner);
+	    if (banners != null && !banners.isEmpty()) {
+	        Random random = new Random();
+	        BannerEntity randomBanner = banners.get(random.nextInt(banners.size()));
+	        model.addAttribute("banners", randomBanner);
+	    } else {
+	        model.addAttribute("banners", null);
+	    }
 
 		//난이도별 문제
 		List<TestDTO> diffProblem = testService.getDiffTest();

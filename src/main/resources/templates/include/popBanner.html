@@ -4,7 +4,7 @@
     	<span class="dontShow" onclick="dontShowAgain()">하루만 안보기</span>
     	<span class="xi-close" onclick="popCloseEvent()"></span>
   	</div>
-  	<div class="banner-img" th:each="banner : ${banners}">
+  	<div class="sub-banner-img" th:each="banner : ${banners}">
     <!-- 1번 배너 -->
     	<a th:href="@{${banner.url}}">
       		<img th:src="@{'/banner/img/' + ${banner.img}}" th:alt="${banner.name}">
