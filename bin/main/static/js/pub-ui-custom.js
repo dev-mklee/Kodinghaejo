@@ -7,7 +7,7 @@ function scrollToTop() {
 
 /* popbanner-close : pop-info x 버튼 이벤트 */
 function popCloseEvent() {
-	document.querySelector('.banner-img').style.display = 'none';
+	document.querySelector('.sub-banner-img').style.display = 'none';
 	document.querySelector('.xi-close').parentElement.style.display = 'none';
 }
 
@@ -34,7 +34,7 @@ function getCookie(name) {
 function dontShowAgain() {
 	setcookie_expires("myCookie", "true", 1); 
 	alert("광고를 하루 동안 보지 않습니다.");
-	document.querySelector('.banner-img').style.display = 'none';
+	document.querySelector('.sub-banner-img').style.display = 'none';
 	document.querySelector('.pop-info').style.display = 'none';
 }
 
