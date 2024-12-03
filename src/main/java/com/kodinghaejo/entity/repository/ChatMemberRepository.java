@@ -3,6 +3,8 @@ package com.kodinghaejo.entity.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.kodinghaejo.entity.ChatEntity;
 import com.kodinghaejo.entity.ChatMemberEntity;
@@ -18,7 +20,7 @@ public interface ChatMemberRepository extends JpaRepository<ChatMemberEntity, Ch
 	boolean existsByChatIdxAndEmail(ChatEntity chatRoom, MemberEntity chatEmail);
 
 	//현재 채팅방 멤버 조회
-	 List<ChatMemberEntity> findByChatIdx(ChatEntity chatRoom);
+	List<ChatMemberEntity> findByChatIdx(ChatEntity chatRoom);
 
 	//사용자 이메일로 방장 역할을 맡고 있는 채팅방 갯수 확인
 	public Long countByEmailAndManager(MemberEntity email, String manager);
@@ -28,5 +30,9 @@ public interface ChatMemberRepository extends JpaRepository<ChatMemberEntity, Ch
 
 	// chatIdx 값을 가진 chatmember의 갯수를 반환
 	int countByChatIdx(ChatEntity chatRoom);
+	
+    @Query("SELECT cm FROM chatMember cm WHERE cm.chatIdx.idx = :chatIdx AND cm.manager = 'Y'")
+    public ChatMemberEntity findByChatIdxAndManager(@Param("chatIdx") Long chatIdx);
+
 
 }

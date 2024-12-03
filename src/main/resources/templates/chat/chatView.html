@@ -22,7 +22,7 @@
             <ul>
               <li><a href="#" onclick="history.back();" role="button"><i class="xi-angle-left"></i><span class="hidden">뒤로가기</span></a></li>
               <li class="profile">
-                <img src="/img/test-profile/moseyping.png" alt="" style="width: 50px;">
+                <img th:src="@{/member/img/{email}(email=${managerEmail})}" alt="" style="width: 50px;">
                 <p><b th:text="${chatRoom.title}"></b></p>
               </li>
               <li class="chat-nav-side-btn"><a href="#" onclick=""><i class="xi-hamburger-back" role="button"></i><span class="hidden">사이드 바</span></a></li>
@@ -35,10 +35,11 @@
             <b>대화상대</b>
             <div class="user-box" id="userBox"></div>
           </div>
+          <!-- 
           <div class="chat-nav-side-item">
             <b>사진/동영상</b>
             <div class="attach-photo-box">
-              <!-- 테스트용 이미지 주소 지우셔도 됩니다 -->
+
               <a href="#"><div class="attach-item"><img src="https://i.namu.wiki/i/onpHbm1gdU9BJIwYYWEixv0uOOlRxuDROw1zqrtVX0uTYY5TwnFskAsBVPyrENUjuMk-R-dPrveeZBO43zEw5qjvQoJYixiy4lyFVyBzRLthKmqYf02snNnvPP_KtF370D0Ets0qxIpGk1_oJBIB6Q.webp" alt=""></div></a>
               <a href="#"><div class="attach-item"><img src="https://i.namu.wiki/i/ae49NGHW4EVSo9MAPRy8j4s7pCCTonuIBf2ll65g5aYKj50_0OhXFHMpzJ9YECscBN9rCvhNGFPJuBtpazbkrJTU4_nFUc5mWFL8690C4BrR-mrQo4QPq1y_H3fBknNQPykWgUiXZaiXSycFgIE_1w.webp" alt=""></div></a>
               <a href="#"><div class="attach-item"><img src="https://i.namu.wiki/i/xZg1hN4s_lC5saw0vX5O0m372v8QkdPddJbp0jXIBjMdc3d3XYLb7o5vlWwWdmGi4YV6QHT9sgg3VlSnBV3cY-xUjnrqO-1DLKFzccUMrZ7XxXCzaxdFzv42n8cBwfgTmAJn-dqmi-za0TT3FHd6ZQ.webp" alt=""></div></a>
@@ -47,7 +48,7 @@
           <div class="chat-nav-side-item">
             <b>첨부파일</b>
             <div class="attach-file-box">
-              <!-- 최근 히스토리 3개 까지 -->
+
               <p><a href="#">D:\kodinghaejo_pub\img\aset03.png</a></p>
               <p><a href="#">D:\kodinghaejo_pub\img\aset03.png</a></p>
               <p><a href="#">D:\kodinghaejo_pub\img\aset03.png</a></p>
@@ -59,20 +60,21 @@
               <span class="card-small-red-tag">자유주제</span>
               <span class="card-small-yellow-tag">커리어고민</span>
             </div>
-          </div>
+          </div> -->
         </div> <!-- chat-nav-side end-->
 
 		<!-- 채팅방 -->
         <div class="chat-view-body">
+          
         </div> 
       	
        <div class="chat-send-message">
   <input type="hidden" id="email" th:value="${session.email}" readonly>
   <input type="hidden" id="username" th:value="${session.username}" readonly>
-  <input type="text" id="input-box-custom" class="input-box-custom" ><br>
+  <input type="text" id="input-box-custom" class="input-box-custom" placeholder="메시지를 입력해주세요..."><br>
   <button id="btn_sendMessage" class="btn_sendMessage" > <i class="xi-send"> </i></button>
-  <button> <i class="xi-plus-circle"></i></button>
-  <button id="btn_exitChat" class="btn_exitChat">나가기</button>
+<!--   <button> <i class="xi-plus-circle"></i></button> -->
+  <button id="btn_exitChat" class="xi-log-in"></button>
 </div>
        
       </div>
@@ -149,6 +151,7 @@
 	//웹소켓 서버에서 데이터 수신이 일어 났을 경우 실행하는 이벤트 핸들러
 	websocket.onmessage = (msg) => {
 		let data = JSON.parse(msg.data);
+		console.log(data);
 		let host_user = username.value;
 		let guest_user = data.user;
 		
@@ -163,15 +166,17 @@
 			    // 자신의 메시지
 			    str = "<div class='chat-me fadeInDown'>"
 			    	+"<p class='date'>" + formatDate(new Date()) + "</p>"
-			        + "<ul class='chat-message'>"
+			        + "<ul class='chat-message-user'>"
 			        + "<li>" + data.user + "</li>"
 			        + "<li>" + data.message + "</li>"
 			        + "</ul>"
+			        + "<img src=/member/img/" + data.email + ">" 
 			        + "</div>";
 			} else {
 			    // 상대방의 메시지
 			    str = "<div class='chat-your fadeInDown'>"
-			        + "<ul class='chat-message-user'>"
+			        + "<img src=/member/img/" + data.email + ">" 
+			        + "<ul class='chat-message'>"
 			        + "<li>" + data.user + "</li>"
 			        + "<li>" + data.message + "</li>"
 			        + "</ul>"
@@ -325,13 +330,30 @@
 	    const formattedDate = formatDate(new Date(regdate));
 	    
 	    const messageElement = document.createElement('div');
-	    messageElement.classList.add(email === document.querySelector('#email').value ? 'chat-me' : 'chat-your');
-	    messageElement.innerHTML = `
-	        <p class="date">${formattedDate}</p>
-	        <ul class="chat-message">
-	            <li>${username}</li>
-	            <li>${content}</li>
-	        </ul>`;
+	    const isMe = email === document.querySelector('#email').value;
+	
+	    messageElement.classList.add(isMe ? 'chat-me' : 'chat-your');
+	    
+	    if (isMe) {
+	        // chat-me인 경우
+	        messageElement.innerHTML = `
+	            <p class="date">${formattedDate}</p>
+	            <ul class="chat-message-user">
+	                <li><b>${username}</b></li>
+	                <li>${content}</li>
+	            </ul>
+		        <img src="/member/img/${email}">`;
+	    } else {
+	        // chat-your인 경우
+	        messageElement.innerHTML = `
+	        	<img src="/member/img/${email}">
+	            <ul class="chat-message">
+	                <li><b>${username}</b></li>
+	                <li>${content}</li>
+	            </ul>
+	            <p class="date">${formattedDate}</p>`;
+	    }
+	
 	    chatBody.appendChild(messageElement);
 	};
 

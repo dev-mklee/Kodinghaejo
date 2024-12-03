@@ -2,6 +2,7 @@ package com.kodinghaejo.dto;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.web.socket.WebSocketSession;
@@ -34,7 +35,10 @@ public class ChatDTO {
 	private LocalDateTime regdate;
 	private String isUse;
 	private Set<WebSocketSession> sessions = new HashSet<>();
-
+	
+	private List<ChatMemberDTO> managerEmail;
+	
+	
 	//Entity --> DTO 이동
 	public ChatDTO(ChatEntity entity) {
 		this.idx = entity.getIdx();
