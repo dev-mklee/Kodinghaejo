@@ -108,14 +108,38 @@
 			body: formData
 		}).then((response)=> response.json())
 			.then((data)=> {
-				if(data.message === 'good'){
-					document.location = '/chat/create';
-				}
-		}).catch((error)=> {
-			alert("시스템 장애로 대화방 등록이 실패했습니다.");
-			console.log(error);
-		})
-		window.close();
-	}
+				if (data.message === 'good') {
+				    Swal.fire({
+				        icon: 'success',
+				        title: '채팅방 생성 완료',
+				        text: '채팅방이 성공적으로 생성되었습니다!',
+				        confirmButtonText: '확인',
+				        timer: 2000,
+	            	    timerProgressBar: true
+				    }).then(() => {
+				        if (window.opener && !window.opener.closed) {
+				            window.opener.location.reload();
+				        }
+				        window.close();
+				    });
+				} else {
+			            Swal.fire({
+			                icon: 'error',
+			                title: '실패',
+			                text: '대화방 등록에 실패했습니다.',
+			                confirmButtonText: '확인'
+			            });
+			        }
+			    })
+			    .catch((error) => {
+			        Swal.fire({
+			            icon: 'error',
+			            title: '시스템 장애',
+			            text: '시스템 장애로 대화방 등록이 실패했습니다.',
+			            confirmButtonText: '확인'
+			        });
+			        console.error(error);
+			    });
+			};
 </script>
 </html>

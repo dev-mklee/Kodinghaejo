@@ -54,10 +54,8 @@ public class ChatController {
 		log.info("--------------------- 채팅방 목록 ---------------------");
 
 		List<ChatDTO> chatRooms = chatService.findManagers();
+	    
 		model.addAttribute("chatRooms", chatRooms);
-		log.info("000", chatRooms);
-		
-
 		
 
 		// 채팅방에 참여자 수를 출력
@@ -117,8 +115,13 @@ public class ChatController {
 		String manager = "";//manager 추가함
 		
 		ChatMemberEntity managerMember = chatService.getmanager(chatidx);
-		String managerEmail = managerMember.getEmail().getEmail(); 
-		
+	    String managerEmail = "";
+	    if (managerMember != null && managerMember.getEmail() != null) {
+	        managerEmail = managerMember.getEmail().getEmail();
+	    } else {
+	        // managerMember가 null인 경우 처리 (필요 시 로그 추가)
+	        managerEmail = null; // 기본값 설정
+	    }
 		// 유저가 이미 채팅방에 등록되어 있는지 확인
 	    boolean isUserInRoom = chatService.isUserInRoom(chatidx, email);
 	    if (!isUserInRoom) {

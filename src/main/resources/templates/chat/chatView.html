@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
   <!-- pub-js link -->
   <script src="/js/pub-ui-custom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body style="overflow-x: hidden;" >
@@ -22,7 +23,7 @@
             <ul>
               <li><a href="#" onclick="history.back();" role="button"><i class="xi-angle-left"></i><span class="hidden">뒤로가기</span></a></li>
               <li class="profile">
-                <img th:src="@{/member/img/{email}(email=${managerEmail})}" alt="" style="width: 50px;">
+				<img th:src="${managerEmail != null ? '/member/img/' + managerEmail : '/img/test-profile/nonoping.png'}" alt="이미지" style="width: 50px;">
                 <p><b th:text="${chatRoom.title}"></b></p>
               </li>
               <li class="chat-nav-side-btn"><a href="#" onclick=""><i class="xi-hamburger-back" role="button"></i><span class="hidden">사이드 바</span></a></li>
@@ -103,7 +104,12 @@
 	
 	const send = () => {
 	    if (message.value === '') {
-	        alert('메세지를 입력하세요');
+	    	Swal.fire({
+	            icon: 'warning',
+	            title: '입력 필요',
+	            text: '메세지를 입력하세요.',
+	            confirmButtonText: '확인'
+	        });
 	        message.focus();
 	        return false;
 	    }

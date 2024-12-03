@@ -218,6 +218,7 @@ public class ChatServiceImpl implements ChatService {
 	public void removeUserFromRoom(Long chatIdx, String email) {
 		ChatEntity chatRoom = findRoomById(chatIdx);
 		MemberEntity member = memberRepository.findById(email).get();
+		
 		chatMemberRepository.deleteByChatIdxAndEmail(chatRoom, member);
 	}
 
@@ -291,21 +292,18 @@ public class ChatServiceImpl implements ChatService {
 	
 
 	public List<ChatDTO> findManagers() {
-	    // 모든 ChatEntity를 조회
 	    List<ChatEntity> chatEntities = chatRepository.findAll();
 	    List<ChatDTO> chatDTOs = new ArrayList<>();
 
 	    for (ChatEntity chat : chatEntities) {
 	        ChatDTO chatDTO = new ChatDTO(chat);
 
-	        // manager가 "Y"인 멤버만 필터링
 	        List<ChatMemberDTO> memberDTOs = chatMemberRepository.findByChatIdx(chat)
 	            .stream()
-	            .filter(chatMember -> "Y".equals(chatMember.getManager())) // manager가 "Y"인지 확인
-	            .map(ChatMemberDTO::new) // ChatMemberDTO로 변환
-	            .toList(); // 필터링된 결과를 리스트로 변환
+	            .filter(chatMember -> "Y".equals(chatMember.getManager()))
+	            .map(ChatMemberDTO::new)
+	            .toList();
 
-	        // 필터링된 멤버를 DTO에 설정
 	        chatDTO.setManagerEmail(memberDTOs);
 	        chatDTOs.add(chatDTO);
 	    }
